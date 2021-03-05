@@ -1,0 +1,9 @@
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.csprojAssemblyReference.cache
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.AssemblyInfoInputs.cache
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.AssemblyInfo.cs
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.csproj.CoreCompileInputs.cache
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\bin\Debug\netstandard2.0\DataAccessLibrary.deps.json
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\bin\Debug\netstandard2.0\DataAccessLibrary.dll
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\bin\Debug\netstandard2.0\DataAccessLibrary.pdb
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.dll
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.pdb

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccessLibrary
 {
-    class Twig : ITwig
+    public class Twig : ITwig
     {
         public int Id { get; set; }
         public int ProjectId { get; set; }

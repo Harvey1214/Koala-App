@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccessLibrary
 {
-    class User
+    public class User : IUser
     {
         public int Id { get; set; }
         public string Email { get; set; }

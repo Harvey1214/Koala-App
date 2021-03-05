@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccessLibrary
 {
-    class Project
+    public class Project : IProject
     {
         public int Id { get; set; }
         public int UserId { get; set; }
