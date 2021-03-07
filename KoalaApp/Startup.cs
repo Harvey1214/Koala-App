@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccessLibrary;
 
 namespace KoalaApp
 {
@@ -28,6 +29,10 @@ namespace KoalaApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddScoped<UsersHandler>();
+            services.AddScoped<ProjectsHandler>();
+            services.AddScoped<TwigsHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

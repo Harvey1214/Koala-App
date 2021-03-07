@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tnLATEUEnCVJ4M/pRuj7WrPI4zfqHipzMzkGGo+ebE0lFfdPSX5NZD5I8ZcOLOgGkMOiLUfvBq+rJ/TiS3KaeA==",
+  "dgSpecHash": "EBG4/iGmYCfwqoIgrc1aKsqohmxBGH5FdOtPxaL+MCnW6o3txGdzZ90b4XQytz4OtR2lXdomYDbVi7v/hOGHvg==",
   "success": true,
   "projectFilePath": "C:\\Users\\mikuh\\source\\repos\\KoalaApp\\DataAccessLibrary\\DataAccessLibrary.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\mikuh\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\mikuh\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.data.sqlclient\\4.8.2\\system.data.sqlclient.4.8.2.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.0\\system.diagnostics.diagnosticsource.4.7.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",

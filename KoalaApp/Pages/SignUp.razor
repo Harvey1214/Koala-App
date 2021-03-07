@@ -1,0 +1,25 @@
+﻿@page "/signup"
+@using Data
+@inject DataAccessLibrary.UsersHandler UsersHandler 
+
+<h3>Sign Up</h3>
+
+<EditForm Model="@SignupModel" OnValidSubmit="@ValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText @bind-Value="SignupModel.Email" placeholder="Email" class="form-control"></InputText>
+    <InputText @bind-Value="SignupModel.Password" type="password" Placeholder="Password" class="form-control"></InputText>
+    <InputText @bind-Value="SignupModel.ControlPassword" type="password" Placeholder="Repeat Password" class="form-control"></InputText>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    private SignupModel SignupModel { get; set; } = new SignupModel();
+
+    private void ValidSubmit()
+    {
+        UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
+    }
+}

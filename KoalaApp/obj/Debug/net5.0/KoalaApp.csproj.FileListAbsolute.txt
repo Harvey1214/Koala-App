@@ -63,3 +63,5 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\runtimes\win\lib\
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\DataAccessLibrary.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\DataAccessLibrary.pdb
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\dbOptions.json
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Pages\SignUp.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Pages\SignUp.razor.g.cs

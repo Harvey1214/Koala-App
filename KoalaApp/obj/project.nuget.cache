@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0BpKxDpVe4uaI+xZqkfIookxlGVuk6wLyHqX0w+sddmmK8AE00cz8EOSYEx/66I42yP0Ik2m2THic2w4ASoSRQ==",
+  "dgSpecHash": "0xkvgDYyX92hj6Rzjz+5kPNtiWD3b6cJyPVRgOcDY3PU+/OAIubbxCGOdy2GG+qMl/i1DvyX2dxjQ91AI0zyfA==",
   "success": true,
   "projectFilePath": "C:\\Users\\mikuh\\source\\repos\\KoalaApp\\KoalaApp\\KoalaApp.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\mikuh\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\mikuh\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.data.sqlclient\\4.8.2\\system.data.sqlclient.4.8.2.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
