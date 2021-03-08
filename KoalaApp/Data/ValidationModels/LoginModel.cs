@@ -4,17 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace KoalaApp.Data
+namespace KoalaApp.Data.ValidationModels
 {
-    public class SignupModel
+    public class LoginModel
     {
         [Required]
         [EmailAddress]
+        [StringLength(49)]
         public string Email { get; set; }
 
         [Required]
+        [StringLength(49)]
         public string Password { get; set; }
-        [Required]
-        public string ControlPassword { get; set; }
     }
 }

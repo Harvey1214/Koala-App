@@ -33,6 +33,8 @@ namespace KoalaApp
             services.AddScoped<UsersHandler>();
             services.AddScoped<ProjectsHandler>();
             services.AddScoped<TwigsHandler>();
+
+            services.AddScoped<AccountHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,77 @@
+﻿@page "/login"
+@using Data.ValidationModels
+@using Data
+@using DataAccessLibrary
+@inject UsersHandler UsersHandler
+@inject NavigationManager NavManager
+@inject AccountHandler AccountHandler 
+
+@if (LoginNotSuccessful)
+{
+    <div class="alert alert-danger">
+        Acccount with this email <strong>doesn't</strong> exists, please <a class="alert-link" href="/signup">sign up</a>
+    </div>
+}
+
+@if (UsernameAndPasswordDoNotMatch)
+{
+    <div class="alert alert-danger">
+        Email and password <strong>do not match</strong>, <a class="alert-link" href="/forgotpassword">forgot password?</a>
+    </div>
+}
+
+<h3>Login</h3>
+
+<EditForm Model="LoginModel" OnValidSubmit="@ValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <InputText @bind-Value="LoginModel.Email" placeholder="Email" class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <InputText @bind-Value="LoginModel.Password" type="password" Placeholder="Password" class="form-control"></InputText>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+
+@code {
+    private LoginModel LoginModel = new LoginModel();
+
+    private bool LoginNotSuccessful { get; set; } = false;
+    private bool UsernameAndPasswordDoNotMatch { get; set; } = false;
+
+    private void ValidSubmit()
+    {
+        List<User> users = UsersHandler.GetUsers(LoginModel.Email);
+        if (users != null)
+        {
+            if (users.Count > 0)
+            {
+                if (users.First().Password == LoginModel.Password)
+                {
+                    LoginUser(users.First());
+                }
+                else
+                {
+                    UsernameAndPasswordDoNotMatch = true;
+                }
+            }
+            else
+            {
+                LoginNotSuccessful = true;
+            }
+        }
+        else
+        {
+            LoginNotSuccessful = true;
+        }
+    }
+
+    private void LoginUser(User user)
+    {
+        AccountHandler.User = user;
+        NavManager.NavigateTo("/trees");
+    }
+}

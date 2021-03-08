@@ -2,15 +2,35 @@
 @using Data
 @inject DataAccessLibrary.UsersHandler UsersHandler 
 
+@if (SignUpSuccessful)
+{
+    <div class="alert alert-success">
+        You have <strong>successfuly signed up</strong>, click <a class="alert-link" href="newtree">here</a> to create a new tree
+    </div>
+}
+
+@if (SomethingWentWrong)
+{
+    <div class="alert alert-danger">
+        Something <strong>went wrong</strong>, please <a class="alert-link" href="/signup">try again</a> in a few minutes
+    </div>
+}
+
 <h3>Sign Up</h3>
 
 <EditForm Model="@SignupModel" OnValidSubmit="@ValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <InputText @bind-Value="SignupModel.Email" placeholder="Email" class="form-control"></InputText>
-    <InputText @bind-Value="SignupModel.Password" type="password" Placeholder="Password" class="form-control"></InputText>
-    <InputText @bind-Value="SignupModel.ControlPassword" type="password" Placeholder="Repeat Password" class="form-control"></InputText>
+    <div class="form-group">
+        <InputText @bind-Value="SignupModel.Email" placeholder="Email" class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <InputText @bind-Value="SignupModel.Password" type="password" Placeholder="Password" class="form-control"></InputText>
+    </div>
+    <div class="form-group">
+        <InputText @bind-Value="SignupModel.ControlPassword" type="password" Placeholder="Repeat Password" class="form-control"></InputText>
+    </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
@@ -18,8 +38,21 @@
 @code {
     private SignupModel SignupModel { get; set; } = new SignupModel();
 
+    private bool SignUpSuccessful { get; set; } = false;
+    private bool SomethingWentWrong { get; set; } = false;
+
     private void ValidSubmit()
     {
-        UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
+        bool success = UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
+
+        if (success)
+        {
+            SignUpSuccessful = true;
+            SomethingWentWrong = false;
+        }
+        else
+        {
+            SomethingWentWrong = true;
+        }
     }
 }

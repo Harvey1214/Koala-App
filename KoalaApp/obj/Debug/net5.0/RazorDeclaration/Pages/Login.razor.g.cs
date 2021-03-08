@@ -83,14 +83,28 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
+#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
+using Data.ValidationModels;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/signup")]
-    public partial class SignUp : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
+using DataAccessLibrary;
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/login")]
+    public partial class Login : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -98,32 +112,52 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 38 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
+#line 39 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
        
-    private SignupModel SignupModel { get; set; } = new SignupModel();
+    private LoginModel LoginModel = new LoginModel();
 
-    private bool SignUpSuccessful { get; set; } = false;
-    private bool SomethingWentWrong { get; set; } = false;
+    private bool LoginNotSuccessful { get; set; } = false;
+    private bool UsernameAndPasswordDoNotMatch { get; set; } = false;
 
     private void ValidSubmit()
     {
-        bool success = UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
-
-        if (success)
+        List<User> users = UsersHandler.GetUsers(LoginModel.Email);
+        if (users != null)
         {
-            SignUpSuccessful = true;
-            SomethingWentWrong = false;
+            if (users.Count > 0)
+            {
+                if (users.First().Password == LoginModel.Password)
+                {
+                    LoginUser(users.First());
+                }
+                else
+                {
+                    UsernameAndPasswordDoNotMatch = true;
+                }
+            }
+            else
+            {
+                LoginNotSuccessful = true;
+            }
         }
         else
         {
-            SomethingWentWrong = true;
+            LoginNotSuccessful = true;
         }
+    }
+
+    private void LoginUser(User user)
+    {
+        AccountHandler.User = user;
+        NavManager.NavigateTo("/trees");
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DataAccessLibrary.UsersHandler UsersHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UsersHandler UsersHandler { get; set; }
     }
 }
 #pragma warning restore 1591

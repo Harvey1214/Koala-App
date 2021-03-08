@@ -83,47 +83,21 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
+#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/signup")]
-    public partial class SignUp : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/trees")]
+    public partial class Trees : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 38 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
-       
-    private SignupModel SignupModel { get; set; } = new SignupModel();
-
-    private bool SignUpSuccessful { get; set; } = false;
-    private bool SomethingWentWrong { get; set; } = false;
-
-    private void ValidSubmit()
-    {
-        bool success = UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
-
-        if (success)
-        {
-            SignUpSuccessful = true;
-            SomethingWentWrong = false;
-        }
-        else
-        {
-            SomethingWentWrong = true;
-        }
-    }
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DataAccessLibrary.UsersHandler UsersHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
     }
 }
 #pragma warning restore 1591
