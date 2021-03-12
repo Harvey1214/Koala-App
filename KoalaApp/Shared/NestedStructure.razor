@@ -10,7 +10,7 @@
 {
     @foreach (var twig in TwigsTempStorage.Twigs)
     {
-        <NestedTwig Twig="@twig" />
+        <NestedTwig Twig="@twig" NestedStructure="@this"/>
     }
 }
 

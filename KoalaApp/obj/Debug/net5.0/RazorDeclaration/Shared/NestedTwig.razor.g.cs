@@ -89,6 +89,20 @@ using DataAccessLibrary;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+using Data.Common;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+using Data;
+
+#line default
+#line hidden
+#nullable disable
     public partial class NestedTwig : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -97,14 +111,60 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 5 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 15 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
 
+    [Parameter]
+    public NestedStructure NestedStructure { get; set; }
+
+    private string margin
+    {
+        get
+        {
+            float result = Twig.AbsoluteLevel * UISettings.MarginMultiplier;
+            return $"{result}rem";
+        }
+    }
+
+    private void AddTwig()
+    {
+        for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
+        {
+            if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
+            {
+                // insert the new twig into the database
+                TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
+
+                // add the new twig to the GUI
+                int newTwigId = TwigsHandler.GetLastId();
+                TwigsTempStorage.Twigs.Insert(i + 1,
+                    new Twig()
+                    {
+                        Id = newTwigId,
+                        ProjectId = NestedStructure.ProjectId,
+                        ParentId = Twig.Id,
+                        Title = "New Twig",
+                        DueDate = DateTime.Now.AddYears(100),
+                        Priority = 0,
+                        Description = "",
+                        State = State.NOTSTARTED
+                    });
+                TwigsTempStorage.Order();
+
+                // update and exit
+                NestedStructure.Update();
+                return;
+            }
+        }
+    }
+
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
     }
 }
 #pragma warning restore 1591

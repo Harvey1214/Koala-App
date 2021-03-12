@@ -12,5 +12,6 @@ namespace DataAccessLibrary
         int ProjectId { get; set; }
         State State { get; set; }
         string Title { get; set; }
+        int? ParentId { get; set; }
     }
 }

@@ -41,16 +41,16 @@ namespace DataAccessLibrary
         /// <param name="projectId"></param>
         /// <param name="title"></param>
         /// <returns>True if operation was successful, returns false if otherwise</returns>
-        public bool InsertTwig(int projectId)
+        public bool InsertTwig(int projectId, int? parentId = null)
         {
             DateTime now = DateTime.Now;
 
-            string command = "insert into TwigsTable(ProjectId, Title, DueDate, Priority, Description, State) " +
-                "values (@ProjectId, @Title, @DueDate, @Priority, @Description, @State)";
+            string command = "insert into TwigsTable(ProjectId, Title, DueDate, Priority, Description, State, ParentId) " +
+                "values (@ProjectId, @Title, @DueDate, @Priority, @Description, @State, @ParentId)";
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             int rowsAffected = dataAccess.WriteData(command,
-                new {ProjectId = projectId, Title = "New Twig", DueDate = DateTime.Now.AddYears(100), Priority = 0, Description = "", State = State.NOTSTARTED }); ;
+                new {ProjectId = projectId, Title = "New Twig", DueDate = DateTime.Now.AddYears(100), Priority = 0, Description = "", State = State.NOTSTARTED, ParentId = parentId }); ;
 
             if (rowsAffected == 1)
             {

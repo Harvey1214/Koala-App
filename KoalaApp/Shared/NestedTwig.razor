@@ -1,8 +1,62 @@
 ﻿@using DataAccessLibrary
+@using Data.Common
+@using Data
 
-<h6>@Twig.Title</h6>
+@inject TwigsTempStorage TwigsTempStorage 
+@inject TwigsHandler TwigsHandler 
+
+<div @ondblclick="AddTwig" class="card @UISettings.LevelStyles[Twig.RelativeLevel] mb-3" style="max-width: 18rem;margin-left:@margin">
+    <div class="card-body">
+        <h5 class="card-title">@Twig.Title</h5>
+        <p class="card-text">@Twig.DueDate</p>
+    </div>
+</div>
 
 @code {
     [Parameter]
     public Twig Twig { get; set; }
+
+    [Parameter]
+    public NestedStructure NestedStructure { get; set; }
+
+    private string margin
+    {
+        get
+        {
+            float result = Twig.AbsoluteLevel * UISettings.MarginMultiplier;
+            return $"{result}rem";
+        }
+    }
+
+    private void AddTwig()
+    {
+        for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
+        {
+            if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
+            {
+                // insert the new twig into the database
+                TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
+
+                // add the new twig to the GUI
+                int newTwigId = TwigsHandler.GetLastId();
+                TwigsTempStorage.Twigs.Insert(i + 1,
+                    new Twig()
+                    {
+                        Id = newTwigId,
+                        ProjectId = NestedStructure.ProjectId,
+                        ParentId = Twig.Id,
+                        Title = "New Twig",
+                        DueDate = DateTime.Now.AddYears(100),
+                        Priority = 0,
+                        Description = "",
+                        State = State.NOTSTARTED
+                    });
+                TwigsTempStorage.Order();
+
+                // update and exit
+                NestedStructure.Update();
+                return;
+            }
+        }
+    }
 }
