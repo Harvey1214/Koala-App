@@ -83,28 +83,22 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
-using Data.ValidationModels;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
+#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
+#line 5 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
 using DataAccessLibrary;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/login")]
-    public partial class Login : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/tree")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/tree/{TreeIdText}")]
+    public partial class Tree : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -112,52 +106,97 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 41 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
+#line 34 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
        
-    private LoginModel LoginModel = new LoginModel();
+    [Parameter]
+    public string TreeIdText { get; set; }
 
-    private bool LoginNotSuccessful { get; set; } = false;
-    private bool UsernameAndPasswordDoNotMatch { get; set; } = false;
+    private int TreeId { get; set; }
+    private Project Project { get; set; }
 
-    private void ValidSubmit()
+    private bool ValidURL { get; set; } = true;
+    private bool ProjectNotFound { get; set; } = false;
+    private bool RedirectToLogin { get; set; } = false;
+
+    protected override void OnAfterRender(bool firstRender)
     {
-        List<User> users = UsersHandler.GetUsers(LoginModel.Email);
-        if (users != null)
+        if (firstRender && RedirectToLogin)
         {
-            if (users.Count > 0)
-            {
-                if (users.First().Password == LoginModel.Password)
-                {
-                    LoginUser(users.First());
-                }
-                else
-                {
-                    UsernameAndPasswordDoNotMatch = true;
-                }
-            }
-            else
-            {
-                LoginNotSuccessful = true;
-            }
-        }
-        else
-        {
-            LoginNotSuccessful = true;
+            RedirectToLoginPage();
         }
     }
 
-    private void LoginUser(User user)
+    private List<Twig> GetTwigs()
     {
-        AccountHandler.User = user;
-        NavManager.NavigateTo("/trees");
+        return TwigsHandler.GetTwigsOfProject(Project.Id) ?? new List<Twig>();
+    }
+
+    private Project GetProject()
+    {
+        var projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id);
+        if (projects != null)
+        {
+            if (projects.Count > 0)
+            {
+                return projects.Where(o => o.Id == TreeId).ToList().FirstOrDefault();
+            }
+        }
+
+        return null;
+    }
+
+    private void RedirectToLoginPage()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+
+    protected override void OnParametersSet()
+    {
+        int treeId;
+        bool success = Int32.TryParse(TreeIdText, out treeId);
+
+        if (success)
+        {
+            TreeId = treeId;
+        }
+        else
+        {
+            ValidURL = false;
+        }
+
+        LoadProject();
+    }
+
+    private void LoadProject()
+    {
+        if (AccountHandler.User == null)
+        {
+            RedirectToLogin = true;
+            return;
+        }
+        if (ValidURL == false)
+        {
+            return;
+        }
+
+        Project = GetProject();
+        if (Project == null)
+        {
+            ProjectNotFound = true;
+            return;
+        }
+
+        TwigsTempStorage.Twigs = GetTwigs();
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavManager { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UsersHandler UsersHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ProjectsHandler ProjectsHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
     }
 }
 #pragma warning restore 1591

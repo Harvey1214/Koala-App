@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace KoalaApp.Pages
+namespace KoalaApp.Shared
 {
     #line hidden
     using System;
@@ -83,14 +83,13 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
-using Data;
+#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+using DataAccessLibrary;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/signup")]
-    public partial class SignUp : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class NestedTwig : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -98,32 +97,14 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
+#line 5 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
-    private SignupModel SignupModel { get; set; } = new SignupModel();
-
-    private bool SignUpSuccessful { get; set; } = false;
-    private bool SomethingWentWrong { get; set; } = false;
-
-    private void ValidSubmit()
-    {
-        bool success = UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
-
-        if (success)
-        {
-            SignUpSuccessful = true;
-            SomethingWentWrong = false;
-        }
-        else
-        {
-            SomethingWentWrong = true;
-        }
-    }
+    [Parameter]
+    public Twig Twig { get; set; }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DataAccessLibrary.UsersHandler UsersHandler { get; set; }
     }
 }
 #pragma warning restore 1591

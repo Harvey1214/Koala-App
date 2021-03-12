@@ -42,11 +42,10 @@ namespace DataAccessLibrary
         /// <returns>True if operation was successful, returns false otherwise</returns>
         public bool InsertUser(string email, string password)
         {
-            int newUserId = GetHighestUserId() + 1;
-            string command = "insert into UsersTable(Id, Email, Password) values (@Id, @Email, @Password)";
+            string command = "insert into UsersTable(Email, Password) values (@Email, @Password)";
             DataAccess<User, object> dataAccess = new DataAccess<User, object>();
 
-            int rowsAffected = dataAccess.WriteData(command, new { Id = newUserId, Email = email, Password = password });
+            int rowsAffected = dataAccess.WriteData(command, new { Email = email, Password = password });
 
             if (rowsAffected == 1)
             {
@@ -68,26 +67,6 @@ namespace DataAccessLibrary
             DataAccess<User, object> dataAccess = new DataAccess<User, object>();
 
             return dataAccess.GetData(command);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>The highest Id in the UsersTable</returns>
-        private int GetHighestUserId()
-        {
-            string command = "select * from UsersTable order by Id desc";
-            DataAccess<User, object> dataAccess = new DataAccess<User, object>();
-
-            List<User> allUsers = dataAccess.GetData(command);
-            if (allUsers.Count > 0)
-            {
-                return allUsers[0].Id;
-            }
-            else
-            {
-                return 0;
-            }
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿@using DataAccessLibrary
+@using Data
+
+@inject TwigsTempStorage TwigsTempStorage
+@inject TwigsHandler TwigsHandler 
+
+<button @onclick="AddTwig" class="btn btn-outline-success">Add Twig</button>
+
+@if (TwigsTempStorage.Twigs != null)
+{
+    @foreach (var twig in TwigsTempStorage.Twigs)
+    {
+        <NestedTwig Twig="@twig" />
+    }
+}
+
+@code {
+    [Parameter]
+    public int ProjectId { get; set; }
+
+    private void AddTwig()
+    {
+        Twig twig = new Twig()
+        {
+            ProjectId = ProjectId,
+            Title = "New Twig",
+            DueDate = DateTime.Now.AddYears(100),
+            Priority = 0,
+            Description = "",
+            State = State.NOTSTARTED
+        };
+
+        TwigsHandler.InsertTwig(ProjectId);
+
+        twig.Id = TwigsHandler.GetLastId();
+
+        TwigsTempStorage.Twigs.Add(twig);
+
+        Update();
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+}

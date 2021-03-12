@@ -83,14 +83,14 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
 using DataAccessLibrary;
 
 #line default
@@ -105,23 +105,35 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 35 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 38 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
        
-    private List<Project> projects = new List<Project>();
+    public List<Project> Projects { get; set; } = new List<Project>();
 
     private void OpenProject(int id)
     {
-
+        NavigationManager.NavigateTo($"/tree/{id}");
     }
 
     protected override void OnInitialized()
     {
-        projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+        LoadProjects();
+    }
+
+    private void LoadProjects()
+    {
+        Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
+        LoadProjects();
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private ProjectsHandler ProjectsHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
     }

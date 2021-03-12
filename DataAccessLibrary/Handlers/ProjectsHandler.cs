@@ -72,25 +72,5 @@ namespace DataAccessLibrary
 
             return dataAccess.GetData(command);
         }
-
-        /// <summary>
-        /// Finds the highest project id in the ProjectsTable
-        /// </summary>
-        /// <returns>Highest project Id</returns>
-        private int GetHighestProjectId()
-        {
-            string command = "select * from ProjectsTable order by Id desc";
-            DataAccess<Project, object> dataAccess = new DataAccess<Project, object>();
-
-            List<Project> allProjects = dataAccess.GetData(command);
-            if (allProjects.Count > 0)
-            {
-                return allProjects[0].Id;
-            }
-            else
-            {
-                return 0;
-            }
-        }
     }
 }

@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace KoalaApp.Pages
+namespace KoalaApp.Shared
 {
     #line hidden
     using System;
@@ -83,14 +83,20 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
+#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
+using DataAccessLibrary;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/signup")]
-    public partial class SignUp : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class NestedStructure : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -98,32 +104,42 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
+#line 17 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
        
-    private SignupModel SignupModel { get; set; } = new SignupModel();
+    [Parameter]
+    public int ProjectId { get; set; }
 
-    private bool SignUpSuccessful { get; set; } = false;
-    private bool SomethingWentWrong { get; set; } = false;
-
-    private void ValidSubmit()
+    private void AddTwig()
     {
-        bool success = UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
+        Twig twig = new Twig()
+        {
+            ProjectId = ProjectId,
+            Title = "New Twig",
+            DueDate = DateTime.Now.AddYears(100),
+            Priority = 0,
+            Description = "",
+            State = State.NOTSTARTED
+        };
 
-        if (success)
-        {
-            SignUpSuccessful = true;
-            SomethingWentWrong = false;
-        }
-        else
-        {
-            SomethingWentWrong = true;
-        }
+        TwigsHandler.InsertTwig(ProjectId);
+
+        twig.Id = TwigsHandler.GetLastId();
+
+        TwigsTempStorage.Twigs.Add(twig);
+
+        Update();
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DataAccessLibrary.UsersHandler UsersHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
     }
 }
 #pragma warning restore 1591

@@ -1,0 +1,115 @@
+﻿@page "/tree"
+@page "/tree/{TreeIdText}" 
+
+@using Data
+@using DataAccessLibrary
+
+@inject TwigsHandler TwigsHandler  
+@inject ProjectsHandler ProjectsHandler 
+@inject AccountHandler AccountHandler
+@inject NavigationManager NavigationManager  
+@inject TwigsTempStorage TwigsTempStorage
+
+@if (ProjectNotFound)
+{
+    <div class="alert alert-warning">
+        Tree <strong>was not found</strong>, please check your spelling and <a href="/trees" class="alert-link">tree list</a>
+    </div>
+}
+@if (ValidURL == false)
+{
+    <div class="alert alert-warning">
+        The url is <strong>invalid</strong>, the correct form is base URL + /tree/{Tree Id}
+    </div>
+}
+
+<!-- Title -->
+@if (Project != null)
+{
+    <h5>@Project.Name</h5>
+}
+
+<NestedStructure ProjectId="@Project.Id" />
+
+@code {
+    [Parameter]
+    public string TreeIdText { get; set; }
+
+    private int TreeId { get; set; }
+    private Project Project { get; set; }
+
+    private bool ValidURL { get; set; } = true;
+    private bool ProjectNotFound { get; set; } = false;
+    private bool RedirectToLogin { get; set; } = false;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && RedirectToLogin)
+        {
+            RedirectToLoginPage();
+        }
+    }
+
+    private List<Twig> GetTwigs()
+    {
+        return TwigsHandler.GetTwigsOfProject(Project.Id) ?? new List<Twig>();
+    }
+
+    private Project GetProject()
+    {
+        var projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id);
+        if (projects != null)
+        {
+            if (projects.Count > 0)
+            {
+                return projects.Where(o => o.Id == TreeId).ToList().FirstOrDefault();
+            }
+        }
+
+        return null;
+    }
+
+    private void RedirectToLoginPage()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+
+    protected override void OnParametersSet()
+    {
+        int treeId;
+        bool success = Int32.TryParse(TreeIdText, out treeId);
+
+        if (success)
+        {
+            TreeId = treeId;
+        }
+        else
+        {
+            ValidURL = false;
+        }
+
+        LoadProject();
+    }
+
+    private void LoadProject()
+    {
+        if (AccountHandler.User == null)
+        {
+            RedirectToLogin = true;
+            return;
+        }
+        if (ValidURL == false)
+        {
+            return;
+        }
+
+        Project = GetProject();
+        if (Project == null)
+        {
+            ProjectNotFound = true;
+            return;
+        }
+
+        TwigsTempStorage.Twigs = GetTwigs();
+    }
+}

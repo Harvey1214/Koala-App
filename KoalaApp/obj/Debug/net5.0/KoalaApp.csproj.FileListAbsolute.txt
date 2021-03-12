@@ -70,5 +70,11 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Pages\Login.razor.g.cs
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Pages\Trees.razor.g.cs
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Pages\Trees.razor.g.cs
-C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Pages\NewTree.razor.g.cs
-C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Pages\NewTree.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Pages\Tree.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Pages\Tree.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Shared\NewTree.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\NewTree.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Shared\NestedStructure.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Shared\NestedTwig.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\NestedStructure.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\NestedTwig.razor.g.cs

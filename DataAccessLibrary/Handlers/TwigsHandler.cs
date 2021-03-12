@@ -44,14 +44,13 @@ namespace DataAccessLibrary
         public bool InsertTwig(int projectId)
         {
             DateTime now = DateTime.Now;
-            int newTwigId = GetHighestTwigId() + 1;
 
-            string command = "insert into TwigsTable(Id, ProjectId, Title, DueDate, CompletedDate, Priority, Description, State) " +
-                "values (@Id, @ProjectId, @Title, @DueDate, @CompletedDate, @Priority, @Description, @State)";
+            string command = "insert into TwigsTable(ProjectId, Title, DueDate, Priority, Description, State) " +
+                "values (@ProjectId, @Title, @DueDate, @Priority, @Description, @State)";
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             int rowsAffected = dataAccess.WriteData(command,
-                new { Id = newTwigId, ProjectId = projectId, Title = "New Twig", DueDate = DateTime.MaxValue, CompletedDate = new DateTime(), Priority = 0, Description = "", State = State.NOTSTARTED }); ;
+                new {ProjectId = projectId, Title = "New Twig", DueDate = DateTime.Now.AddYears(100), Priority = 0, Description = "", State = State.NOTSTARTED }); ;
 
             if (rowsAffected == 1)
             {
@@ -98,24 +97,12 @@ namespace DataAccessLibrary
             return dataAccess.GetData(command);
         }
 
-        /// <summary>
-        /// Finds the highest Twig id in the TwigsTable
-        /// </summary>
-        /// <returns>Highest Twig Id</returns>
-        private int GetHighestTwigId()
+        public int GetLastId()
         {
-            string command = "select * from TwigsTable order by Id desc";
-            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+            string command = "select max(Id) from TwigsTable";
+            DataAccess<int, object> dataAccess = new DataAccess<int, object>();
 
-            List<Twig> allTwigs = dataAccess.GetData(command);
-            if (allTwigs.Count > 0)
-            {
-                return allTwigs[0].Id;
-            }
-            else
-            {
-                return 0;
-            }
+            return dataAccess.GetData(command)[0];
         }
     }
 }

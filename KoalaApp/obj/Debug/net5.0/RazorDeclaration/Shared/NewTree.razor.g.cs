@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace KoalaApp.Pages
+namespace KoalaApp.Shared
 {
     #line hidden
     using System;
@@ -83,21 +83,21 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\NewTree.razor"
+#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NewTree.razor"
 using Data.ValidationModels;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\NewTree.razor"
+#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NewTree.razor"
 using DataAccessLibrary;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\NewTree.razor"
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NewTree.razor"
 using Data;
 
 #line default
@@ -111,8 +111,11 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 33 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\NewTree.razor"
+#line 33 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NewTree.razor"
        
+    [Parameter]
+    public object Parent { get; set; }
+
     private NewTreeModel NewTreeModel { get; set; } = new NewTreeModel();
 
     private bool NewTreeHasBeenCreated { get; set; } = false;
@@ -123,6 +126,19 @@ using Data;
         if (ProjectsHandler.InsertProject(AccountHandler.User.Id, NewTreeModel.Name))
         {
             NewTreeHasBeenCreated = true;
+
+            if (Parent is Pages.Trees)
+            {
+                Pages.Trees trees = (Pages.Trees)Parent;
+                trees.Projects.Add(new Project()
+                {
+                    Name = NewTreeModel.Name,
+                    DateCreated = DateTime.Now,
+                    LastOpened = DateTime.Now
+                });
+                trees.Update();
+            }
+
         }
         else
         {

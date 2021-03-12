@@ -83,14 +83,14 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
+#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
 using DataAccessLibrary;
 
 #line default
@@ -105,7 +105,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 20 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
+#line 21 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
        
     List<User> users = new List<User>();
 

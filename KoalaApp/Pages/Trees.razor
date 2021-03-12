@@ -1,10 +1,13 @@
 ﻿@page "/trees" 
+
 @using Data
 @using DataAccessLibrary
+
 @inject AccountHandler AccountHandler 
 @inject ProjectsHandler ProjectsHandler 
+@inject NavigationManager NavigationManager 
 
-<NewTree />
+<NewTree Parent="@this"/>
 
 <br />
 
@@ -20,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var project in projects)
+        @foreach (var project in Projects)
         {
             <tr>
                 <td>@project.Name</td>
@@ -33,15 +36,26 @@
 </table>
 
 @code {
-    private List<Project> projects = new List<Project>();
+    public List<Project> Projects { get; set; } = new List<Project>();
 
     private void OpenProject(int id)
     {
-
+        NavigationManager.NavigateTo($"/tree/{id}");
     }
 
     protected override void OnInitialized()
     {
-        projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+        LoadProjects();
+    }
+
+    private void LoadProjects()
+    {
+        Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
+        LoadProjects();
     }
 }

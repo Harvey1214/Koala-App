@@ -31,6 +31,9 @@
 </EditForm>
 
 @code {
+    [Parameter]
+    public object Parent { get; set; }
+
     private NewTreeModel NewTreeModel { get; set; } = new NewTreeModel();
 
     private bool NewTreeHasBeenCreated { get; set; } = false;
@@ -41,6 +44,19 @@
         if (ProjectsHandler.InsertProject(AccountHandler.User.Id, NewTreeModel.Name))
         {
             NewTreeHasBeenCreated = true;
+
+            if (Parent is Pages.Trees)
+            {
+                Pages.Trees trees = (Pages.Trees)Parent;
+                trees.Projects.Add(new Project()
+                {
+                    Name = NewTreeModel.Name,
+                    DateCreated = DateTime.Now,
+                    LastOpened = DateTime.Now
+                });
+                trees.Update();
+            }
+
         }
         else
         {
