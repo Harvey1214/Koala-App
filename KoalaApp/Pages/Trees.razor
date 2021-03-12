@@ -1,13 +1,47 @@
 ﻿@page "/trees" 
 @using Data
+@using DataAccessLibrary
 @inject AccountHandler AccountHandler 
+@inject ProjectsHandler ProjectsHandler 
 
-<h3>Trees</h3>
+<NewTree />
 
-Id: @AccountHandler.User.Id 
-Email: @AccountHandler.User.Email
-Password: @AccountHandler.User.Password
+<br />
+
+<h5>Trees</h5>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Last Opened</th>
+            <th>Open</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in projects)
+        {
+            <tr>
+                <td>@project.Name</td>
+                <td>@project.DateCreated</td>
+                <td>@project.LastOpened</td>
+                <td><button class="btn btn-outline-secondary" @onclick="() => OpenProject(project.Id)">Open</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 @code {
+    private List<Project> projects = new List<Project>();
 
+    private void OpenProject(int id)
+    {
+
+    }
+
+    protected override void OnInitialized()
+    {
+        projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+    }
 }

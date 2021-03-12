@@ -43,14 +43,13 @@ namespace DataAccessLibrary
         public bool InsertProject(int userId, string name)
         {
             DateTime now = DateTime.Now;
-            int newProjectId = GetHighestProjectId() + 1;
 
-            string command = "insert into ProjectsTable(Id, UserId, Name, DateCreated, LastOpened) " +
-                "values (@Id, @UserId, @Name, @DateCreated, @LastOpened)";
+            string command = "insert into ProjectsTable(UserId, Name, DateCreated, LastOpened) " +
+                "values (@UserId, @Name, @DateCreated, @LastOpened)";
             DataAccess<Project, object> dataAccess = new DataAccess<Project, object>();
 
             int rowsAffected = dataAccess.WriteData(command,
-                new { Id = newProjectId, UserId = userId, Name = name, DateCreated = now, LastOpened = now }); ;
+                new { UserId = userId, Name = name, DateCreated = now, LastOpened = now }); ;
 
             if (rowsAffected == 1)
             {

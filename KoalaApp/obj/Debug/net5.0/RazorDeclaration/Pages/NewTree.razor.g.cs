@@ -83,21 +83,27 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
-using Data;
+#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\NewTree.razor"
+using Data.ValidationModels;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\NewTree.razor"
 using DataAccessLibrary;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/trees")]
-    public partial class Trees : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\NewTree.razor"
+using Data;
+
+#line default
+#line hidden
+#nullable disable
+    public partial class NewTree : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -105,18 +111,23 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 35 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 33 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\NewTree.razor"
        
-    private List<Project> projects = new List<Project>();
+    private NewTreeModel NewTreeModel { get; set; } = new NewTreeModel();
 
-    private void OpenProject(int id)
+    private bool NewTreeHasBeenCreated { get; set; } = false;
+    private bool ErrorOccured { get; set; } = false;
+
+    private void CreateNewTree()
     {
-
-    }
-
-    protected override void OnInitialized()
-    {
-        projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+        if (ProjectsHandler.InsertProject(AccountHandler.User.Id, NewTreeModel.Name))
+        {
+            NewTreeHasBeenCreated = true;
+        }
+        else
+        {
+            ErrorOccured = true;
+        }
     }
 
 #line default

@@ -1,0 +1,50 @@
+﻿@using Data.ValidationModels
+@using DataAccessLibrary
+@using Data
+@inject AccountHandler AccountHandler
+@inject ProjectsHandler ProjectsHandler   
+
+@if (NewTreeHasBeenCreated)
+{
+    <div class="alert alert-success">
+        The new tree has been <strong>created successfuly!</strong>
+    </div>
+}
+
+@if (ErrorOccured)
+{
+    <div class="alert alert-danger">
+        An <strong>error has occured</strong>, please refresh the page or try again later
+    </div>
+}
+
+<h5>New Tree</h5>
+
+<EditForm Model="@NewTreeModel" OnValidSubmit="@CreateNewTree" class="form-inline">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group mb-2" style="margin-right:0.2rem">
+        <InputText @bind-Value="NewTreeModel.Name" placeholder="Name" class="form-control"></InputText>
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Create</button>
+</EditForm>
+
+@code {
+    private NewTreeModel NewTreeModel { get; set; } = new NewTreeModel();
+
+    private bool NewTreeHasBeenCreated { get; set; } = false;
+    private bool ErrorOccured { get; set; } = false;
+
+    private void CreateNewTree()
+    {
+        if (ProjectsHandler.InsertProject(AccountHandler.User.Id, NewTreeModel.Name))
+        {
+            NewTreeHasBeenCreated = true;
+        }
+        else
+        {
+            ErrorOccured = true;
+        }
+    }
+}
