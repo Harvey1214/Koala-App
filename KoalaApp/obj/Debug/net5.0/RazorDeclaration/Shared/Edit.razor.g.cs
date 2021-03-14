@@ -83,27 +83,20 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
-using DataAccessLibrary;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
-using Data.Common;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
-    public partial class NestedTwig : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+using DataAccessLibrary;
+
+#line default
+#line hidden
+#nullable disable
+    public partial class Edit : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -111,32 +104,35 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 16 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
-       
-    [Parameter]
-    public Twig Twig { get; set; }
-
-    [Parameter]
-    public NestedStructure NestedStructure { get; set; }
-
-    private string margin
+#line 37 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+             
+    private void SetDueDate(string dueDateText)
     {
-        get
+        DateTime dueDate;
+        bool success = DateTime.TryParse(dueDateText, out dueDate);
+
+        if (success)
         {
-            float result = Twig.AbsoluteLevel * UISettings.MarginMultiplier;
-            return $"{result}rem";
+            if (dueDate.Year > 1800 && dueDate.Year < 9000)
+            {
+                EditedTwig.Twig.DueDate = dueDate;
+            }
+        }
+
+        TwigsHandler.UpdateTwigDueDate(EditedTwig.Twig);
+    }
+
+    private void UpdateTwigInDatabase()
+    {
+        if (EditedTwig.Twig != null)
+        {
+            TwigsHandler.UpdateTwig(EditedTwig.Twig);
         }
     }
 
-    private void OpenForEditting()
+    protected override void OnInitialized()
     {
-        EditedTwig.Twig = Twig;
-        EditedTwig.NestedTwig = this;
-
-        if (EditedTwig.Edit != null)
-        {
-            EditedTwig.Edit.Update();
-        }
+        EditedTwig.Edit = this;
     }
 
     public void Update()
@@ -144,44 +140,11 @@ using Data;
         InvokeAsync(StateHasChanged);
     }
 
-    private void AddTwig()
-    {
-        for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
-        {
-            if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
-            {
-                // insert the new twig into the database
-                TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
-
-                // add the new twig to the GUI
-                int newTwigId = TwigsHandler.GetLastId();
-                TwigsTempStorage.Twigs.Insert(i + 1,
-                    new Twig()
-                    {
-                        Id = newTwigId,
-                        ProjectId = NestedStructure.ProjectId,
-                        ParentId = Twig.Id,
-                        Title = "New Twig",
-                        DueDate = DateTime.Now.AddYears(100),
-                        Priority = 0,
-                        Description = "",
-                        State = State.NOTSTARTED
-                    });
-                TwigsTempStorage.Order();
-
-                // update and exit
-                NestedStructure.Update();
-                return;
-            }
-        }
-    }
-
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }
     }
 }
 #pragma warning restore 1591

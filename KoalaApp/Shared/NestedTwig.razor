@@ -4,8 +4,9 @@
 
 @inject TwigsTempStorage TwigsTempStorage 
 @inject TwigsHandler TwigsHandler 
+@inject EditedTwig EditedTwig  
 
-<div @ondblclick="AddTwig" class="card @UISettings.LevelStyles[Twig.RelativeLevel] mb-3" style="max-width: 18rem;margin-left:@margin">
+<div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @UISettings.LevelStyles[Twig.RelativeLevel] mb-3" style="max-width: 18rem;margin-left:@margin;">
     <div class="card-body">
         <h5 class="card-title">@Twig.Title</h5>
         <p class="card-text">@Twig.DueDate</p>
@@ -26,6 +27,22 @@
             float result = Twig.AbsoluteLevel * UISettings.MarginMultiplier;
             return $"{result}rem";
         }
+    }
+
+    private void OpenForEditting()
+    {
+        EditedTwig.Twig = Twig;
+        EditedTwig.NestedTwig = this;
+
+        if (EditedTwig.Edit != null)
+        {
+            EditedTwig.Edit.Update();
+        }
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
     }
 
     private void AddTwig()

@@ -69,11 +69,65 @@ namespace DataAccessLibrary
         /// <returns>True if the operation was successful, returns false otherwise</returns>
         public bool UpdateTwig(Twig twig)
         {
-            string command = "update TwigsTable set Title = @Title, DueDate = @DueDate, CompletedDate = @CompletedDate, Priority = @Priority, Description = @Description, State = @State where Id = @Id";
+            string command = "update TwigsTable set Title = @Title, Priority = @Priority, State = @State";
+            if (twig.Description != null)
+                command += ", Description = @Description";
+            command += " where Id = @Id";
+
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             int rowsAffected = dataAccess.WriteData(command,
-                new { Id = twig.Id, Title = twig.Title, DueDate = twig.DueDate, CompletedDate = twig.CompletedDate, Priority = twig.Priority, Description = twig.Description, State = twig.State }); ;
+                new { Id = twig.Id, Title = twig.Title, Priority = twig.Priority, Description = twig.Description, State = twig.State }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateTwigDueDate(Twig twig)
+        {
+            if (twig.DueDate == null || twig.DueDate.Year < 1800 || twig.DueDate.Year > 9000)
+            {
+                return false;
+            }
+
+            string command = "update TwigsTable set DueDate = @DueDate where Id = @Id";
+
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = twig.Id, DueDate = twig.DueDate }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool UpdateTwigCompletedDate(Twig twig)
+        {
+            if (twig.CompletedDate == null)
+            {
+                return false;
+            }
+            if (twig.CompletedDate.Year < 1800 || twig.CompletedDate.Year > 9000)
+            {
+                return false;
+            }
+
+            string command = "update TwigsTable set CompletedDate = @CompletedDate where Id = @Id";
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = twig.Id, CompletedDate = twig.CompletedDate }); ;
 
             if (rowsAffected == 1)
             {

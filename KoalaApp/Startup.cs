@@ -36,6 +36,7 @@ namespace KoalaApp
 
             services.AddScoped<AccountHandler>();
             services.AddScoped<TwigsTempStorage>();
+            services.AddScoped<EditedTwig>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

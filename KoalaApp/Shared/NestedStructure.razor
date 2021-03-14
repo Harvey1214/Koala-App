@@ -4,15 +4,17 @@
 @inject TwigsTempStorage TwigsTempStorage
 @inject TwigsHandler TwigsHandler 
 
-<button @onclick="AddTwig" class="btn btn-outline-success">Add Twig</button>
+<div style="display:inline-block">
+    <button @onclick="AddTwig" class="btn btn-outline-success">Add Twig</button>
 
-@if (TwigsTempStorage.Twigs != null)
-{
-    @foreach (var twig in TwigsTempStorage.Twigs)
+    @if (TwigsTempStorage.Twigs != null)
     {
-        <NestedTwig Twig="@twig" NestedStructure="@this"/>
+        @foreach (var twig in TwigsTempStorage.Twigs)
+        {
+            <NestedTwig Twig="@twig" NestedStructure="@this" />
+        }
     }
-}
+</div>
 
 @code {
     [Parameter]

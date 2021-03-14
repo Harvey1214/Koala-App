@@ -9,8 +9,38 @@ namespace KoalaApp.Data
 {
     public class TwigsTempStorage
     {
+        /// <summary>
+        /// Twigs ordered for the nested structure
+        /// </summary>
         public List<Twig> Twigs { get; set; }
         private List<Twig> OrderedTwigs = new List<Twig>();
+
+        /// <summary>
+        /// Twigs sorted for the search window
+        /// </summary>
+        public List<Twig> SortedTwigs { get; set; } = new List<Twig>();
+        public SortBy SortBy { get; set; } = SortBy.DUEDATE_LOWTOHIGH;
+
+        private void Sort()
+        {
+            SortedTwigs = new List<Twig>(Twigs);
+
+            switch (SortBy)
+            {
+                case SortBy.DUEDATE_LOWTOHIGH:
+                    SortedTwigs.OrderBy(o => o.DueDate);
+                    break;
+                case SortBy.DUEDATE_HIGHTOLOW:
+                    SortedTwigs.OrderByDescending(o => o.DueDate);
+                    break;
+                case SortBy.PRIORITY_HIGHTOLOW:
+                    SortedTwigs.OrderByDescending(o => o.Priority);
+                    break;
+                case SortBy.PRIORITY_LOWTOHIGH:
+                    SortedTwigs.OrderBy(o => o.Priority);
+                    break;
+            }
+        }
 
         public void Order()
         {
@@ -23,6 +53,8 @@ namespace KoalaApp.Data
             }
 
             Twigs = new List<Twig>(OrderedTwigs);
+
+            Sort();
         }
 
         private void Assign(Twig twig, int relativeLevel, int absoluteLevel)

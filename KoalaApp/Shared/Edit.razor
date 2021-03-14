@@ -1,0 +1,71 @@
+﻿@using Data
+@using DataAccessLibrary 
+
+@inject EditedTwig EditedTwig
+@inject TwigsHandler TwigsHandler  
+
+<div class="card" style="float:right; width:30%">
+    <h5 class="card-header">Edit</h5>
+    <div class="card-body">
+        @if (EditedTwig.Twig != null)
+        {
+            <div class="form-group">
+                <input @onfocusout="UpdateTwigInDatabase" @bind="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; EditedTwig.NestedTwig.Update(); }" class="form-control" />
+            </div>
+            <div class="form-group">
+                <textarea @onfocusout="UpdateTwigInDatabase" @bind="EditedTwig.Twig.Description" @oninput="(e) => { EditedTwig.Twig.Description = (string)e.Value; EditedTwig.NestedTwig.Update(); }" class="form-control" rows="3" />
+            </div>
+            <div class="form-group">
+                <input type="datetime-local" class="form-control" @onfocusout="() => UpdateTwigInDatabase()" @bind="EditedTwig.Twig.DueDate" @oninput="@((e) => { SetDueDate((string)e.Value); EditedTwig.NestedTwig.Update(); })" placeholder="Due Date" />
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <input class="form-control" disabled/>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="3" disabled/>
+            </div>
+            <div class="form-group">
+                <input type="datetime-local" class="form-control" placeholder="Due Date" disabled/>
+            </div>
+        }
+    </div>
+</div>
+
+@code {      
+    private void SetDueDate(string dueDateText)
+    {
+        DateTime dueDate;
+        bool success = DateTime.TryParse(dueDateText, out dueDate);
+
+        if (success)
+        {
+            if (dueDate.Year > 1800 && dueDate.Year < 9000)
+            {
+                EditedTwig.Twig.DueDate = dueDate;
+            }
+        }
+
+        TwigsHandler.UpdateTwigDueDate(EditedTwig.Twig);
+    }
+
+    private void UpdateTwigInDatabase()
+    {
+        if (EditedTwig.Twig != null)
+        {
+            TwigsHandler.UpdateTwig(EditedTwig.Twig);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        EditedTwig.Edit = this;
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+}
