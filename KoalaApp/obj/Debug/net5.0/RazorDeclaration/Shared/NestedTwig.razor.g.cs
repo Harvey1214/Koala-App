@@ -127,6 +127,24 @@ using Data;
             return $"{result}rem";
         }
     }
+    private string cardStyle;
+
+    protected override void OnInitialized()
+    {
+        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
+    }
+
+    #region AppearanceEffects
+    private void OnMouseOut()
+    {
+        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
+    }
+
+    private void OnMouseOver()
+    {
+        cardStyle = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
+    }
+    #endregion AppearanceEffects
 
     private void OpenForEditting()
     {
@@ -137,6 +155,8 @@ using Data;
         {
             EditedTwig.Edit.Update();
         }
+
+        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
     }
 
     public void Update()
@@ -165,15 +185,27 @@ using Data;
                         DueDate = DateTime.Now.AddYears(100),
                         Priority = 0,
                         Description = "",
-                        State = State.NOTSTARTED
+                        State = State.NOTSTARTED,
+                        AbsoluteLevel = Twig.AbsoluteLevel + 1,
+                        RelativeLevel = GetNextRelativeLevel()
                     });
-                TwigsTempStorage.Order();
 
                 // update and exit
                 NestedStructure.Update();
                 return;
             }
         }
+    }
+
+    private int GetNextRelativeLevel()
+    {
+        int nextRelativeLevel = Twig.RelativeLevel + 1;
+        if (nextRelativeLevel >= UISettings.LevelStyles.Length)
+        {
+            nextRelativeLevel = 0;
+        }
+
+        return nextRelativeLevel;
     }
 
 #line default

@@ -104,7 +104,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 19 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
+#line 17 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
        
     [Parameter]
     public int ProjectId { get; set; }

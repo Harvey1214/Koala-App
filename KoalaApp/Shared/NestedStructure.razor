@@ -5,8 +5,6 @@
 @inject TwigsHandler TwigsHandler 
 
 <div style="display:inline-block">
-    <button @onclick="AddTwig" class="btn btn-outline-success">Add Twig</button>
-
     @if (TwigsTempStorage.Twigs != null)
     {
         @foreach (var twig in TwigsTempStorage.Twigs)
