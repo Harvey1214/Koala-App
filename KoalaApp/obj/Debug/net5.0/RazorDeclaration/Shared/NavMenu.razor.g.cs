@@ -82,6 +82,13 @@ using KoalaApp.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NavMenu.razor"
+using Data;
+
+#line default
+#line hidden
+#nullable disable
     public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -90,11 +97,21 @@ using KoalaApp.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NavMenu.razor"
+#line 43 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    protected override void OnInitialized()
+    {
+        AccountHandler.NavMenu = this;
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
+    }
 
     private void ToggleNavMenu()
     {
@@ -104,6 +121,7 @@ using KoalaApp.Shared;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
     }
 }
 #pragma warning restore 1591

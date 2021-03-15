@@ -109,6 +109,8 @@ using DataAccessLibrary;
        
     public List<Project> Projects { get; set; } = new List<Project>();
 
+    private bool redirectToLoginPage = false;
+
     private void OpenProject(int id)
     {
         NavigationManager.NavigateTo($"/tree/{id}");
@@ -119,9 +121,24 @@ using DataAccessLibrary;
         LoadProjects();
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && redirectToLoginPage)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+
     private void LoadProjects()
     {
-        Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+        if (AccountHandler.User != null)
+        {
+            Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+        }
+        else
+        {
+            redirectToLoginPage = true;
+        }
     }
 
     public void Update()

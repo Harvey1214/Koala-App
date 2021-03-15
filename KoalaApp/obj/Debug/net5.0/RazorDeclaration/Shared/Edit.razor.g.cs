@@ -104,7 +104,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 37 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 43 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
              
     private void SetDueDate(string dueDateText)
     {
@@ -118,8 +118,17 @@ using DataAccessLibrary;
                 EditedTwig.Twig.DueDate = dueDate;
             }
         }
+    }
 
-        TwigsHandler.UpdateTwigDueDate(EditedTwig.Twig);
+    private void SetPriority(string priorityText)
+    {
+        int priority;
+        bool success = Int32.TryParse(priorityText, out priority);
+
+        if (success)
+        {
+            EditedTwig.Twig.Priority = priority;
+        }
     }
 
     private void UpdateTwigInDatabase()

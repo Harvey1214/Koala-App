@@ -111,7 +111,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 16 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 22 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
@@ -129,6 +129,9 @@ using Data;
     }
     private string cardStyle;
 
+    private bool highlight = false;
+    private string width = "0rem";
+
     protected override void OnInitialized()
     {
         cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
@@ -138,11 +141,18 @@ using Data;
     private void OnMouseOut()
     {
         cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
+        width = "0rem";
+        highlight = false;
     }
 
     private void OnMouseOver()
     {
-        cardStyle = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
+        if (UISettings.LevelHighlightStyles[Twig.RelativeLevel].Length > 0)
+            cardStyle = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
+
+        width = UISettings.MarginHighlightAddittion.ToString() + "rem";
+
+        highlight = true;
     }
     #endregion AppearanceEffects
 

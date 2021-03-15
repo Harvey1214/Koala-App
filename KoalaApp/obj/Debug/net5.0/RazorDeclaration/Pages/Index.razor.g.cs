@@ -82,20 +82,6 @@ using KoalaApp.Shared;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
-using Data;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
-using DataAccessLibrary;
-
-#line default
-#line hidden
-#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -104,26 +90,6 @@ using DataAccessLibrary;
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 21 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
-       
-    List<User> users = new List<User>();
-
-    private void AddUser()
-    {
-        UsersHandler usersHandler = new UsersHandler();
-        usersHandler.InsertUser("ruzicka@pavel.com", "12345676");
-    }
-
-    protected override void OnInitialized()
-    {
-        UsersHandler usersHandler = new UsersHandler();
-        users = usersHandler.GetAllUsers();
-    }
-
-#line default
-#line hidden
-#nullable disable
     }
 }
 #pragma warning restore 1591

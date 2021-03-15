@@ -1,13 +1,13 @@
 ﻿@page "/tree"
-@page "/tree/{TreeIdText}" 
+@page "/tree/{TreeIdText}"
 
 @using Data
 @using DataAccessLibrary
 
-@inject TwigsHandler TwigsHandler  
-@inject ProjectsHandler ProjectsHandler 
+@inject TwigsHandler TwigsHandler
+@inject ProjectsHandler ProjectsHandler
 @inject AccountHandler AccountHandler
-@inject NavigationManager NavigationManager  
+@inject NavigationManager NavigationManager
 @inject TwigsTempStorage TwigsTempStorage
 
 @if (ProjectNotFound)
@@ -27,10 +27,9 @@
 @if (Project != null)
 {
     <h5>@Project.Name</h5>
+    <NestedStructure ProjectId="@Project.Id" />
+    <Edit />
 }
-
-<NestedStructure ProjectId="@Project.Id"/>
-<Edit />
 
 @code {
     [Parameter]

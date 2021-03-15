@@ -6,10 +6,16 @@
 @inject TwigsHandler TwigsHandler 
 @inject EditedTwig EditedTwig  
 
-<div @onmouseout="OnMouseOut" @onmouseover="OnMouseOver" @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3" style="max-width: 18rem;margin-left:@margin;">
-    <div class="card-body">
-        <h5 class="card-title">@Twig.Title</h5>
-        <p class="card-text">@Twig.DueDate</p>
+<div @onmouseover="OnMouseOver" @onmousemove="OnMouseOver" @onmouseout="OnMouseOut" style="overflow:hidden;">
+    <div style="height:5rem;width:@width;margin-left:@margin;display:inline-block;float:left;">
+        <img style="width:100%; height:100%; visibility:hidden;"/>
+    </div>
+
+    <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3" style="max-width: 18rem;margin-left:0px; overflow:hidden;">
+        <div class="card-body">
+            <h5 class="card-title">@Twig.Title</h5>
+            <p class="card-text">@Twig.DueDate<br />Priority @Twig.Priority</p>
+        </div>
     </div>
 </div>
 
@@ -30,6 +36,9 @@
     }
     private string cardStyle;
 
+    private bool highlight = false;
+    private string width = "0rem";
+
     protected override void OnInitialized()
     {
         cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
@@ -39,11 +48,18 @@
     private void OnMouseOut()
     {
         cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
+        width = "0rem";
+        highlight = false;
     }
 
     private void OnMouseOver()
     {
-        cardStyle = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
+        if (UISettings.LevelHighlightStyles[Twig.RelativeLevel].Length > 0)
+            cardStyle = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
+
+        width = UISettings.MarginHighlightAddittion.ToString() + "rem";
+
+        highlight = true;
     }
     #endregion AppearanceEffects
 

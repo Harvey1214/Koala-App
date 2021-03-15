@@ -119,6 +119,17 @@ using DataAccessLibrary;
     private bool LoginNotSuccessful { get; set; } = false;
     private bool UsernameAndPasswordDoNotMatch { get; set; } = false;
 
+    protected override void OnInitialized()
+    {
+        string logout = "";
+        NavManager.TryGetQueryString<string>("logout", out logout);
+
+        if (logout == "true")
+        {
+            AccountHandler.User = null;
+        }
+    }
+
     private void ValidSubmit()
     {
         List<User> users = UsersHandler.GetUsers(LoginModel.Email);
