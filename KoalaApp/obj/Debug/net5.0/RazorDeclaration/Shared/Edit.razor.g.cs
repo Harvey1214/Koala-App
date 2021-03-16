@@ -121,6 +121,7 @@ using DataAccessLibrary;
 
         Update();
 
+        UpdateTwigInDatabase();
         TwigsHandler.UpdateTwigCompletedDate(EditedTwig.Twig);
     }
 

@@ -119,6 +119,8 @@ using Data;
     [Parameter]
     public NestedStructure NestedStructure { get; set; }
 
+    private string block = "";
+
     private string margin
     {
         get
@@ -148,6 +150,11 @@ using Data;
 
     private bool highlight = false;
     private string width = "0rem";
+
+    protected override void OnInitialized()
+    {
+
+    }
 
     private void Collapse()
     {

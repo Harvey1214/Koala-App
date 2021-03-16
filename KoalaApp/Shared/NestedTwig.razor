@@ -6,7 +6,7 @@
 @inject TwigsHandler TwigsHandler 
 @inject EditedTwig EditedTwig  
 
-<div @onmouseover="OnMouseOver" @onmousemove="OnMouseOver" @onmouseout="OnMouseOut" class="noOverflow">
+<div @onmouseover="OnMouseOver" @onmousemove="OnMouseOver" @onmouseout="OnMouseOut" class="noOverflow @block">
     <div class="nextToLeft" style="height:5rem;width:@width;margin-left:@margin;">
         <img class="invisibleAbsoluteFill"/>
     </div>
@@ -32,6 +32,8 @@
 
     [Parameter]
     public NestedStructure NestedStructure { get; set; }
+
+    private string block = "";
 
     private string margin
     {
@@ -62,6 +64,11 @@
 
     private bool highlight = false;
     private string width = "0rem";
+
+    protected override void OnInitialized()
+    {
+
+    }
 
     private void Collapse()
     {
