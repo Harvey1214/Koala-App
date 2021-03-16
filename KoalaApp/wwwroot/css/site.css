@@ -14,6 +14,50 @@ a, .btn-link {
     border-color: #1861ac;
 }
 
+.SmallerPage {
+    -webkit-transform: scale(0.67);
+    -moz-transform: scale(0.67);
+    -ms-transform: scale(0.67);
+    transform: scale(0.67);
+    -ms-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+.block {
+    display:inline-block;
+}
+
+.nextToRight {
+    display:inline-block;
+    float:right;
+}
+
+.nextToLeft {
+    display:inline-block;
+    float:left;
+}
+
+.noOverflow {
+    overflow:hidden;
+}
+
+.floatRight {
+    float:right;
+}
+
+.noBottomPaddingMargin {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.invisibleAbsoluteFill {
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
 .content {
     padding-top: 1.1rem;
 }

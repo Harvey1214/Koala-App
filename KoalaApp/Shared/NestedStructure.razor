@@ -4,10 +4,14 @@
 @inject TwigsTempStorage TwigsTempStorage
 @inject TwigsHandler TwigsHandler 
 
-<div style="display:inline-block">
+<div style="margin-bottom:1rem;">
+    <button class="btn btn-outline-info" @onclick="AddTwig">Add twig</button>
+</div>
+
+<div class="block SmallerPage">
     @if (TwigsTempStorage.Twigs != null)
     {
-        @foreach (var twig in TwigsTempStorage.Twigs)
+        @foreach (var twig in TwigsTempStorage.OrderedTwigs)
         {
             <NestedTwig Twig="@twig" NestedStructure="@this" />
         }
@@ -18,6 +22,12 @@
     [Parameter]
     public int ProjectId { get; set; }
 
+    protected override void OnInitialized()
+    {
+        TwigsTempStorage.NestedStructure = this;
+    }
+
+    /*
     private void AddTwig()
     {
         Twig twig = new Twig()
@@ -36,7 +46,37 @@
 
         TwigsTempStorage.Twigs.Add(twig);
 
+        TwigsTempStorage.Order();
+
         Update();
+    }
+    */
+
+    private void AddTwig()
+    {
+        // insert the new twig into the database
+        TwigsHandler.InsertTwig(ProjectId);
+
+        // add the new twig to the GUI
+        int newTwigId = TwigsHandler.GetLastId();
+        TwigsTempStorage.Twigs.Add(
+            new Twig()
+            {
+                Id = newTwigId,
+                ProjectId = ProjectId,
+                ParentId = null,
+                Title = "New Twig",
+                DueDate = DateTime.Now.AddYears(100),
+                Priority = 0,
+                Description = "",
+                State = State.NOTSTARTED,
+                AbsoluteLevel = 0,
+                RelativeLevel = 0
+            });
+
+        // sort twigs and update nested structure
+        TwigsTempStorage.Order();
+        return;
     }
 
     public void Update()

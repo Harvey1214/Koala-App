@@ -104,11 +104,17 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 17 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
+#line 21 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
        
     [Parameter]
     public int ProjectId { get; set; }
 
+    protected override void OnInitialized()
+    {
+        TwigsTempStorage.NestedStructure = this;
+    }
+
+    /*
     private void AddTwig()
     {
         Twig twig = new Twig()
@@ -127,7 +133,37 @@ using Data;
 
         TwigsTempStorage.Twigs.Add(twig);
 
+        TwigsTempStorage.Order();
+
         Update();
+    }
+    */
+
+    private void AddTwig()
+    {
+        // insert the new twig into the database
+        TwigsHandler.InsertTwig(ProjectId);
+
+        // add the new twig to the GUI
+        int newTwigId = TwigsHandler.GetLastId();
+        TwigsTempStorage.Twigs.Add(
+            new Twig()
+            {
+                Id = newTwigId,
+                ProjectId = ProjectId,
+                ParentId = null,
+                Title = "New Twig",
+                DueDate = DateTime.Now.AddYears(100),
+                Priority = 0,
+                Description = "",
+                State = State.NOTSTARTED,
+                AbsoluteLevel = 0,
+                RelativeLevel = 0
+            });
+
+        // sort twigs and update nested structure
+        TwigsTempStorage.Order();
+        return;
     }
 
     public void Update()

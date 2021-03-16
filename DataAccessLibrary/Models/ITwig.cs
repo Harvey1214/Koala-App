@@ -4,7 +4,7 @@ namespace DataAccessLibrary
 {
     interface ITwig
     {
-        DateTime CompletedDate { get; set; }
+        DateTime? CompletedDate { get; set; }
         string Description { get; set; }
         DateTime DueDate { get; set; }
         int Id { get; set; }

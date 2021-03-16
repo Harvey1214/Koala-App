@@ -45,12 +45,34 @@ namespace DataAccessLibrary
         {
             DateTime now = DateTime.Now;
 
-            string command = "insert into TwigsTable(ProjectId, Title, DueDate, Priority, Description, State, ParentId) " +
-                "values (@ProjectId, @Title, @DueDate, @Priority, @Description, @State, @ParentId)";
+            string command = "insert into TwigsTable(ProjectId, Title, DueDate, Priority, Description, State, ParentId, ShowChildren) " +
+                "values (@ProjectId, @Title, @DueDate, @Priority, @Description, @State, @ParentId, @ShowChildren)";
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             int rowsAffected = dataAccess.WriteData(command,
-                new {ProjectId = projectId, Title = "New Twig", DueDate = DateTime.Now.AddYears(100), Priority = 0, Description = "", State = State.NOTSTARTED, ParentId = parentId }); ;
+                new {ProjectId = projectId, Title = "New Twig", DueDate = DateTime.Now.AddYears(100), Priority = 0, Description = "", State = State.NOTSTARTED, ParentId = parentId, ShowChildren = true }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Removes the twig with specified Id from the TwigsTable
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>True if operation was successful, false otherwise</returns>
+        public bool RemoveTwig(int id)
+        {
+            string command = "delete from TwigsTable where Id = @Id";
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command, new { Id = id });
 
             if (rowsAffected == 1)
             {
@@ -89,6 +111,29 @@ namespace DataAccessLibrary
             }
         }
 
+        /// <summary>
+        /// Updates the ShowChildren column of a twig
+        /// </summary>
+        /// <param name="twig"></param>
+        /// <returns>True if the operation was successful, false otherwise</returns>
+        public bool UpdateTwigShowChildren(Twig twig)
+        {
+            string command = "update TwigsTable set ShowChildren = @ShowChildren where Id = @Id";
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = twig.Id, ShowChildren = twig.ShowChildren }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool UpdateTwigDueDate(Twig twig)
         {
             if (twig.DueDate == null || twig.DueDate.Year < 1800 || twig.DueDate.Year > 9000)
@@ -114,13 +159,12 @@ namespace DataAccessLibrary
         }
         public bool UpdateTwigCompletedDate(Twig twig)
         {
-            if (twig.CompletedDate == null)
+            if (twig.CompletedDate.HasValue)
             {
-                return false;
-            }
-            if (twig.CompletedDate.Year < 1800 || twig.CompletedDate.Year > 9000)
-            {
-                return false;
+                if (twig.CompletedDate.Value.Year < 1800 || twig.CompletedDate.Value.Year > 9000)
+                {
+                    return false;
+                }
             }
 
             string command = "update TwigsTable set CompletedDate = @CompletedDate where Id = @Id";

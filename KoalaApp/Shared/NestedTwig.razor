@@ -6,15 +6,22 @@
 @inject TwigsHandler TwigsHandler 
 @inject EditedTwig EditedTwig  
 
-<div @onmouseover="OnMouseOver" @onmousemove="OnMouseOver" @onmouseout="OnMouseOut" style="overflow:hidden;">
-    <div style="height:5rem;width:@width;margin-left:@margin;display:inline-block;float:left;">
-        <img style="width:100%; height:100%; visibility:hidden;"/>
+<div @onmouseover="OnMouseOver" @onmousemove="OnMouseOver" @onmouseout="OnMouseOut" class="noOverflow">
+    <div class="nextToLeft" style="height:5rem;width:@width;margin-left:@margin;">
+        <img class="invisibleAbsoluteFill"/>
     </div>
 
-    <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3" style="width: 18rem;margin-left:0px; overflow:hidden;">
+    <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3 noOverflow" style="width: 18rem;margin-left:0px;cursor:pointer;">
         <div class="card-body">
-            <h5 class="card-title" style="margin-bottom:0px;padding-bottom:0px;">@Twig.Title</h5>
-            <!-- <p class="card-text">@Twig.DueDate<br />Priority @Twig.Priority</p>  -->
+            <h5 class="card-title noBottomPaddingMargin block">@Twig.Title</h5>
+            @if (Twig.ShowChildren)
+            {
+                <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-bottom"></span></button>
+            }
+            else
+            {
+                <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-top"></span></button>
+            }
         </div>
     </div>
 </div>
@@ -34,31 +41,46 @@
             return $"{result}rem";
         }
     }
-    private string cardStyle;
+    private string cardStyle
+    {
+        get
+        {
+            string style = "";
+
+            if (highlight && UISettings.LevelHighlightStyles[Twig.RelativeLevel].Length > 0)
+            {
+                style = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
+            }
+            else
+            {
+                style = UISettings.LevelStyles[Twig.RelativeLevel];
+            }
+
+            return style;
+        }
+    }
 
     private bool highlight = false;
     private string width = "0rem";
 
-    protected override void OnInitialized()
+    private void Collapse()
     {
-        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
+        Twig.ShowChildren = !Twig.ShowChildren;
+        TwigsTempStorage.Order();
+
+        TwigsHandler.UpdateTwigShowChildren(Twig);
     }
 
     #region AppearanceEffects
     private void OnMouseOut()
     {
-        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
         width = "0rem";
         highlight = false;
     }
 
     private void OnMouseOver()
     {
-        if (UISettings.LevelHighlightStyles[Twig.RelativeLevel].Length > 0)
-            cardStyle = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
-
         width = UISettings.MarginHighlightAddittion.ToString() + "rem";
-
         highlight = true;
     }
     #endregion AppearanceEffects
@@ -72,8 +94,6 @@
         {
             EditedTwig.Edit.Update();
         }
-
-        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
     }
 
     public void Update()
@@ -107,8 +127,8 @@
                         RelativeLevel = GetNextRelativeLevel()
                     });
 
-                // update and exit
-                NestedStructure.Update();
+                // sort twigs and update nested structure
+                TwigsTempStorage.Order();
                 return;
             }
         }

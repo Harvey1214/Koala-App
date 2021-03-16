@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLibrary;
 using KoalaApp.Data.Common;
+using KoalaApp.Shared;
 
 namespace KoalaApp.Data
 {
@@ -13,7 +14,9 @@ namespace KoalaApp.Data
         /// Twigs ordered for the nested structure
         /// </summary>
         public List<Twig> Twigs { get; set; }
-        private List<Twig> OrderedTwigs = new List<Twig>();
+        public List<Twig> OrderedTwigs { get; set; } = new List<Twig>();
+
+        public NestedStructure NestedStructure { get; set; }
 
         /// <summary>
         /// Twigs sorted for the search window
@@ -52,9 +55,9 @@ namespace KoalaApp.Data
                 Assign(twig, 0, 0);
             }
 
-            Twigs = new List<Twig>(OrderedTwigs);
-
             Sort();
+
+            UpdateNestedStructure();
         }
 
         private void Assign(Twig twig, int relativeLevel, int absoluteLevel)
@@ -78,6 +81,14 @@ namespace KoalaApp.Data
                 {
                     Assign(child, relativeLevel, absoluteLevel);
                 }
+            }
+        }
+
+        public void UpdateNestedStructure()
+        {
+            if (NestedStructure != null)
+            {
+                NestedStructure.Update();
             }
         }
     }

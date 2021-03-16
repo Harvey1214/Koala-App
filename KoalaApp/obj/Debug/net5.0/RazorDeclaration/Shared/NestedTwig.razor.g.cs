@@ -111,7 +111,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 22 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 29 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
@@ -127,31 +127,46 @@ using Data;
             return $"{result}rem";
         }
     }
-    private string cardStyle;
+    private string cardStyle
+    {
+        get
+        {
+            string style = "";
+
+            if (highlight && UISettings.LevelHighlightStyles[Twig.RelativeLevel].Length > 0)
+            {
+                style = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
+            }
+            else
+            {
+                style = UISettings.LevelStyles[Twig.RelativeLevel];
+            }
+
+            return style;
+        }
+    }
 
     private bool highlight = false;
     private string width = "0rem";
 
-    protected override void OnInitialized()
+    private void Collapse()
     {
-        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
+        Twig.ShowChildren = !Twig.ShowChildren;
+        TwigsTempStorage.Order();
+
+        TwigsHandler.UpdateTwigShowChildren(Twig);
     }
 
     #region AppearanceEffects
     private void OnMouseOut()
     {
-        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
         width = "0rem";
         highlight = false;
     }
 
     private void OnMouseOver()
     {
-        if (UISettings.LevelHighlightStyles[Twig.RelativeLevel].Length > 0)
-            cardStyle = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
-
         width = UISettings.MarginHighlightAddittion.ToString() + "rem";
-
         highlight = true;
     }
     #endregion AppearanceEffects
@@ -165,8 +180,6 @@ using Data;
         {
             EditedTwig.Edit.Update();
         }
-
-        cardStyle = UISettings.LevelStyles[Twig.RelativeLevel];
     }
 
     public void Update()
@@ -200,8 +213,8 @@ using Data;
                         RelativeLevel = GetNextRelativeLevel()
                     });
 
-                // update and exit
-                NestedStructure.Update();
+                // sort twigs and update nested structure
+                TwigsTempStorage.Order();
                 return;
             }
         }

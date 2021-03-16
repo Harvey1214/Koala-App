@@ -104,8 +104,26 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 43 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 117 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
+    private void SetState(State state)
+    {
+        EditedTwig.Twig.State = state;
+
+        if (state == State.COMPLETED)
+        {
+            EditedTwig.Twig.CompletedDate = DateTime.Now;
+        }
+        else
+        {
+            EditedTwig.Twig.CompletedDate = null;
+        }
+
+        Update();
+
+        TwigsHandler.UpdateTwigCompletedDate(EditedTwig.Twig);
+    }
+
     private void SetDueDate(string dueDateText)
     {
         DateTime dueDate;
@@ -139,6 +157,19 @@ using DataAccessLibrary;
         }
     }
 
+    private void DeleteTwig()
+    {
+        // deleting the twig record from the database
+        TwigsHandler.RemoveTwig(EditedTwig.Twig.Id);
+
+        // removing the twig from the GUI
+        TwigsTempStorage.Twigs.Remove(EditedTwig.Twig);
+        TwigsTempStorage.Order();
+
+        // not displaing the twig anymore in the edit
+        EditedTwig.Twig = null;
+    }
+
     protected override void OnInitialized()
     {
         EditedTwig.Edit = this;
@@ -152,6 +183,7 @@ using DataAccessLibrary;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }
     }
