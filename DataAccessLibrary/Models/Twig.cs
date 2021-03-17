@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccessLibrary.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,5 +20,10 @@ namespace DataAccessLibrary
         public int AbsoluteLevel { get; set; }
         public int RelativeLevel { get; set; }
         public bool ShowChildren { get; set; } = true;
+
+        public Twig Copy()
+        {
+            return (Twig)this.MemberwiseClone();
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace KoalaApp.Data
         public List<Twig> Twigs { get; set; }
         public List<Twig> OrderedTwigs { get; set; } = new List<Twig>();
 
+        public Twig CopiedTwig { get; set; }
+
         public NestedStructure NestedStructure { get; set; }
 
         /// <summary>

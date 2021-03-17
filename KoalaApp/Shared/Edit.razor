@@ -1,15 +1,20 @@
 ﻿@using Data
 @using DataAccessLibrary 
+@using DataAccessLibrary.Helpers 
 
 @inject EditedTwig EditedTwig
 @inject TwigsHandler TwigsHandler
 @inject TwigsTempStorage TwigsTempStorage  
 
-<div class="card" style="float:right; width:30%">
+<div class="card" style="float:right; width:35%">
     <h5 class="card-header">Edit</h5>
     <div class="card-body">
         @if (EditedTwig.Twig != null)
         {
+            <div class="form-group">
+                <button @onclick="Copy" type="button" class="btn btn-link block">Copy</button>
+                <button @onclick="Paste" type="button" class="btn btn-link">Paste</button>
+            </div>
             <div class="form-group">
                 @if (EditedTwig.Twig.CompletedDate.HasValue)
                 {
@@ -76,6 +81,10 @@
         else
         {
             <div class="form-group">
+                <button @onclick="Copy" type="button" class="btn btn-link block" disabled>Copy</button>
+                <button @onclick="Paste" type="button" class="btn btn-link" disabled>Paste</button>
+            </div>
+            <div class="form-group">
                 <input class="form-control" disabled />
             </div>
             <div class="form-group">
@@ -115,6 +124,39 @@
 </div>
 
 @code {
+    private void Copy()
+    {
+        TwigsTempStorage.CopiedTwig = EditedTwig.Twig.Copy();
+    }
+
+    private void Paste()
+    {
+        // check if there's a twig in the clipboard
+        if (TwigsTempStorage.CopiedTwig == null)
+        {
+            return;
+        }
+
+        Twig twig = TwigsTempStorage.CopiedTwig.Copy();
+
+        EditedTwig.Twig.Title = twig.Title;
+        EditedTwig.Twig.Description = twig.Description;
+        EditedTwig.Twig.Priority = twig.Priority;
+        EditedTwig.Twig.State = twig.State;
+        EditedTwig.Twig.DueDate = twig.DueDate;
+        EditedTwig.Twig.CompletedDate = twig.CompletedDate;
+        EditedTwig.Twig.ShowChildren = twig.ShowChildren;
+
+        Update();
+        EditedTwig.NestedTwig.Update();
+
+        UpdateTwigInDatabase();
+        TwigsHandler.UpdateTwigDueDate(EditedTwig.Twig);
+        TwigsHandler.UpdateTwigCompletedDate(EditedTwig.Twig);
+        TwigsHandler.UpdateTwigShowChildren(EditedTwig.Twig);
+
+    }
+
     private void SetState(State state)
     {
         EditedTwig.Twig.State = state;
@@ -133,7 +175,6 @@
         UpdateTwigInDatabase();
         TwigsHandler.UpdateTwigCompletedDate(EditedTwig.Twig);
     }
-
     private void SetDueDate(string dueDateText)
     {
         DateTime dueDate;
@@ -147,7 +188,6 @@
             }
         }
     }
-
     private void SetPriority(string priorityText)
     {
         int priority;
@@ -184,7 +224,6 @@
     {
         EditedTwig.Edit = this;
     }
-
     public void Update()
     {
         InvokeAsync(StateHasChanged);
