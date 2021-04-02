@@ -9,5 +9,6 @@ namespace DataAccessLibrary
         DateTime LastOpened { get; set; }
         string Name { get; set; }
         int UserId { get; set; }
+        bool ShowCompleted { get; set; }
     }
 }

@@ -2,29 +2,31 @@
 @using Data.Common
 @using Data
 
-@inject TwigsTempStorage TwigsTempStorage 
-@inject TwigsHandler TwigsHandler 
-@inject EditedTwig EditedTwig  
+@inject TwigsTempStorage TwigsTempStorage
+@inject TwigsHandler TwigsHandler
+@inject EditedTwig EditedTwig
 
-<div @onmouseover="OnMouseOver" @onmouseout="OnMouseOut" class="noOverflow @block">
-    <div class="nextToLeft" style="height:5rem;width:@width;margin-left:@margin;">
-        <img class="invisibleAbsoluteFill"/>
-    </div>
-
-    <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3 noOverflow" style="width: 18rem;margin-left:0px;cursor:pointer;">
-        <div class="card-body">
-            <h5 class="card-title noBottomPaddingMargin block">@Twig.Title</h5>
-            @if (Twig.ShowChildren)
-            {
-                <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-bottom"></span></button>
-            }
-            else
-            {
-                <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-top"></span></button>
-            }
+@if (Twig.Display) 
+{
+    <div class="noOverflow @block twig" style="margin-left:@margin;">
+        <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3 noOverflow" style="width: 18rem;margin-left:0px;cursor:pointer;">
+            <div class="card-body">
+                <h5 class="card-title noBottomPaddingMargin block">@Twig.Title</h5>
+                @if (hasChildren)
+                {
+                    @if (Twig.ShowChildren)
+                    {
+                        <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-bottom"></span></button>
+                    }
+                    else
+                    {
+                        <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-top"></span></button>
+                    }
+                }
+            </div>
         </div>
     </div>
-</div>
+}
 
 @code {
     [Parameter]
@@ -48,26 +50,37 @@
         get
         {
             string style = "";
-
-            if (highlight && UISettings.LevelHighlightStyles[Twig.RelativeLevel].Length > 0)
-            {
-                style = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
-            }
-            else
-            {
-                style = UISettings.LevelStyles[Twig.RelativeLevel];
-            }
+            style = UISettings.LevelStyles[Twig.RelativeLevel];
 
             return style;
         }
     }
 
-    private bool highlight = false;
-    private string width = "0rem";
+    private bool hasChildren
+    {
+        get
+        {
+            bool children = false;
+
+            foreach (var twig in TwigsTempStorage.Twigs)
+            {
+                if (twig.ParentId.HasValue)
+                {
+                    if (twig.ParentId.Value == Twig.Id)
+                    {
+                        children = true;
+                        break;
+                    }
+                }
+            }
+
+            return children;
+        }
+    }
 
     protected override void OnInitialized()
     {
-
+        Update();
     }
 
     private void Collapse()
@@ -77,20 +90,6 @@
 
         TwigsHandler.UpdateTwigShowChildren(Twig);
     }
-
-    #region AppearanceEffects
-    private void OnMouseOut()
-    {
-        width = "0rem";
-        highlight = false;
-    }
-
-    private void OnMouseOver()
-    {
-        width = UISettings.MarginHighlightAddittion.ToString() + "rem";
-        highlight = true;
-    }
-    #endregion AppearanceEffects
 
     private void OpenForEditting()
     {
@@ -105,6 +104,27 @@
 
     public void Update()
     {
+        if (NestedStructure.Project.ShowCompleted == false)
+        {
+            if (Twig.State == State.COMPLETED)
+            {
+                Twig.Display = false;
+                InvokeAsync(StateHasChanged);
+                return;
+            }
+
+            var parent = TwigsTempStorage.Twigs.Where(o => o.Id == Twig.ParentId);
+
+            if (parent != null)
+                if (parent.Count() == 1)
+                {
+                    if (parent.First().Display == false)
+                    {
+                        Twig.Display = false;
+                    }
+                }
+        }
+
         InvokeAsync(StateHasChanged);
     }
 
@@ -126,7 +146,7 @@
                         ProjectId = NestedStructure.ProjectId,
                         ParentId = Twig.Id,
                         Title = "New Twig",
-                        DueDate = DateTime.Now.AddYears(100),
+                        DueDate = DateTime.Now,
                         Priority = 0,
                         Description = "",
                         State = State.NOTSTARTED,

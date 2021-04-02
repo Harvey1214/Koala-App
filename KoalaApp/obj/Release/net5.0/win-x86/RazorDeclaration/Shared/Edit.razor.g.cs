@@ -111,7 +111,7 @@ using DataAccessLibrary.Helpers;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 126 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 128 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
     private void Copy()
     {

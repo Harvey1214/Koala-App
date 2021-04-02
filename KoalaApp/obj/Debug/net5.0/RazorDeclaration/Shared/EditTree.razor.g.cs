@@ -83,20 +83,13 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
+#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\EditTree.razor"
 using DataAccessLibrary;
 
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
-using Data;
-
-#line default
-#line hidden
-#nullable disable
-    public partial class NestedStructure : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class EditTree : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -104,69 +97,48 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 21 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
+#line 17 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\EditTree.razor"
        
-    [Parameter]
-    public int ProjectId { get; set; }
+    private Project Project { get; set; }
 
-    protected override void OnInitialized()
+    private bool ShowCompleted
     {
-        TwigsTempStorage.NestedStructure = this;
+        set
+        {
+            if (Project != null)
+            {
+                Project.ShowCompleted = !value;
+                UpdateProjectShowCompletedTasks();
+            }
+        }
+        get
+        {
+            if (Project != null)
+            {
+                return !Project.ShowCompleted;
+            }
+
+            return false;
+        }
     }
 
-    /*
-    private void AddTwig()
+    public void Edit(Project project)
     {
-        Twig twig = new Twig()
-        {
-            ProjectId = ProjectId,
-            Title = "New Twig",
-            DueDate = DateTime.Now.AddYears(100),
-            Priority = 0,
-            Description = "",
-            State = State.NOTSTARTED
-        };
-
-        TwigsHandler.InsertTwig(ProjectId);
-
-        twig.Id = TwigsHandler.GetLastId();
-
-        TwigsTempStorage.Twigs.Add(twig);
-
-        TwigsTempStorage.Order();
-
+        Project = project;
         Update();
     }
-    */
 
-    private void AddTwig()
+    private void UpdateProjectShowCompletedTasks()
     {
-        // insert the new twig into the database
-        TwigsHandler.InsertTwig(ProjectId);
+        if (Project == null)
+        {
+            return;
+        }
 
-        // add the new twig to the GUI
-        int newTwigId = TwigsHandler.GetLastId();
-        TwigsTempStorage.Twigs.Add(
-            new Twig()
-            {
-                Id = newTwigId,
-                ProjectId = ProjectId,
-                ParentId = null,
-                Title = "New Twig",
-                DueDate = DateTime.Now,
-                Priority = 0,
-                Description = "",
-                State = State.NOTSTARTED,
-                AbsoluteLevel = 0,
-                RelativeLevel = 0
-            });
-
-        // sort twigs and update nested structure
-        TwigsTempStorage.Order();
-        return;
+        ProjectsHandler.UpdateProjectShowCompleted(Project);
     }
 
-    public void Update()
+    private void Update()
     {
         InvokeAsync(StateHasChanged);
     }
@@ -174,8 +146,7 @@ using Data;
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ProjectsHandler ProjectsHandler { get; set; }
     }
 }
 #pragma warning restore 1591

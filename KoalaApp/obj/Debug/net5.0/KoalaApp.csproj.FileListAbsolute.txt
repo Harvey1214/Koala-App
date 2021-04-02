@@ -80,3 +80,5 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\Nest
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\NestedTwig.razor.g.cs
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Shared\Edit.razor.g.cs
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\Edit.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Shared\EditTree.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\EditTree.razor.g.cs

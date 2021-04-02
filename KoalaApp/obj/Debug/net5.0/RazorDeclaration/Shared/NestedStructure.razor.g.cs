@@ -109,6 +109,18 @@ using Data;
     [Parameter]
     public int ProjectId { get; set; }
 
+    [Parameter]
+    public Project Project { get; set; }
+
+    private List<NestedTwig> NestedTwigs = new List<NestedTwig>();
+    private NestedTwig AddNestedTwigToList
+    {
+        set
+        {
+            NestedTwigs.Add(value);
+        }
+    }
+
     protected override void OnInitialized()
     {
         TwigsTempStorage.NestedStructure = this;
@@ -139,6 +151,14 @@ using Data;
     }
     */
 
+    public void UpdateAll()
+    {
+        foreach (var twig in NestedTwigs)
+        {
+            twig.Update();
+        }
+    }
+
     private void AddTwig()
     {
         // insert the new twig into the database
@@ -153,7 +173,7 @@ using Data;
                 ProjectId = ProjectId,
                 ParentId = null,
                 Title = "New Twig",
-                DueDate = DateTime.Now.AddYears(100),
+                DueDate = DateTime.Now,
                 Priority = 0,
                 Description = "",
                 State = State.NOTSTARTED,

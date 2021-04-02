@@ -1,0 +1,61 @@
+﻿@using DataAccessLibrary
+
+@inject ProjectsHandler ProjectsHandler
+
+@if (Project != null)
+{
+    <div class="form-inline">
+        <div class="form-group">
+            <input class="form-check-input" type="checkbox" @bind="ShowCompleted" id="hideCompletedTwigsCheckbox" />
+            <label class="form-check-label" for="hideCompletedTwigsCheckbox">
+                Hide Completed Twigs
+            </label>
+        </div>
+    </div>
+}
+
+@code {
+    private Project Project { get; set; }
+
+    private bool ShowCompleted
+    {
+        set
+        {
+            if (Project != null)
+            {
+                Project.ShowCompleted = !value;
+                UpdateProjectShowCompletedTasks();
+            }
+        }
+        get
+        {
+            if (Project != null)
+            {
+                return !Project.ShowCompleted;
+            }
+
+            return false;
+        }
+    }
+
+    public void Edit(Project project)
+    {
+        Project = project;
+        Update();
+    }
+
+    private void UpdateProjectShowCompletedTasks()
+    {
+        if (Project == null)
+        {
+            return;
+        }
+
+        ProjectsHandler.UpdateProjectShowCompleted(Project);
+    }
+
+    private void Update()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+}

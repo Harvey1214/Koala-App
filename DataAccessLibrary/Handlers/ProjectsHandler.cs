@@ -61,6 +61,25 @@ namespace DataAccessLibrary
             }
         }
 
+        public bool UpdateProjectShowCompleted(Project project)
+        {
+            string command = "update ProjectsTable set ShowCompleted = @ShowCompleted where Id = @Id";
+
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = project.Id, ShowCompleted = project.ShowCompleted }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

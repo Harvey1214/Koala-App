@@ -13,7 +13,7 @@
     {
         @foreach (var twig in TwigsTempStorage.OrderedTwigs)
         {
-            <NestedTwig Twig="@twig" NestedStructure="@this" />
+            <NestedTwig Twig="@twig" NestedStructure="@this" @ref="AddNestedTwigToList" />
         }
     }
 </div>
@@ -21,6 +21,18 @@
 @code {
     [Parameter]
     public int ProjectId { get; set; }
+
+    [Parameter]
+    public Project Project { get; set; }
+
+    private List<NestedTwig> NestedTwigs = new List<NestedTwig>();
+    private NestedTwig AddNestedTwigToList
+    {
+        set
+        {
+            NestedTwigs.Add(value);
+        }
+    }
 
     protected override void OnInitialized()
     {
@@ -52,6 +64,14 @@
     }
     */
 
+    public void UpdateAll()
+    {
+        foreach (var twig in NestedTwigs)
+        {
+            twig.Update();
+        }
+    }
+
     private void AddTwig()
     {
         // insert the new twig into the database
@@ -66,7 +86,7 @@
                 ProjectId = ProjectId,
                 ParentId = null,
                 Title = "New Twig",
-                DueDate = DateTime.Now.AddYears(100),
+                DueDate = DateTime.Now,
                 Priority = 0,
                 Description = "",
                 State = State.NOTSTARTED,

@@ -153,7 +153,7 @@ using Data;
                 ProjectId = ProjectId,
                 ParentId = null,
                 Title = "New Twig",
-                DueDate = DateTime.Now.AddYears(100),
+                DueDate = DateTime.Now,
                 Priority = 0,
                 Description = "",
                 State = State.NOTSTARTED,

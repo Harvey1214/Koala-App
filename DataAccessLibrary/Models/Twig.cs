@@ -20,6 +20,7 @@ namespace DataAccessLibrary
         public int AbsoluteLevel { get; set; }
         public int RelativeLevel { get; set; }
         public bool ShowChildren { get; set; } = true;
+        public bool Display { get; set; } = true;
 
         public Twig Copy()
         {

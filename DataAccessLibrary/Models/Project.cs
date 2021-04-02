@@ -11,5 +11,6 @@ namespace DataAccessLibrary
         public string Name { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime LastOpened { get; set; }
+        public bool ShowCompleted { get; set; }
     }
 }

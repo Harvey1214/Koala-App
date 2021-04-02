@@ -111,7 +111,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 29 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 31 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
@@ -134,26 +134,37 @@ using Data;
         get
         {
             string style = "";
-
-            if (highlight && UISettings.LevelHighlightStyles[Twig.RelativeLevel].Length > 0)
-            {
-                style = UISettings.LevelHighlightStyles[Twig.RelativeLevel];
-            }
-            else
-            {
-                style = UISettings.LevelStyles[Twig.RelativeLevel];
-            }
+            style = UISettings.LevelStyles[Twig.RelativeLevel];
 
             return style;
         }
     }
 
-    private bool highlight = false;
-    private string width = "0rem";
+    private bool hasChildren
+    {
+        get
+        {
+            bool children = false;
+
+            foreach (var twig in TwigsTempStorage.Twigs)
+            {
+                if (twig.ParentId.HasValue)
+                {
+                    if (twig.ParentId.Value == Twig.Id)
+                    {
+                        children = true;
+                        break;
+                    }
+                }
+            }
+
+            return children;
+        }
+    }
 
     protected override void OnInitialized()
     {
-
+        Update();
     }
 
     private void Collapse()
@@ -163,20 +174,6 @@ using Data;
 
         TwigsHandler.UpdateTwigShowChildren(Twig);
     }
-
-    #region AppearanceEffects
-    private void OnMouseOut()
-    {
-        width = "0rem";
-        highlight = false;
-    }
-
-    private void OnMouseOver()
-    {
-        width = UISettings.MarginHighlightAddittion.ToString() + "rem";
-        highlight = true;
-    }
-    #endregion AppearanceEffects
 
     private void OpenForEditting()
     {
@@ -191,6 +188,27 @@ using Data;
 
     public void Update()
     {
+        if (NestedStructure.Project.ShowCompleted == false)
+        {
+            if (Twig.State == State.COMPLETED)
+            {
+                Twig.Display = false;
+                InvokeAsync(StateHasChanged);
+                return;
+            }
+
+            var parent = TwigsTempStorage.Twigs.Where(o => o.Id == Twig.ParentId);
+
+            if (parent != null)
+                if (parent.Count() == 1)
+                {
+                    if (parent.First().Display == false)
+                    {
+                        Twig.Display = false;
+                    }
+                }
+        }
+
         InvokeAsync(StateHasChanged);
     }
 
@@ -212,7 +230,7 @@ using Data;
                         ProjectId = NestedStructure.ProjectId,
                         ParentId = Twig.Id,
                         Title = "New Twig",
-                        DueDate = DateTime.Now.AddYears(100),
+                        DueDate = DateTime.Now,
                         Priority = 0,
                         Description = "",
                         State = State.NOTSTARTED,

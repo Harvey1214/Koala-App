@@ -14,6 +14,28 @@ a, .btn-link {
     border-color: #1861ac;
 }
 
+.bg-light:hover {
+    border: 1px solid black;
+}
+
+.edit {
+    resize:both;
+    overflow:auto;
+    direction: rtl;
+}
+
+.edit-content {
+    direction: ltr;
+}
+
+.twig {
+
+}
+
+.twig:hover {
+    padding-left:2rem;
+}
+
 .SmallerPage {
     -webkit-transform: scale(0.67);
     -moz-transform: scale(0.67);
