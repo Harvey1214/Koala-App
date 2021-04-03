@@ -48,6 +48,10 @@
         {
             RedirectToLoginPage();
         }
+        else if (firstRender)
+        {
+            TwigsTempStorage.NestedStructure.UpdateAll();
+        }
     }
 
     private List<Twig> GetTwigs()

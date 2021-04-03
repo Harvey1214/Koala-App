@@ -111,7 +111,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 31 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
@@ -164,7 +164,7 @@ using Data;
 
     protected override void OnInitialized()
     {
-
+        Update();
     }
 
     private void Collapse()
@@ -188,6 +188,27 @@ using Data;
 
     public void Update()
     {
+        if (NestedStructure.Project.ShowCompleted == false)
+        {
+            if (Twig.State == State.COMPLETED)
+            {
+                Twig.Display = false;
+                InvokeAsync(StateHasChanged);
+                return;
+            }
+
+            var parent = TwigsTempStorage.Twigs.Where(o => o.Id == Twig.ParentId);
+
+            if (parent != null)
+                if (parent.Count() == 1)
+                {
+                    if (parent.First().Display == false)
+                    {
+                        Twig.Display = false;
+                    }
+                }
+        }
+
         InvokeAsync(StateHasChanged);
     }
 

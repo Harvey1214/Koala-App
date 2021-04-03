@@ -163,6 +163,8 @@ using DataAccessLibrary.Helpers;
 
         UpdateTwigInDatabase();
         TwigsHandler.UpdateTwigCompletedDate(EditedTwig.Twig);
+
+        TwigsTempStorage.NestedStructure.UpdateAll();
     }
     private void SetDueDate(string dueDateText)
     {

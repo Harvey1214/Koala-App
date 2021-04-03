@@ -109,6 +109,18 @@ using Data;
     [Parameter]
     public int ProjectId { get; set; }
 
+    [Parameter]
+    public Project Project { get; set; }
+
+    private List<NestedTwig> NestedTwigs = new List<NestedTwig>();
+    private NestedTwig AddNestedTwigToList
+    {
+        set
+        {
+            NestedTwigs.Add(value);
+        }
+    }
+
     protected override void OnInitialized()
     {
         TwigsTempStorage.NestedStructure = this;
@@ -138,6 +150,14 @@ using Data;
         Update();
     }
     */
+
+    public void UpdateAll()
+    {
+        foreach (var twig in NestedTwigs)
+        {
+            twig.Update();
+        }
+    }
 
     private void AddTwig()
     {
