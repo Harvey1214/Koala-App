@@ -164,7 +164,7 @@ using DataAccessLibrary.Helpers;
         UpdateTwigInDatabase();
         TwigsHandler.UpdateTwigCompletedDate(EditedTwig.Twig);
 
-        TwigsTempStorage.NestedStructure.UpdateAll();
+        TwigsTempStorage.Order();
     }
     private void SetDueDate(string dueDateText)
     {

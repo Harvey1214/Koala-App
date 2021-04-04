@@ -19,6 +19,7 @@ namespace KoalaApp.Data
         public Twig CopiedTwig { get; set; }
 
         public NestedStructure NestedStructure { get; set; }
+        public SearchSort SearchSort { get; set; }
 
         /// <summary>
         /// Twigs sorted for the search window
@@ -28,7 +29,13 @@ namespace KoalaApp.Data
 
         private void Sort()
         {
-            SortedTwigs = new List<Twig>(Twigs);
+            SortedTwigs.Clear();
+
+            var rootTwigs = Twigs.Where(o => o.ParentId == null);
+            foreach (var twig in rootTwigs)
+            {
+                AssignForSort(twig);
+            }
 
             switch (SortBy)
             {
@@ -37,6 +44,12 @@ namespace KoalaApp.Data
                     break;
                 case SortBy.DUEDATE_HIGHTOLOW:
                     SortedTwigs.OrderByDescending(o => o.DueDate);
+                    break;
+                case SortBy.COMPLETEDDATE_LOWTOHIGH:
+                    SortedTwigs.OrderBy(o => o.CompletedDate);
+                    break;
+                case SortBy.COMPLETEDDATE_HIGHTOLOW:
+                    SortedTwigs.OrderByDescending(o => o.CompletedDate);
                     break;
                 case SortBy.PRIORITY_HIGHTOLOW:
                     SortedTwigs.OrderByDescending(o => o.Priority);
@@ -60,10 +73,16 @@ namespace KoalaApp.Data
             Sort();
 
             UpdateNestedStructure();
+            UpdateSearchSort();
         }
 
         private void Assign(Twig twig, int relativeLevel, int absoluteLevel)
         {
+            if (NestedStructure.Project.ShowCompleted == false && twig.State == State.COMPLETED)
+            {
+                return;
+            }
+
             twig.AbsoluteLevel = absoluteLevel;
             twig.RelativeLevel = relativeLevel;
             OrderedTwigs.Add(twig);
@@ -83,6 +102,30 @@ namespace KoalaApp.Data
                 {
                     Assign(child, relativeLevel, absoluteLevel);
                 }
+            }
+        }
+
+        private void AssignForSort(Twig twig)
+        {
+            if (NestedStructure.Project.ShowCompleted == false && twig.State == State.COMPLETED)
+            {
+                return;
+            }
+
+            SortedTwigs.Add(twig);
+
+            var children = Twigs.Where(o => o.ParentId == twig.Id);
+            foreach (var child in children)
+            {
+                AssignForSort(child);
+            }
+        }
+
+        public void UpdateSearchSort()
+        {
+            if (SearchSort != null)
+            {
+                SearchSort.Update();
             }
         }
 

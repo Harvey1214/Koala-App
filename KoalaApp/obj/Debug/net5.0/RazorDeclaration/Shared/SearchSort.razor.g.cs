@@ -83,20 +83,20 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
-using DataAccessLibrary;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
+#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
-    public partial class NestedStructure : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
+using DataAccessLibrary;
+
+#line default
+#line hidden
+#nullable disable
+    public partial class SearchSort : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -104,94 +104,42 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 21 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
-       
-    [Parameter]
-    public int ProjectId { get; set; }
-
-    [Parameter]
-    public Project Project { get; set; }
-
-    private List<NestedTwig> NestedTwigs = new List<NestedTwig>();
-    private NestedTwig AddNestedTwigToList
-    {
-        set
-        {
-            NestedTwigs.Add(value);
-        }
-    }
-
+#line 19 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
+             
     protected override void OnInitialized()
     {
-        TwigsTempStorage.NestedStructure = this;
+        TwigsTempStorage.SearchSort = this;
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    private string GetTitle(Twig twig)
     {
-        if (firstRender)
+        if (twig == null) return "";
+
+        string title = "";
+
+        int maxLength = 50;
+
+        if (twig.Description != null)
+            if (maxLength < twig.Description.Length)
+                title += $"{twig.Description.Substring(0, maxLength)}...{Environment.NewLine}";
+            else
+                title += $"{twig.Description}{Environment.NewLine}";
+
+        title += $"Due Date: {twig.DueDate}{Environment.NewLine}";
+        title += $"Priority: {twig.Priority}";
+
+        return title;
+    }
+
+    private void OpenForEditting(Twig twig)
+    {
+        EditedTwig.Twig = twig;
+        EditedTwig.NestedTwig = null;
+
+        if (EditedTwig.Edit != null)
         {
-            TwigsTempStorage.Order();
+            EditedTwig.Edit.Update();
         }
-    }
-
-    /*
-    private void AddTwig()
-    {
-        Twig twig = new Twig()
-        {
-            ProjectId = ProjectId,
-            Title = "New Twig",
-            DueDate = DateTime.Now.AddYears(100),
-            Priority = 0,
-            Description = "",
-            State = State.NOTSTARTED
-        };
-
-        TwigsHandler.InsertTwig(ProjectId);
-
-        twig.Id = TwigsHandler.GetLastId();
-
-        TwigsTempStorage.Twigs.Add(twig);
-
-        TwigsTempStorage.Order();
-
-        Update();
-    }
-    */
-
-    public void UpdateAll()
-    {
-        foreach (var twig in NestedTwigs)
-        {
-            twig.Update();
-        }
-    }
-
-    private void AddTwig()
-    {
-        // insert the new twig into the database
-        TwigsHandler.InsertTwig(ProjectId);
-
-        // add the new twig to the GUI
-        int newTwigId = TwigsHandler.GetLastId();
-        TwigsTempStorage.Twigs.Add(
-            new Twig()
-            {
-                Id = newTwigId,
-                ProjectId = ProjectId,
-                ParentId = null,
-                Title = "New Twig",
-                DueDate = DateTime.Now,
-                Priority = 0,
-                Description = "",
-                State = State.NOTSTARTED,
-                AbsoluteLevel = 0,
-                RelativeLevel = 0
-            });
-
-        // sort twigs and update nested structure
-        TwigsTempStorage.Order();
-        return;
     }
 
     public void Update()
@@ -202,7 +150,7 @@ using Data;
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
     }
 }

@@ -111,7 +111,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 31 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 29 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
@@ -148,17 +148,39 @@ using Data;
 
             foreach (var twig in TwigsTempStorage.Twigs)
             {
-                if (twig.ParentId.HasValue)
+                if (twig.ParentId.HasValue == false) continue;
+
+                if (twig.ParentId.Value == Twig.Id)
                 {
-                    if (twig.ParentId.Value == Twig.Id)
-                    {
-                        children = true;
-                        break;
-                    }
+                    children = true;
+                    break;
                 }
             }
 
             return children;
+        }
+    }
+
+    private string title
+    {
+        get
+        {
+            if (Twig == null) return "";
+
+            string title = "";
+
+            int maxLength = 50;
+
+            if (Twig.Description != null)
+                if (maxLength < Twig.Description.Length)
+                    title += $"{Twig.Description.Substring(0, maxLength)}...{Environment.NewLine}";
+                else
+                    title += $"{Twig.Description}{Environment.NewLine}";
+
+            title += $"Due Date: {Twig.DueDate}{Environment.NewLine}";
+            title += $"Priority: {Twig.Priority}";
+
+            return title;
         }
     }
 
@@ -191,26 +213,13 @@ using Data;
 
     public void Update()
     {
-        if (NestedStructure.Project.ShowCompleted == false)
-        {
-            if (Twig.State == State.COMPLETED)
-            {
-                Twig.Display = false;
-                InvokeAsync(StateHasChanged);
-                return;
-            }
 
-            var parent = TwigsTempStorage.Twigs.Where(o => o.Id == Twig.ParentId);
-
-            if (parent != null)
-                if (parent.Count() == 1)
-                {
-                    if (parent.First().Display == false)
-                    {
-                        Twig.Display = false;
-                    }
-                }
-        }
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 149 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+           
 
         InvokeAsync(StateHasChanged);
     }

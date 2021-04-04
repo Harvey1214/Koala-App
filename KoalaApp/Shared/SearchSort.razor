@@ -1,0 +1,60 @@
+﻿@using Data
+@using DataAccessLibrary
+
+@inject TwigsTempStorage TwigsTempStorage 
+@inject EditedTwig EditedTwig  
+
+<div class="search-sort">
+    <div class="list-group">
+        <button type="button" class="list-group-item list-group-item-action active">
+            Sort & Search
+        </button>
+        @foreach (var twig in TwigsTempStorage.SortedTwigs)
+        {
+            <button @onclick="() => OpenForEditting(twig)" type="button" class="list-group-item list-group-item-action" alt="@GetTitle(twig)" title="@GetTitle(twig)">@twig.Title</button>
+        }
+    </div>
+</div>
+
+@code {      
+    protected override void OnInitialized()
+    {
+        TwigsTempStorage.SearchSort = this;
+    }
+
+    private string GetTitle(Twig twig)
+    {
+        if (twig == null) return "";
+
+        string title = "";
+
+        int maxLength = 50;
+
+        if (twig.Description != null)
+            if (maxLength < twig.Description.Length)
+                title += $"{twig.Description.Substring(0, maxLength)}...{Environment.NewLine}";
+            else
+                title += $"{twig.Description}{Environment.NewLine}";
+
+        title += $"Due Date: {twig.DueDate}{Environment.NewLine}";
+        title += $"Priority: {twig.Priority}";
+
+        return title;
+    }
+
+    private void OpenForEditting(Twig twig)
+    {
+        EditedTwig.Twig = twig;
+        EditedTwig.NestedTwig = null;
+
+        if (EditedTwig.Edit != null)
+        {
+            EditedTwig.Edit.Update();
+        }
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+}

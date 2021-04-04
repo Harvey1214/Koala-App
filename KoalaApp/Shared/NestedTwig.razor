@@ -6,27 +6,25 @@
 @inject TwigsHandler TwigsHandler
 @inject EditedTwig EditedTwig
 
-@if (Twig.Display) 
-{
-    <div class="noOverflow @block twig" style="margin-left:@margin;">
-        <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3 noOverflow" style="width: 18rem;margin-left:0px;cursor:pointer;">
-            <div class="card-body">
-                <h5 class="card-title noBottomPaddingMargin block">@Twig.Title</h5>
-                @if (hasChildren)
+
+<div class="noOverflow @block twig" style="margin-left:@margin;" title="@title" alt="@title">
+    <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3 noOverflow" style="width: 18rem;margin-left:0px;cursor:pointer;">
+        <div class="card-body">
+            <h5 class="card-title noBottomPaddingMargin block">@Twig.Title</h5>
+            @if (hasChildren)
+            {
+                @if (Twig.ShowChildren)
                 {
-                    @if (Twig.ShowChildren)
-                    {
-                        <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-bottom"></span></button>
-                    }
-                    else
-                    {
-                        <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-top"></span></button>
-                    }
+                    <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-bottom"></span></button>
                 }
-            </div>
+                else
+                {
+                    <button class="btn floatRight" @onclick="Collapse"><span class="oi oi-arrow-top"></span></button>
+                }
+            }
         </div>
     </div>
-}
+</div>
 
 @code {
     [Parameter]
@@ -64,17 +62,39 @@
 
             foreach (var twig in TwigsTempStorage.Twigs)
             {
-                if (twig.ParentId.HasValue)
+                if (twig.ParentId.HasValue == false) continue;
+
+                if (twig.ParentId.Value == Twig.Id)
                 {
-                    if (twig.ParentId.Value == Twig.Id)
-                    {
-                        children = true;
-                        break;
-                    }
+                    children = true;
+                    break;
                 }
             }
 
             return children;
+        }
+    }
+
+    private string title
+    {
+        get
+        {
+            if (Twig == null) return "";
+
+            string title = "";
+
+            int maxLength = 50;
+
+            if (Twig.Description != null)
+                if (maxLength < Twig.Description.Length)
+                    title += $"{Twig.Description.Substring(0, maxLength)}...{Environment.NewLine}";
+                else
+                    title += $"{Twig.Description}{Environment.NewLine}";
+
+            title += $"Due Date: {Twig.DueDate}{Environment.NewLine}";
+            title += $"Priority: {Twig.Priority}";
+
+            return title;
         }
     }
 
@@ -107,7 +127,7 @@
 
     public void Update()
     {
-        if (NestedStructure.Project.ShowCompleted == false)
+@*        if (NestedStructure.Project.ShowCompleted == false)
         {
             if (Twig.State == State.COMPLETED)
             {
@@ -126,7 +146,7 @@
                         Twig.Display = false;
                     }
                 }
-        }
+        }*@
 
         InvokeAsync(StateHasChanged);
     }

@@ -126,6 +126,14 @@ using Data;
         TwigsTempStorage.NestedStructure = this;
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            TwigsTempStorage.Order();
+        }
+    }
+
     /*
     private void AddTwig()
     {

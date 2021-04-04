@@ -28,6 +28,7 @@
 {
     <h5>@Project.Name</h5>
     <NestedStructure ProjectId="@Project.Id" Project="@Project"/>
+    <SearchSort />
     <Edit />
 }
 
@@ -115,6 +116,5 @@
         }
 
         TwigsTempStorage.Twigs = GetTwigs();
-        TwigsTempStorage.Order();
     }
 }

@@ -191,7 +191,6 @@ using DataAccessLibrary;
         }
 
         TwigsTempStorage.Twigs = GetTwigs();
-        TwigsTempStorage.Order();
     }
 
 #line default
