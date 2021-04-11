@@ -211,10 +211,24 @@ using DataAccessLibrary.Helpers;
         EditedTwig.Twig = null;
     }
 
+    private void UpdateEditedTwig()
+    {
+        if (EditedTwig.NestedTwig != null)
+            EditedTwig.NestedTwig.Update();
+        else
+        {
+            TwigsTempStorage.NestedStructure.UpdateAll();
+        }
+
+        TwigsTempStorage.UpdateSearchSort();
+
+    }
+
     protected override void OnInitialized()
     {
         EditedTwig.Edit = this;
     }
+
     public void Update()
     {
         InvokeAsync(StateHasChanged);

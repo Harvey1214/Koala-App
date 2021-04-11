@@ -19,22 +19,30 @@ a, .btn-link {
 }
 
 .search-sort {
-    z-index:10;
-    position:fixed;
-    width:100%;
-    margin-left:1rem;
-    margin-right:1rem;
-    bottom:1rem;
-    max-height:20%;
+    display: inline-block;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    float: left;
 }
 
 .edit {
-    resize:both;
-    overflow:auto;
+    display: inline-block;
+    float: right;
+}
+
+.resizable-window-only-width {
+    resize: horizontal;
+    overflow: auto;
     direction: rtl;
 }
 
-.edit-content {
+.resizable-window {
+    resize: both;
+    overflow: auto;
+    direction: rtl;
+}
+
+.resizable-window-content {
     direction: ltr;
 }
 

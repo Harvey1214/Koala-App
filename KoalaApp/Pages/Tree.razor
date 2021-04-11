@@ -28,8 +28,12 @@
 {
     <h5>@Project.Name</h5>
     <NestedStructure ProjectId="@Project.Id" Project="@Project"/>
-    <SearchSort />
-    <Edit />
+    <div class="resizable-window" style="float: right; position:fixed; top:1rem; right:1rem; height: 100%;">
+        <div class="resizable-window-content">
+            <SearchSort />
+            <Edit />
+        </div>
+    </div>
 }
 
 @code {

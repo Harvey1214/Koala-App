@@ -40,22 +40,22 @@ namespace KoalaApp.Data
             switch (SortBy)
             {
                 case SortBy.DUEDATE_LOWTOHIGH:
-                    SortedTwigs.OrderBy(o => o.DueDate);
+                    SortedTwigs = SortedTwigs.OrderBy(o => o.DueDate).ToList();
                     break;
                 case SortBy.DUEDATE_HIGHTOLOW:
-                    SortedTwigs.OrderByDescending(o => o.DueDate);
+                    SortedTwigs = SortedTwigs.OrderByDescending(o => o.DueDate).ToList();
                     break;
                 case SortBy.COMPLETEDDATE_LOWTOHIGH:
-                    SortedTwigs.OrderBy(o => o.CompletedDate);
+                    SortedTwigs = SortedTwigs.OrderBy(o => o.CompletedDate).ToList();
                     break;
                 case SortBy.COMPLETEDDATE_HIGHTOLOW:
-                    SortedTwigs.OrderByDescending(o => o.CompletedDate);
+                    SortedTwigs = SortedTwigs.OrderByDescending(o => o.CompletedDate).ToList();
                     break;
                 case SortBy.PRIORITY_HIGHTOLOW:
-                    SortedTwigs.OrderByDescending(o => o.Priority);
+                    SortedTwigs = SortedTwigs.OrderByDescending(o => o.Priority).ToList();
                     break;
                 case SortBy.PRIORITY_LOWTOHIGH:
-                    SortedTwigs.OrderBy(o => o.Priority);
+                    SortedTwigs = SortedTwigs.OrderBy(o => o.Priority).ToList();
                     break;
             }
         }
