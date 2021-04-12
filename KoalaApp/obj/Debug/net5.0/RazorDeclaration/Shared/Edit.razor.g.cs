@@ -178,6 +178,8 @@ using DataAccessLibrary.Helpers;
                 EditedTwig.Twig.DueDate = dueDate;
             }
         }
+
+        TwigsTempStorage.Order();
     }
     private void SetPriority(string priorityText)
     {
@@ -188,6 +190,8 @@ using DataAccessLibrary.Helpers;
         {
             EditedTwig.Twig.Priority = priority;
         }
+
+        TwigsTempStorage.Order();
     }
 
     private void UpdateTwigInDatabase()
@@ -221,7 +225,6 @@ using DataAccessLibrary.Helpers;
         }
 
         TwigsTempStorage.UpdateSearchSort();
-
     }
 
     protected override void OnInitialized()

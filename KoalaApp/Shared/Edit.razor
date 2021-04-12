@@ -191,6 +191,8 @@
                 EditedTwig.Twig.DueDate = dueDate;
             }
         }
+
+        TwigsTempStorage.Order();
     }
     private void SetPriority(string priorityText)
     {
@@ -201,6 +203,8 @@
         {
             EditedTwig.Twig.Priority = priority;
         }
+
+        TwigsTempStorage.Order();
     }
 
     private void UpdateTwigInDatabase()
@@ -234,7 +238,6 @@
         }
 
         TwigsTempStorage.UpdateSearchSort();
-
     }
 
     protected override void OnInitialized()

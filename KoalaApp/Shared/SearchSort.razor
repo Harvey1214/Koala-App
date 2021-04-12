@@ -3,12 +3,25 @@
 
 @inject TwigsTempStorage TwigsTempStorage 
 @inject EditedTwig EditedTwig  
+@inject IJSRuntime JS 
 
 <div class="search-sort">
     <div class="list-group">
-        <button type="button" class="list-group-item list-group-item-action active">
-            Sort & Search
-        </button>
+        <div class="dropdown">
+            <button @onclick="ToggleDropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+            </button>
+            <div class="dropdown-menu" style="@dropdownOpenedStyle" aria-labelledby="dropdownMenu2">
+                <button @onclick="() => UpdateSort(SortBy.DUEDATE_HIGHTOLOW)" class="dropdown-item" type="button">Due Date Desc</button>
+                <button @onclick="() => UpdateSort(SortBy.DUEDATE_LOWTOHIGH)" class="dropdown-item" type="button">Due Date Asc</button>
+                <div class="dropdown-divider"></div>
+                <button @onclick="() => UpdateSort(SortBy.PRIORITY_HIGHTOLOW)" class="dropdown-item" type="button">Priority Desc</button>
+                <button @onclick="() => UpdateSort(SortBy.PRIORITY_LOWTOHIGH)" class="dropdown-item" type="button">Priority Asc</button>
+                <div class="dropdown-divider"></div>
+                <button @onclick="() => UpdateSort(SortBy.COMPLETEDDATE_HIGHTOLOW)" class="dropdown-item" type="button">Completed Date Desc</button>
+                <button @onclick="() => UpdateSort(SortBy.COMPLETEDDATE_LOWTOHIGH)" class="dropdown-item" type="button">Completed Date Asc</button>
+            </div>
+        </div>
         @foreach (var twig in TwigsTempStorage.SortedTwigs)
         {
             <button @onclick="() => OpenForEditting(twig)" type="button" class="list-group-item list-group-item-action" alt="@GetTitle(twig)" title="@GetTitle(twig)">@twig.Title</button>
@@ -17,6 +30,29 @@
 </div>
 
 @code {      
+    private bool dropdownOpened;
+    private string dropdownOpenedStyle
+    {
+        get
+        {
+            if (dropdownOpened) return "display: block;";
+            return "display: none";
+        }
+    }
+
+    private int sortByCount = 6;
+
+    private void ToggleDropdown()
+    {
+        dropdownOpened = !dropdownOpened;
+    }
+
+    private void UpdateSort(SortBy sortBy)
+    {
+        TwigsTempStorage.SortBy = sortBy;
+        TwigsTempStorage.Order();
+    }
+
     protected override void OnInitialized()
     {
         TwigsTempStorage.SearchSort = this;
