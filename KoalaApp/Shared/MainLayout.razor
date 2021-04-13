@@ -1,9 +1,17 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    @if (navMenuHidden == false)
+    {
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+        <button @onclick="ToggleNavMenuHidden" type="button" class="btn btn-primary hideSidebarBtn"><span class="oi oi-arrow-left"></span></button>
+    }
+    else
+    {
+        <button @onclick="ToggleNavMenuHidden" type="button" class="btn btn-primary hideSidebarBtn"><span class="oi oi-arrow-right"></span></button>
+    }
 
     <div class="main">
         <div class="content px-4">
@@ -11,3 +19,12 @@
         </div>
     </div>
 </div>
+
+@code {
+    private bool navMenuHidden = false;
+
+    private void ToggleNavMenuHidden()
+    {
+        navMenuHidden = !navMenuHidden;
+    }
+}

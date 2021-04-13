@@ -104,7 +104,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 32 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
+#line 31 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
              
     private bool dropdownOpened;
     private string dropdownOpenedStyle
@@ -123,10 +123,17 @@ using DataAccessLibrary;
         dropdownOpened = !dropdownOpened;
     }
 
+    private void CloseDropdown()
+    {
+        dropdownOpened = false;
+    }
+
     private void UpdateSort(SortBy sortBy)
     {
         TwigsTempStorage.SortBy = sortBy;
         TwigsTempStorage.Order();
+
+        CloseDropdown();
     }
 
     protected override void OnInitialized()
@@ -173,7 +180,6 @@ using DataAccessLibrary;
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JS { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
     }

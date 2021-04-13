@@ -3,10 +3,9 @@
 
 @inject TwigsTempStorage TwigsTempStorage 
 @inject EditedTwig EditedTwig  
-@inject IJSRuntime JS 
 
 <div class="search-sort">
-    <div class="list-group">
+    <div class="list-group search-sort-list">
         <div class="dropdown">
             <button @onclick="ToggleDropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort By
@@ -47,10 +46,17 @@
         dropdownOpened = !dropdownOpened;
     }
 
+    private void CloseDropdown()
+    {
+        dropdownOpened = false;
+    }
+
     private void UpdateSort(SortBy sortBy)
     {
         TwigsTempStorage.SortBy = sortBy;
         TwigsTempStorage.Order();
+
+        CloseDropdown();
     }
 
     protected override void OnInitialized()

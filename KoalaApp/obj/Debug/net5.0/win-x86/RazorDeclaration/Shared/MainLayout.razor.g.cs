@@ -89,6 +89,19 @@ using KoalaApp.Shared;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 23 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
+       
+    private bool navMenuHidden = false;
+
+    private void ToggleNavMenuHidden()
+    {
+        navMenuHidden = !navMenuHidden;
+    }
+
+#line default
+#line hidden
+#nullable disable
     }
 }
 #pragma warning restore 1591
