@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KoalaApp.Data
+namespace DataAccessLibrary
 {
     public enum SortBy
     {

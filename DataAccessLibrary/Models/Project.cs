@@ -12,5 +12,6 @@ namespace DataAccessLibrary
         public DateTime DateCreated { get; set; }
         public DateTime LastOpened { get; set; }
         public bool ShowCompleted { get; set; }
+        public SortBy SortBy { get; set; }
     }
 }

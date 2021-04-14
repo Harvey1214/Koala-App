@@ -41,11 +41,16 @@
     public string TreeIdText { get; set; }
 
     private int TreeId { get; set; }
-    private Project Project { get; set; }
+    public Project Project { get; set; }
 
     private bool ValidURL { get; set; } = true;
     private bool ProjectNotFound { get; set; } = false;
     private bool RedirectToLogin { get; set; } = false;
+
+    protected override void OnInitialized()
+    {
+        TwigsTempStorage.Tree = this;
+    }
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -57,25 +62,6 @@
         {
             TwigsTempStorage.NestedStructure.UpdateAll();
         }
-    }
-
-    private List<Twig> GetTwigs()
-    {
-        return TwigsHandler.GetTwigsOfProject(Project.Id) ?? new List<Twig>();
-    }
-
-    private Project GetProject()
-    {
-        var projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id);
-        if (projects != null)
-        {
-            if (projects.Count > 0)
-            {
-                return projects.Where(o => o.Id == TreeId).ToList().FirstOrDefault();
-            }
-        }
-
-        return null;
     }
 
     private void RedirectToLoginPage()
@@ -120,5 +106,26 @@
         }
 
         TwigsTempStorage.Twigs = GetTwigs();
+
+        TwigsTempStorage.SortBy = Project.SortBy;
+    }
+
+    private List<Twig> GetTwigs()
+    {
+        return TwigsHandler.GetTwigsOfProject(Project.Id) ?? new List<Twig>();
+    }
+
+    private Project GetProject()
+    {
+        var projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id);
+        if (projects != null)
+        {
+            if (projects.Count > 0)
+            {
+                return projects.Where(o => o.Id == TreeId).ToList().FirstOrDefault();
+            }
+        }
+
+        return null;
     }
 }

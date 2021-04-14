@@ -2,6 +2,7 @@
 @using DataAccessLibrary
 
 @inject TwigsTempStorage TwigsTempStorage 
+@inject ProjectsHandler ProjectsHandler 
 @inject EditedTwig EditedTwig  
 
 <div class="search-sort">
@@ -54,9 +55,16 @@
     private void UpdateSort(SortBy sortBy)
     {
         TwigsTempStorage.SortBy = sortBy;
+
+        if (TwigsTempStorage.Tree != null)
+            if (TwigsTempStorage.Tree.Project != null)
+                TwigsTempStorage.Tree.Project.SortBy = sortBy;
+
         TwigsTempStorage.Order();
 
         CloseDropdown();
+
+        ProjectsHandler.UpdateProjectSortBy(TwigsTempStorage.Tree.Project);
     }
 
     protected override void OnInitialized()

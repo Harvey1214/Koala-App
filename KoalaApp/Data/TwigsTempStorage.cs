@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataAccessLibrary;
 using KoalaApp.Data.Common;
 using KoalaApp.Shared;
+using KoalaApp.Pages;
 
 namespace KoalaApp.Data
 {
@@ -18,6 +19,7 @@ namespace KoalaApp.Data
 
         public Twig CopiedTwig { get; set; }
 
+        public Tree Tree { get; set; }
         public NestedStructure NestedStructure { get; set; }
         public SearchSort SearchSort { get; set; }
 
