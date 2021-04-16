@@ -11,6 +11,9 @@ namespace KoalaApp.Data
     {
         public NavMenu NavMenu { get; set; }
 
+        private UsersHandler UsersHandler = new UsersHandler();
+        private CookieSecurityHandler CookieSecurityHandler = new CookieSecurityHandler();
+
         private User user;
         public User User 
         {
@@ -26,6 +29,24 @@ namespace KoalaApp.Data
                 }
 
                 user = value;
+            }
+        }
+
+        public void HandleCookies(string? cookieContent)
+        {
+            if (cookieContent == null) return;
+
+            int id;
+            bool success = Int32.TryParse(CookieSecurityHandler.DecryptCookie(cookieContent), out id);
+
+            if (success)
+            {
+                List<User> users = UsersHandler.GetUsers(id).ToList();
+                if (users == null) return;
+                if (users.Count != 1) return;
+
+                User = users.First();
+                if (NavMenu != null) NavMenu.Update();
             }
         }
     }

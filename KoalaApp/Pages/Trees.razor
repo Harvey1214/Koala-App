@@ -1,11 +1,13 @@
-﻿@page "/trees" 
+﻿@page "/trees"
 
 @using Data
 @using DataAccessLibrary
 
-@inject AccountHandler AccountHandler 
-@inject ProjectsHandler ProjectsHandler 
-@inject NavigationManager NavigationManager 
+@inject AccountHandler AccountHandler
+@inject ProjectsHandler ProjectsHandler
+@inject NavigationManager NavigationManager
+@inject UsersHandler UsersHandler 
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
 <NewTree Parent="@this" />
 
@@ -63,29 +65,33 @@
         NavigationManager.NavigateTo($"/tree/{id}");
     }
 
-    protected override void OnInitialized()
-    {
-        LoadProjects();
-    }
-
     protected override void OnAfterRender(bool firstRender)
     {
-        if (firstRender && redirectToLoginPage)
+        if (firstRender) LoadProjects();
+
+        if (redirectToLoginPage)
         {
             NavigationManager.NavigateTo("/login");
         }
     }
 
-    private void LoadProjects()
+    private async void LoadProjects()
     {
-        if (AccountHandler.User != null)
+        if (AccountHandler.User == null)
         {
-            Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+            var cookieContent = await LocalStorage.GetItemAsync<string>("QoAOgiNzhb");
+            AccountHandler.HandleCookies(cookieContent);
         }
-        else
+
+        if (AccountHandler.User == null)
         {
             redirectToLoginPage = true;
+            return;
         }
+
+        Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+
+        InvokeAsync(StateHasChanged);
     }
 
     public void Update()

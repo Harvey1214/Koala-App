@@ -431,3 +431,4 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\KoalaApp.
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\KoalaApp.csprojAssemblyReference.cache
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\RazorDeclaration\Shared\SearchSort.razor.g.cs
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\Razor\Shared\SearchSort.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\win-x86\Blazored.LocalStorage.dll

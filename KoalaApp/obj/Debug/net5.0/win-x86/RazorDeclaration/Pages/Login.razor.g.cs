@@ -112,7 +112,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 41 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
+#line 43 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
        
     private LoginModel LoginModel = new LoginModel();
 
@@ -127,45 +127,48 @@ using DataAccessLibrary;
         if (logout == "true")
         {
             AccountHandler.User = null;
+            RemoveCookie();
         }
     }
 
     private void ValidSubmit()
     {
         List<User> users = UsersHandler.GetUsers(LoginModel.Email);
+
         if (users != null)
-        {
             if (users.Count > 0)
-            {
                 if (users.First().Password == LoginModel.Password)
                 {
                     LoginUser(users.First());
+                    return;
                 }
-                else
-                {
-                    UsernameAndPasswordDoNotMatch = true;
-                }
-            }
-            else
-            {
-                LoginNotSuccessful = true;
-            }
-        }
-        else
-        {
-            LoginNotSuccessful = true;
-        }
+
+        LoginNotSuccessful = true;
     }
 
     private void LoginUser(User user)
     {
         AccountHandler.User = user;
+        SetCookie(user);
+
         NavManager.NavigateTo("/trees");
+    }
+
+    private async void SetCookie(User user)
+    {
+        await LocalStorage.SetItemAsync("QoAOgiNzhb", CookieSecurityHandler.EncryptCookie(user.Id.ToString()));
+    }
+
+    private async void RemoveCookie()
+    {
+        await LocalStorage.RemoveItemAsync("QoAOgiNzhb");
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private CookieSecurityHandler CookieSecurityHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private UsersHandler UsersHandler { get; set; }

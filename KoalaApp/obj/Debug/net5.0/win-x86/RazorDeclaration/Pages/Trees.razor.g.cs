@@ -105,7 +105,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 44 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 46 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
        
     public List<Project> Projects { get; set; } = new List<Project>();
 
@@ -128,29 +128,33 @@ using DataAccessLibrary;
         NavigationManager.NavigateTo($"/tree/{id}");
     }
 
-    protected override void OnInitialized()
-    {
-        LoadProjects();
-    }
-
     protected override void OnAfterRender(bool firstRender)
     {
-        if (firstRender && redirectToLoginPage)
+        if (firstRender) LoadProjects();
+
+        if (redirectToLoginPage)
         {
             NavigationManager.NavigateTo("/login");
         }
     }
 
-    private void LoadProjects()
+    private async void LoadProjects()
     {
-        if (AccountHandler.User != null)
+        if (AccountHandler.User == null)
         {
-            Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+            var cookieContent = await LocalStorage.GetItemAsync<string>("QoAOgiNzhb");
+            AccountHandler.HandleCookies(cookieContent);
         }
-        else
+
+        if (AccountHandler.User == null)
         {
             redirectToLoginPage = true;
+            return;
         }
+
+        Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
+
+        InvokeAsync(StateHasChanged);
     }
 
     public void Update()
@@ -162,6 +166,8 @@ using DataAccessLibrary;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UsersHandler UsersHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private ProjectsHandler ProjectsHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }

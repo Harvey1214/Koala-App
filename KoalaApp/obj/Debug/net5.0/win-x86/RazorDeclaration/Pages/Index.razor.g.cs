@@ -82,6 +82,13 @@ using KoalaApp.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
+using Data;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -90,6 +97,26 @@ using KoalaApp.Shared;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 14 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
+       
+    protected async override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (AccountHandler.User == null)
+            {
+                var cookieContent = await LocalStorage.GetItemAsync<string>("QoAOgiNzhb");
+                AccountHandler.HandleCookies(cookieContent);
+            }
+        }
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
     }
 }
 #pragma warning restore 1591

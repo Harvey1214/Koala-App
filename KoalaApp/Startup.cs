@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLibrary;
+using Blazored.LocalStorage;
 
 namespace KoalaApp
 {
@@ -37,6 +38,11 @@ namespace KoalaApp
             services.AddScoped<AccountHandler>();
             services.AddScoped<TwigsTempStorage>();
             services.AddScoped<EditedTwig>();
+
+            services.AddSingleton<CookieSecurityHandler>();
+
+            services.AddBlazoredLocalStorage();
+            services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

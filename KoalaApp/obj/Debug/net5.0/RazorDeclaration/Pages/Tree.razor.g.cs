@@ -106,7 +106,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 39 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
+#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
        
     [Parameter]
     public string TreeIdText { get; set; }
@@ -123,15 +123,22 @@ using DataAccessLibrary;
         TwigsTempStorage.Tree = this;
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    protected async override void OnAfterRender(bool firstRender)
     {
-        if (firstRender && RedirectToLogin)
+        if (RedirectToLogin)
         {
             RedirectToLoginPage();
         }
-        else if (firstRender)
+        
+        if (firstRender)
         {
-            TwigsTempStorage.NestedStructure.UpdateAll();
+            if (AccountHandler.User == null)
+            {
+                var cookieContent = await LocalStorage.GetItemAsync<string>("QoAOgiNzhb");
+                AccountHandler.HandleCookies(cookieContent);
+            }
+
+            LoadProject();
         }
     }
 
@@ -153,8 +160,6 @@ using DataAccessLibrary;
         {
             ValidURL = false;
         }
-
-        LoadProject();
     }
 
     private void LoadProject()
@@ -179,6 +184,8 @@ using DataAccessLibrary;
         TwigsTempStorage.Twigs = GetTwigs();
 
         TwigsTempStorage.SortBy = Project.SortBy;
+
+        InvokeAsync(StateHasChanged);
     }
 
     private List<Twig> GetTwigs()
@@ -203,6 +210,7 @@ using DataAccessLibrary;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }

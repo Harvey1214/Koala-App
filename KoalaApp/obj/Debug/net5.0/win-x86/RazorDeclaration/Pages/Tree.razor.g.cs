@@ -106,47 +106,40 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 39 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
+#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
        
     [Parameter]
     public string TreeIdText { get; set; }
 
     private int TreeId { get; set; }
-    private Project Project { get; set; }
+    public Project Project { get; set; }
 
     private bool ValidURL { get; set; } = true;
     private bool ProjectNotFound { get; set; } = false;
     private bool RedirectToLogin { get; set; } = false;
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override void OnInitialized()
     {
-        if (firstRender && RedirectToLogin)
+        TwigsTempStorage.Tree = this;
+    }
+
+    protected async override void OnAfterRender(bool firstRender)
+    {
+        if (RedirectToLogin)
         {
             RedirectToLoginPage();
         }
-        else if (firstRender)
+        
+        if (firstRender)
         {
-            TwigsTempStorage.NestedStructure.UpdateAll();
-        }
-    }
-
-    private List<Twig> GetTwigs()
-    {
-        return TwigsHandler.GetTwigsOfProject(Project.Id) ?? new List<Twig>();
-    }
-
-    private Project GetProject()
-    {
-        var projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id);
-        if (projects != null)
-        {
-            if (projects.Count > 0)
+            if (AccountHandler.User == null)
             {
-                return projects.Where(o => o.Id == TreeId).ToList().FirstOrDefault();
+                var cookieContent = await LocalStorage.GetItemAsync<string>("QoAOgiNzhb");
+                AccountHandler.HandleCookies(cookieContent);
             }
-        }
 
-        return null;
+            LoadProject();
+        }
     }
 
     private void RedirectToLoginPage()
@@ -167,8 +160,6 @@ using DataAccessLibrary;
         {
             ValidURL = false;
         }
-
-        LoadProject();
     }
 
     private void LoadProject()
@@ -191,11 +182,35 @@ using DataAccessLibrary;
         }
 
         TwigsTempStorage.Twigs = GetTwigs();
+
+        TwigsTempStorage.SortBy = Project.SortBy;
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private List<Twig> GetTwigs()
+    {
+        return TwigsHandler.GetTwigsOfProject(Project.Id) ?? new List<Twig>();
+    }
+
+    private Project GetProject()
+    {
+        var projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id);
+        if (projects != null)
+        {
+            if (projects.Count > 0)
+            {
+                return projects.Where(o => o.Id == TreeId).ToList().FirstOrDefault();
+            }
+        }
+
+        return null;
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }

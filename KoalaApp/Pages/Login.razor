@@ -6,7 +6,9 @@
 
 @inject UsersHandler UsersHandler
 @inject NavigationManager NavManager
-@inject AccountHandler AccountHandler 
+@inject AccountHandler AccountHandler
+@inject CookieSecurityHandler CookieSecurityHandler
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
 @if (LoginNotSuccessful)
 {
@@ -52,39 +54,40 @@
         if (logout == "true")
         {
             AccountHandler.User = null;
+            RemoveCookie();
         }
     }
 
     private void ValidSubmit()
     {
         List<User> users = UsersHandler.GetUsers(LoginModel.Email);
+
         if (users != null)
-        {
             if (users.Count > 0)
-            {
                 if (users.First().Password == LoginModel.Password)
                 {
                     LoginUser(users.First());
+                    return;
                 }
-                else
-                {
-                    UsernameAndPasswordDoNotMatch = true;
-                }
-            }
-            else
-            {
-                LoginNotSuccessful = true;
-            }
-        }
-        else
-        {
-            LoginNotSuccessful = true;
-        }
+
+        LoginNotSuccessful = true;
     }
 
     private void LoginUser(User user)
     {
         AccountHandler.User = user;
+        SetCookie(user);
+
         NavManager.NavigateTo("/trees");
+    }
+
+    private async void SetCookie(User user)
+    {
+        await LocalStorage.SetItemAsync("QoAOgiNzhb", CookieSecurityHandler.EncryptCookie(user.Id.ToString()));
+    }
+
+    private async void RemoveCookie()
+    {
+        await LocalStorage.RemoveItemAsync("QoAOgiNzhb");
     }
 }

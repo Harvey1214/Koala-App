@@ -370,6 +370,7 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Ou
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\System.Security.Permissions.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\System.Windows.Extensions.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\aspnetcorev2_inprocess.dll
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\Blazored.LocalStorage.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\Dapper.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\Microsoft.AspNetCore.Components.DataAnnotations.Validation.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\Newtonsoft.Json.dll
