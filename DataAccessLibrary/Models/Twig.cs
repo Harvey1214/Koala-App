@@ -25,5 +25,17 @@ namespace DataAccessLibrary
         {
             return (Twig)this.MemberwiseClone();
         }
+
+        public void Encrypt()
+        {
+            Title = Security.Encrypt(Title);
+            Description = Security.Encrypt(Description);
+        }
+
+        public void Decrypt()
+        {
+            Title = Security.Decrypt(Title);
+            Description = Security.Decrypt(Description);
+        }
     }
 }

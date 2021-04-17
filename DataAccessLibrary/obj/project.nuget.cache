@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Qa45hr/ugkI3+73cHYOcc6si0Xzf16vh3C6wzSt6sOpf6Pt99IA9zIOOoZGsLr1fgKi3tFyPhHH8qnTfFdVGrg==",
+  "dgSpecHash": "X1uW3UNX4UJ881qfUVFkoN9ci+7tn7j8Jirmocz89qAFjfs3bv8vbUpHVoBG1E6MtuyX4UWHwOqXpskgeWSD8w==",
   "success": true,
   "projectFilePath": "C:\\Users\\mikuh\\source\\repos\\KoalaApp\\DataAccessLibrary\\DataAccessLibrary.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\mikuh\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\mikuh\\.nuget\\packages\\portable.bouncycastle\\1.8.10\\portable.bouncycastle.1.8.10.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

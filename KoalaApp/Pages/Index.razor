@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @using Data
+@using DataAccessLibrary 
 
 @inject AccountHandler AccountHandler
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
@@ -11,7 +12,7 @@
 
 <a href="/signup" class="btn btn-success btn-lg">Sign Up</a>
 
-@code {
+@code {      
     protected async override void OnAfterRender(bool firstRender)
     {
         if (firstRender)

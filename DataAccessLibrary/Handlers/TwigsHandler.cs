@@ -18,6 +18,7 @@ namespace DataAccessLibrary
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             List<Twig> TwigsFound = dataAccess.GetData(command, new { ProjectId = projectId });
+            TwigsFound.ForEach(o => o.Decrypt());
             return TwigsFound;
         }
 
@@ -32,6 +33,7 @@ namespace DataAccessLibrary
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             List<Twig> TwigsFound = dataAccess.GetData(command, new { Id = id });
+            TwigsFound.ForEach(o => o.Decrypt());
             return TwigsFound;
         }
 
@@ -50,7 +52,7 @@ namespace DataAccessLibrary
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             int rowsAffected = dataAccess.WriteData(command,
-                new {ProjectId = projectId, Title = "New Twig", DueDate = DateTime.Now.AddYears(100), Priority = 0, Description = "", State = State.NOTSTARTED, ParentId = parentId, ShowChildren = true }); ;
+                new {ProjectId = projectId, Title = Security.Encrypt("New Twig"), DueDate = DateTime.Now.AddYears(100), Priority = 0, Description = "", State = State.NOTSTARTED, ParentId = parentId, ShowChildren = true }); ;
 
             if (rowsAffected == 1)
             {
@@ -89,8 +91,11 @@ namespace DataAccessLibrary
         /// </summary>
         /// <param name="twig"></param>
         /// <returns>True if the operation was successful, returns false otherwise</returns>
-        public bool UpdateTwig(Twig twig)
+        public bool UpdateTwig(Twig twigToUpdate)
         {
+            Twig twig = twigToUpdate.Copy();
+            twig.Encrypt();
+
             string command = "update TwigsTable set Title = @Title, Priority = @Priority, State = @State";
             if (twig.Description != null)
                 command += ", Description = @Description";
