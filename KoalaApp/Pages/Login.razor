@@ -10,10 +10,17 @@
 @inject CookieSecurityHandler CookieSecurityHandler
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
+@if (SignUpSuccessful)
+{
+    <div class="alert alert-success">
+        You have <strong>successfuly signed up</strong>, please login
+    </div>
+}
+
 @if (LoginNotSuccessful)
 {
     <div class="alert alert-danger">
-        Acccount with this email <strong>doesn't</strong> exists, please <a class="alert-link" href="/signup">sign up</a>
+        Acccount with this email <strong>doesn't</strong> exist, please <a class="alert-link" href="/signup">sign up</a>
     </div>
 }
 
@@ -45,15 +52,34 @@
 
     private bool LoginNotSuccessful { get; set; } = false;
     private bool UsernameAndPasswordDoNotMatch { get; set; } = false;
+    private bool SignUpSuccessful { get; set; } = false;
+
+    private bool removeCookie = false;
 
     protected override void OnInitialized()
     {
         string logout = "";
         NavManager.TryGetQueryString<string>("logout", out logout);
 
+        string signup = "";
+        NavManager.TryGetQueryString<string>("signup", out signup);
+
         if (logout == "true")
         {
             AccountHandler.User = null;
+            removeCookie = true;
+        }
+
+        if (signup == "true")
+        {
+            SignUpSuccessful = true;
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (removeCookie)
+        {
             RemoveCookie();
         }
     }

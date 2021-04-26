@@ -98,11 +98,10 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
+#line 34 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
        
     private SignupModel SignupModel { get; set; } = new SignupModel();
 
-    private bool SignUpSuccessful { get; set; } = false;
     private bool SomethingWentWrong { get; set; } = false;
 
     private void ValidSubmit()
@@ -111,8 +110,7 @@ using Data;
 
         if (success)
         {
-            SignUpSuccessful = true;
-            SomethingWentWrong = false;
+            NavigationManager.NavigateTo("/login?signup=true");
         }
         else
         {
@@ -123,6 +121,7 @@ using Data;
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private DataAccessLibrary.UsersHandler UsersHandler { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace DataAccessLibrary
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             List<Twig> TwigsFound = dataAccess.GetData(command, new { ProjectId = projectId });
-            TwigsFound.ForEach(o => o.Decrypt());
+            if (TwigsFound != null) TwigsFound.ForEach(o => o.Decrypt());
             return TwigsFound;
         }
 
@@ -33,7 +33,7 @@ namespace DataAccessLibrary
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             List<Twig> TwigsFound = dataAccess.GetData(command, new { Id = id });
-            TwigsFound.ForEach(o => o.Decrypt());
+            if (TwigsFound != null) TwigsFound.ForEach(o => o.Decrypt());
             return TwigsFound;
         }
 

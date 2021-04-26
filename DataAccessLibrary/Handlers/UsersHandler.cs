@@ -17,6 +17,7 @@ namespace DataAccessLibrary
             DataAccess<User, object> dataAccess = new DataAccess<User, object>();
 
             List<User> usersFound = dataAccess.GetData(command, new { Email = email });
+            if (usersFound != null) usersFound.ForEach(o => o.Decrypt());
             return usersFound;
         }
 
@@ -31,6 +32,7 @@ namespace DataAccessLibrary
             DataAccess<User, object> dataAccess = new DataAccess<User, object>();
 
             List<User> usersFound = dataAccess.GetData(command, new { Id = id });
+            if (usersFound != null) usersFound.ForEach(o => o.Decrypt());
             return usersFound;
         }
 
@@ -45,7 +47,7 @@ namespace DataAccessLibrary
             string command = "insert into UsersTable(Email, Password) values (@Email, @Password)";
             DataAccess<User, object> dataAccess = new DataAccess<User, object>();
 
-            int rowsAffected = dataAccess.WriteData(command, new { Email = email, Password = password });
+            int rowsAffected = dataAccess.WriteData(command, new { Email = email, Password = Security.Encrypt(password) });
 
             if (rowsAffected == 1)
             {

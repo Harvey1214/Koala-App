@@ -89,6 +89,13 @@ using Data;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
+using DataAccessLibrary;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -98,8 +105,8 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 14 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
-       
+#line 15 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Index.razor"
+             
     protected async override void OnAfterRender(bool firstRender)
     {
         if (firstRender)

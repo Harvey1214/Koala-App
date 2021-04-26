@@ -3,13 +3,7 @@
 @using Data
 
 @inject DataAccessLibrary.UsersHandler UsersHandler 
-
-@if (SignUpSuccessful)
-{
-    <div class="alert alert-success">
-        You have <strong>successfuly signed up</strong>, click <a class="alert-link" href="trees">here</a> to view your trees
-    </div>
-}
+@inject NavigationManager NavigationManager 
 
 @if (SomethingWentWrong)
 {
@@ -40,7 +34,6 @@
 @code {
     private SignupModel SignupModel { get; set; } = new SignupModel();
 
-    private bool SignUpSuccessful { get; set; } = false;
     private bool SomethingWentWrong { get; set; } = false;
 
     private void ValidSubmit()
@@ -49,8 +42,7 @@
 
         if (success)
         {
-            SignUpSuccessful = true;
-            SomethingWentWrong = false;
+            NavigationManager.NavigateTo("/login?signup=true");
         }
         else
         {

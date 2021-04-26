@@ -112,21 +112,40 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 43 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
+#line 50 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Login.razor"
        
     private LoginModel LoginModel = new LoginModel();
 
     private bool LoginNotSuccessful { get; set; } = false;
     private bool UsernameAndPasswordDoNotMatch { get; set; } = false;
+    private bool SignUpSuccessful { get; set; } = false;
+
+    private bool removeCookie = false;
 
     protected override void OnInitialized()
     {
         string logout = "";
         NavManager.TryGetQueryString<string>("logout", out logout);
 
+        string signup = "";
+        NavManager.TryGetQueryString<string>("signup", out signup);
+
         if (logout == "true")
         {
             AccountHandler.User = null;
+            removeCookie = true;
+        }
+
+        if (signup == "true")
+        {
+            SignUpSuccessful = true;
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (removeCookie)
+        {
             RemoveCookie();
         }
     }
