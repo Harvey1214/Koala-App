@@ -155,7 +155,7 @@ using Data;
                 Id = newTwigId,
                 ProjectId = ProjectId,
                 ParentId = null,
-                Title = "New Twig",
+                Title = "",
                 DueDate = DateTime.Now,
                 Priority = 0,
                 Description = "",

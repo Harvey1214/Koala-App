@@ -248,7 +248,7 @@ private void AddTwig()
                     Id = newTwigId,
                     ProjectId = NestedStructure.ProjectId,
                     ParentId = Twig.Id,
-                    Title = "New Twig",
+                    Title = "",
                     DueDate = DateTime.Now,
                     Priority = 0,
                     Description = "",
