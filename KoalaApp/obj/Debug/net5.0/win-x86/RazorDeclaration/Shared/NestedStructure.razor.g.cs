@@ -134,31 +134,6 @@ using Data;
         }
     }
 
-    /*
-    private void AddTwig()
-    {
-        Twig twig = new Twig()
-        {
-            ProjectId = ProjectId,
-            Title = "New Twig",
-            DueDate = DateTime.Now.AddYears(100),
-            Priority = 0,
-            Description = "",
-            State = State.NOTSTARTED
-        };
-
-        TwigsHandler.InsertTwig(ProjectId);
-
-        twig.Id = TwigsHandler.GetLastId();
-
-        TwigsTempStorage.Twigs.Add(twig);
-
-        TwigsTempStorage.Order();
-
-        Update();
-    }
-    */
-
     public void UpdateAll()
     {
         foreach (var twig in NestedTwigs)
@@ -191,7 +166,8 @@ using Data;
 
         // sort twigs and update nested structure
         TwigsTempStorage.Order();
-        return;
+
+        TwigsTempStorage.OpenForEdittingId = newTwigId;
     }
 
     public void Update()

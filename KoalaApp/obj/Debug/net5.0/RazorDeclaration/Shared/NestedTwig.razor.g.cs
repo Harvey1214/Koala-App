@@ -111,7 +111,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 29 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 28 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
@@ -190,6 +190,12 @@ using Data;
         {
             Update();
         }
+
+        if (TwigsTempStorage.OpenForEdittingId == Twig.Id)
+        {
+            OpenForEditting();
+            TwigsTempStorage.OpenForEdittingId = null;
+        }
     }
 
     private void Collapse()
@@ -200,7 +206,7 @@ using Data;
         TwigsHandler.UpdateTwigShowChildren(Twig);
     }
 
-    private void OpenForEditting()
+    public void OpenForEditting()
     {
         EditedTwig.Twig = Twig;
         EditedTwig.NestedTwig = this;
@@ -218,55 +224,56 @@ using Data;
 #line hidden
 #nullable disable
 #nullable restore
-#line 149 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 154 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
            
 
-        InvokeAsync(StateHasChanged);
-    }
+    InvokeAsync(StateHasChanged);
+}
 
-    private void AddTwig()
+private void AddTwig()
+{
+    for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
     {
-        for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
+        if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
         {
-            if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
-            {
-                // insert the new twig into the database
-                TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
+            // insert the new twig into the database
+            TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
 
-                // add the new twig to the GUI
-                int newTwigId = TwigsHandler.GetLastId();
-                TwigsTempStorage.Twigs.Insert(i + 1,
-                    new Twig()
-                    {
-                        Id = newTwigId,
-                        ProjectId = NestedStructure.ProjectId,
-                        ParentId = Twig.Id,
-                        Title = "New Twig",
-                        DueDate = DateTime.Now,
-                        Priority = 0,
-                        Description = "",
-                        State = State.NOTSTARTED,
-                        AbsoluteLevel = Twig.AbsoluteLevel + 1,
-                        RelativeLevel = GetNextRelativeLevel()
-                    });
+            // add the new twig to the GUI
+            int newTwigId = TwigsHandler.GetLastId();
+            TwigsTempStorage.Twigs.Insert(i + 1,
+                new Twig()
+                {
+                    Id = newTwigId,
+                    ProjectId = NestedStructure.ProjectId,
+                    ParentId = Twig.Id,
+                    Title = "New Twig",
+                    DueDate = DateTime.Now,
+                    Priority = 0,
+                    Description = "",
+                    State = State.NOTSTARTED,
+                    AbsoluteLevel = Twig.AbsoluteLevel + 1,
+                    RelativeLevel = GetNextRelativeLevel()
+                });
 
-                // sort twigs and update nested structure
-                TwigsTempStorage.Order();
-                return;
-            }
+            TwigsTempStorage.OpenForEdittingId = newTwigId;
+
+            // sort twigs and update nested structure
+            TwigsTempStorage.Order();
         }
     }
+}
 
-    private int GetNextRelativeLevel()
+private int GetNextRelativeLevel()
+{
+    int nextRelativeLevel = Twig.RelativeLevel + 1;
+    if (nextRelativeLevel >= UISettings.LevelStyles.Length)
     {
-        int nextRelativeLevel = Twig.RelativeLevel + 1;
-        if (nextRelativeLevel >= UISettings.LevelStyles.Length)
-        {
-            nextRelativeLevel = 0;
-        }
-
-        return nextRelativeLevel;
+        nextRelativeLevel = 0;
     }
+
+    return nextRelativeLevel;
+}
 
 #line default
 #line hidden

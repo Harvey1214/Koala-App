@@ -6,7 +6,6 @@
 @inject TwigsHandler TwigsHandler
 @inject EditedTwig EditedTwig
 
-
 <div class="noOverflow @block twig" style="margin-left:@margin;" title="@title" alt="@title">
     <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3 noOverflow" style="width: 18rem;margin-left:0px;cursor:pointer;">
         <div class="card-body">
@@ -104,6 +103,12 @@
         {
             Update();
         }
+
+        if (TwigsTempStorage.OpenForEdittingId == Twig.Id)
+        {
+            OpenForEditting();
+            TwigsTempStorage.OpenForEdittingId = null;
+        }
     }
 
     private void Collapse()
@@ -114,7 +119,7 @@
         TwigsHandler.UpdateTwigShowChildren(Twig);
     }
 
-    private void OpenForEditting()
+    public void OpenForEditting()
     {
         EditedTwig.Twig = Twig;
         EditedTwig.NestedTwig = this;
@@ -148,50 +153,51 @@
                 }
         }*@
 
-        InvokeAsync(StateHasChanged);
-    }
+    InvokeAsync(StateHasChanged);
+}
 
-    private void AddTwig()
+private void AddTwig()
+{
+    for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
     {
-        for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
+        if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
         {
-            if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
-            {
-                // insert the new twig into the database
-                TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
+            // insert the new twig into the database
+            TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
 
-                // add the new twig to the GUI
-                int newTwigId = TwigsHandler.GetLastId();
-                TwigsTempStorage.Twigs.Insert(i + 1,
-                    new Twig()
-                    {
-                        Id = newTwigId,
-                        ProjectId = NestedStructure.ProjectId,
-                        ParentId = Twig.Id,
-                        Title = "New Twig",
-                        DueDate = DateTime.Now,
-                        Priority = 0,
-                        Description = "",
-                        State = State.NOTSTARTED,
-                        AbsoluteLevel = Twig.AbsoluteLevel + 1,
-                        RelativeLevel = GetNextRelativeLevel()
-                    });
+            // add the new twig to the GUI
+            int newTwigId = TwigsHandler.GetLastId();
+            TwigsTempStorage.Twigs.Insert(i + 1,
+                new Twig()
+                {
+                    Id = newTwigId,
+                    ProjectId = NestedStructure.ProjectId,
+                    ParentId = Twig.Id,
+                    Title = "New Twig",
+                    DueDate = DateTime.Now,
+                    Priority = 0,
+                    Description = "",
+                    State = State.NOTSTARTED,
+                    AbsoluteLevel = Twig.AbsoluteLevel + 1,
+                    RelativeLevel = GetNextRelativeLevel()
+                });
 
-                // sort twigs and update nested structure
-                TwigsTempStorage.Order();
-                return;
-            }
+            TwigsTempStorage.OpenForEdittingId = newTwigId;
+
+            // sort twigs and update nested structure
+            TwigsTempStorage.Order();
         }
     }
+}
 
-    private int GetNextRelativeLevel()
+private int GetNextRelativeLevel()
+{
+    int nextRelativeLevel = Twig.RelativeLevel + 1;
+    if (nextRelativeLevel >= UISettings.LevelStyles.Length)
     {
-        int nextRelativeLevel = Twig.RelativeLevel + 1;
-        if (nextRelativeLevel >= UISettings.LevelStyles.Length)
-        {
-            nextRelativeLevel = 0;
-        }
-
-        return nextRelativeLevel;
+        nextRelativeLevel = 0;
     }
+
+    return nextRelativeLevel;
+}
 }

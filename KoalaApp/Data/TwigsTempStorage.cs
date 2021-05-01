@@ -29,6 +29,8 @@ namespace KoalaApp.Data
         public List<Twig> SortedTwigs { get; set; } = new List<Twig>();
         public SortBy SortBy { get; set; } = SortBy.DUEDATE_LOWTOHIGH;
 
+        public int? OpenForEdittingId = null;
+
         private void Sort()
         {
             SortedTwigs.Clear();
