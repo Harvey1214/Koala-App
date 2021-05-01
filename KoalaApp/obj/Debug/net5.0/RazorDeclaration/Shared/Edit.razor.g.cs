@@ -111,8 +111,10 @@ using DataAccessLibrary.Helpers;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 128 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 129 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
+    protected ElementReference Title;
+
     private void Copy()
     {
         TwigsTempStorage.CopiedTwig = EditedTwig.Twig.Copy();
@@ -237,9 +239,15 @@ using DataAccessLibrary.Helpers;
         InvokeAsync(StateHasChanged);
     }
 
+    public void FocusOnTitle()
+    {
+        if (Title.Equals(null) == false) Title.FocusAsync();
+    }
+
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JS { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }

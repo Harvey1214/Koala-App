@@ -5,6 +5,7 @@
 @inject EditedTwig EditedTwig
 @inject TwigsHandler TwigsHandler
 @inject TwigsTempStorage TwigsTempStorage  
+@inject IJSRuntime JS  
 
 <div class="card edit resizable-window">
     <div class="edit-content resizable-window-content">
@@ -23,7 +24,7 @@
                     }
                 </div>
                 <div class="form-group">
-                    <input @onfocusout="UpdateTwigInDatabase" @bind="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }" class="form-control" />
+                    <input @ref="Title" @onfocusout="UpdateTwigInDatabase" @bind="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }" class="form-control" />
                 </div>
                 <div class="form-group">
                     <textarea @onfocusout="UpdateTwigInDatabase" @bind="EditedTwig.Twig.Description" @oninput="(e) => { EditedTwig.Twig.Description = (string)e.Value; UpdateEditedTwig(); }" class="form-control" rows="3" />
@@ -126,6 +127,8 @@
 </div>
 
 @code {
+    protected ElementReference Title;
+
     private void Copy()
     {
         TwigsTempStorage.CopiedTwig = EditedTwig.Twig.Copy();
@@ -248,5 +251,10 @@
     public void Update()
     {
         InvokeAsync(StateHasChanged);
+    }
+
+    public void FocusOnTitle()
+    {
+        if (Title.Equals(null) == false) Title.FocusAsync();
     }
 }

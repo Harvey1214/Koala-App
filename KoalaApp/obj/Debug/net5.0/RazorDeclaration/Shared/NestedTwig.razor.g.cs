@@ -195,6 +195,7 @@ using Data;
         {
             OpenForEditting();
             TwigsTempStorage.OpenForEdittingId = null;
+            EditedTwig.Edit.FocusOnTitle();
         }
     }
 
@@ -224,7 +225,7 @@ using Data;
 #line hidden
 #nullable disable
 #nullable restore
-#line 154 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 155 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
            
 
     InvokeAsync(StateHasChanged);
