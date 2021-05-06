@@ -111,7 +111,7 @@ using DataAccessLibrary.Helpers;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 129 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 135 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
     protected ElementReference Title;
 

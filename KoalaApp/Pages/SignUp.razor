@@ -12,6 +12,13 @@
     </div>
 }
 
+@if (AccountWithThisEmailExists)
+{
+    <div class="alert alert-danger">
+        Unfortunately an account with this email <strong>already exists</strong>, please use a different email address
+    </div>
+}
+
 <h3>Sign Up</h3>
 
 <EditForm Model="@SignupModel" OnValidSubmit="@ValidSubmit">
@@ -35,9 +42,19 @@
     private SignupModel SignupModel { get; set; } = new SignupModel();
 
     private bool SomethingWentWrong { get; set; } = false;
+    private bool AccountWithThisEmailExists { get; set; } = false;
 
     private void ValidSubmit()
     {
+        // checking if there's already an account with this email
+        var usersFound = UsersHandler.GetUsers(SignupModel.Email);
+        if (usersFound != null)
+        if (usersFound.Count > 0)
+        {
+            AccountWithThisEmailExists = true;
+            return;
+        }
+
         bool success = UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
 
         if (success)
