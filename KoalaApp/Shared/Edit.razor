@@ -1,6 +1,5 @@
 ﻿@using Data
 @using DataAccessLibrary
-@using DataAccessLibrary.Helpers
 
 @inject EditedTwig EditedTwig
 @inject TwigsHandler TwigsHandler
@@ -10,6 +9,7 @@
 <div class="card edit resizable-window">
     <div class="edit-content resizable-window-content">
         <h5 class="card-header">Edit</h5>
+        <div>Latency: @Latency ms </div>
         <div class="card-body">
             @if (EditedTwig.Twig != null)
             {
@@ -24,7 +24,14 @@
                     }
                 </div>
                 <div class="form-group">
-                    <input @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }" @bind="EditedTwig.Twig.Title" class="form-control" placeholder="Title" />
+                    @if (Latency < LatencyLimitForInstantUpdating && Latency > 0)
+                    {
+                        <input @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); }" @bind="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }" class="form-control" placeholder="Title" />
+                    }
+                    else
+                    {
+                        <input @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }" @bind="EditedTwig.Twig.Title" class="form-control" placeholder="Title" />
+                    }
                 </div>
                 <div class="form-group">
                     <textarea @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }" @bind="EditedTwig.Twig.Description" placeholder="Description" class="form-control" rows="3" />
@@ -126,14 +133,13 @@
     </div>
 </div>
 
-<!--
-    This is code for instantly updating the Twig's title
-
-    @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }"
--->
-
 @code {
     protected ElementReference Title;
+
+    private DateTime StartLoadTime { get; set; }
+    private double Latency { get; set; }
+
+    private double LatencyLimitForInstantUpdating { get; } = 50;
 
     private void Copy()
     {
@@ -251,7 +257,17 @@
 
     protected override void OnInitialized()
     {
+        StartLoadTime = DateTime.Now;
         EditedTwig.Edit = this;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Latency = (DateTime.Now - StartLoadTime).TotalMilliseconds;
+            InvokeAsync(StateHasChanged);
+        }
     }
 
     public void Update()

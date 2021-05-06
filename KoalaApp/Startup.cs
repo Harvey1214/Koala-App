@@ -39,6 +39,8 @@ namespace KoalaApp
             services.AddScoped<TwigsTempStorage>();
             services.AddScoped<EditedTwig>();
 
+            services.AddScoped<OptimizationManager>();
+
             services.AddSingleton<CookieSecurityHandler>();
 
             services.AddBlazoredLocalStorage();

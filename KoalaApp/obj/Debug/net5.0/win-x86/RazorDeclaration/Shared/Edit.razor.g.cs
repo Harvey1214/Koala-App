@@ -96,13 +96,6 @@ using DataAccessLibrary;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
-using DataAccessLibrary.Helpers;
-
-#line default
-#line hidden
-#nullable disable
     public partial class Edit : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -111,9 +104,14 @@ using DataAccessLibrary.Helpers;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 129 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 136 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
     protected ElementReference Title;
+
+    private DateTime StartLoadTime { get; set; }
+    private double Latency { get; set; }
+
+    private double LatencyLimitForInstantUpdating { get; } = 50;
 
     private void Copy()
     {
@@ -231,7 +229,17 @@ using DataAccessLibrary.Helpers;
 
     protected override void OnInitialized()
     {
+        StartLoadTime = DateTime.Now;
         EditedTwig.Edit = this;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Latency = (DateTime.Now - StartLoadTime).TotalMilliseconds;
+            InvokeAsync(StateHasChanged);
+        }
     }
 
     public void Update()

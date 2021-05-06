@@ -98,14 +98,24 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 34 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
+#line 41 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\SignUp.razor"
        
     private SignupModel SignupModel { get; set; } = new SignupModel();
 
     private bool SomethingWentWrong { get; set; } = false;
+    private bool AccountWithThisEmailExists { get; set; } = false;
 
     private void ValidSubmit()
     {
+        // checking if there's already an account with this email
+        var usersFound = UsersHandler.GetUsers(SignupModel.Email);
+        if (usersFound != null)
+        if (usersFound.Count > 0)
+        {
+            AccountWithThisEmailExists = true;
+            return;
+        }
+
         bool success = UsersHandler.InsertUser(SignupModel.Email, SignupModel.Password);
 
         if (success)

@@ -236,7 +236,7 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Ou
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\hostfxr.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\hostpolicy.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscordaccore.dll
-C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscordaccore_x86_x86_5.0.220.61120.dll
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscordaccore_x86_x86_5.0.521.16609.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscordbi.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscorrc.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\ucrtbase.dll
@@ -363,6 +363,7 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Ou
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\Microsoft.JSInterop.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\Microsoft.Net.Http.Headers.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\System.Diagnostics.EventLog.Messages.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\System.Diagnostics.EventLog.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\System.Drawing.Common.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\System.IO.Pipelines.dll
