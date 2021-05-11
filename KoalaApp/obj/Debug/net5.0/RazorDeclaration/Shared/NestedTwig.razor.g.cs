@@ -111,7 +111,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 31 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
@@ -121,6 +121,7 @@ using Data;
 
     private string block = "";
 
+    // calculating margin using the nesting level
     private string margin
     {
         get
@@ -139,7 +140,17 @@ using Data;
             return style;
         }
     }
+    // choosing a color that stands out against the background
+    private string color
+    {
+        get
+        {
+            if (Twig.RelativeLevel != 1) return "color: white;";
+            return "";
+        }
+    }
 
+    // finding out if this twig has children
     private bool hasChildren
     {
         get
@@ -161,6 +172,29 @@ using Data;
         }
     }
 
+    // if this twig is currently being dragged
+    private bool Dragging { get; set; } = false;
+    private string paddingLeft
+    {
+        get
+        {
+            if (Dragging) return "padding-left: 0px;";
+            return "";
+        }
+    }
+
+    // if another twig is being dragged over this one
+    private bool DragOver { get; set; } = false;
+    private string onDragOverHoverEffect
+    {
+        get
+        {
+            if (DragOver) return "transform: translateX(2rem);";
+            return "";
+        }
+    }
+
+    // composing the title displayed when a user hovers over this task
     private string title
     {
         get
@@ -191,12 +225,46 @@ using Data;
             Update();
         }
 
+        // open this task for editting if it has been newly created
         if (TwigsTempStorage.OpenForEdittingId == Twig.Id)
         {
             OpenForEditting();
             TwigsTempStorage.OpenForEdittingId = null;
             EditedTwig.Edit.FocusOnTitle();
         }
+    }
+
+    // add the task that has been dropped onto this one as a new child
+    private void OnDrop()
+    {
+        if (DragAndDropContainer.TransportedTwig == null) return;
+        if (DragAndDropContainer.TransportedTwig == Twig) return;
+
+        DragAndDropContainer.TransportedTwig.ParentId = Twig.Id;
+        TwigsHandler.UpdateTwigParent(DragAndDropContainer.TransportedTwig);
+
+        TwigsTempStorage.Order();
+    }
+
+    // when this twig is being dragged
+    private void OnDragStart()
+    {
+        DragAndDropContainer.TransportedTwig = Twig;
+        Dragging = true;
+    }
+    private void OnDragEnd()
+    {
+        Dragging = false;
+    }
+
+    // when another twig is being dragged over this twig
+    private void OnDragOver()
+    {
+        DragOver = true;
+    }
+    private void OnDragLeave()
+    {
+        DragOver = false;
     }
 
     private void Collapse()
@@ -220,61 +288,53 @@ using Data;
 
     public void Update()
     {
+        InvokeAsync(StateHasChanged);
+    }
 
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 155 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
-           
-
-    InvokeAsync(StateHasChanged);
-}
-
-private void AddTwig()
-{
-    for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
+    private void AddTwig()
     {
-        if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
+        for (int i = 0; i < TwigsTempStorage.Twigs.Count; i++)
         {
-            // insert the new twig into the database
-            TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
+            if (TwigsTempStorage.Twigs[i].Id == Twig.Id)
+            {
+                // insert the new twig into the database
+                TwigsHandler.InsertTwig(NestedStructure.ProjectId, Twig.Id);
 
-            // add the new twig to the GUI
-            int newTwigId = TwigsHandler.GetLastId();
-            TwigsTempStorage.Twigs.Insert(i + 1,
-                new Twig()
-                {
-                    Id = newTwigId,
-                    ProjectId = NestedStructure.ProjectId,
-                    ParentId = Twig.Id,
-                    Title = "",
-                    DueDate = DateTime.Now,
-                    Priority = 0,
-                    Description = "",
-                    State = State.NOTSTARTED,
-                    AbsoluteLevel = Twig.AbsoluteLevel + 1,
-                    RelativeLevel = GetNextRelativeLevel()
-                });
+                // add the new twig to the GUI
+                int newTwigId = TwigsHandler.GetLastId();
+                TwigsTempStorage.Twigs.Insert(i + 1,
+                    new Twig()
+                    {
+                        Id = newTwigId,
+                        ProjectId = NestedStructure.ProjectId,
+                        ParentId = Twig.Id,
+                        Title = "",
+                        DueDate = DateTime.Now,
+                        Priority = 0,
+                        Description = "",
+                        State = State.NOTSTARTED,
+                        AbsoluteLevel = Twig.AbsoluteLevel + 1,
+                        RelativeLevel = GetNextRelativeLevel()
+                    });
 
-            TwigsTempStorage.OpenForEdittingId = newTwigId;
+                TwigsTempStorage.OpenForEdittingId = newTwigId;
 
-            // sort twigs and update nested structure
-            TwigsTempStorage.Order();
+                // sort twigs and update nested structure
+                TwigsTempStorage.Order();
+            }
         }
     }
-}
 
-private int GetNextRelativeLevel()
-{
-    int nextRelativeLevel = Twig.RelativeLevel + 1;
-    if (nextRelativeLevel >= UISettings.LevelStyles.Length)
+    private int GetNextRelativeLevel()
     {
-        nextRelativeLevel = 0;
-    }
+        int nextRelativeLevel = Twig.RelativeLevel + 1;
+        if (nextRelativeLevel >= UISettings.LevelStyles.Length)
+        {
+            nextRelativeLevel = 0;
+        }
 
-    return nextRelativeLevel;
-}
+        return nextRelativeLevel;
+    }
 
 #line default
 #line hidden
@@ -282,6 +342,7 @@ private int GetNextRelativeLevel()
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DragAndDropContainer DragAndDropContainer { get; set; }
     }
 }
 #pragma warning restore 1591

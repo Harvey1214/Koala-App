@@ -139,6 +139,24 @@ namespace DataAccessLibrary
             }
         }
 
+        public bool UpdateTwigParent(Twig twig)
+        {
+            string command = "update TwigsTable set ParentId = @ParentId where Id = @Id";
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = twig.Id, ParentId = twig.ParentId }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool UpdateTwigDueDate(Twig twig)
         {
             if (twig.DueDate == null || twig.DueDate.Year < 1800 || twig.DueDate.Year > 9000)

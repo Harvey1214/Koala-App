@@ -1,0 +1,22 @@
+﻿@using Data
+
+@inject DragAndDropContainer DragAndDropContainer
+
+<div class="card" ondragover="event.preventDefault();" ondragstart="event.dataTransfer.setData('', event.target.id);" @ondrop="OnDrop">
+    <div class="card-body">
+        @text
+    </div>
+</div>
+
+@code {
+    private string text = "Drop here";
+
+    private void OnDrop()
+    {
+        if (DragAndDropContainer.TransportedTwig == null) return;
+
+        text = DragAndDropContainer.TransportedTwig.Title;
+
+        InvokeAsync(StateHasChanged);
+    }
+}

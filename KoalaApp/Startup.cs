@@ -40,6 +40,7 @@ namespace KoalaApp
             services.AddScoped<EditedTwig>();
 
             services.AddScoped<OptimizationManager>();
+            services.AddScoped<DragAndDropContainer>();
 
             services.AddSingleton<CookieSecurityHandler>();
 
