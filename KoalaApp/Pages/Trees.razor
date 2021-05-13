@@ -29,6 +29,7 @@
             <th>Last Opened</th>
             <th>Open</th>
             <th>Preferences</th>
+            <th>Share</th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +41,7 @@
                 <td>@project.LastOpened</td>
                 <td><button class="btn btn-outline-secondary" @onclick="() => OpenProject(project.Id)">Open</button></td>
                 <td><button class="btn btn-secondary" @onclick="() => OpenProjectPreferences(project)"><span class="oi oi-wrench"></span></button></td>
+                <td><button class="btn btn-secondary" @onclick="() => Share(project)"><span class="oi oi-share"></span></button></td>
             </tr>
         }
     </tbody>
@@ -52,10 +54,11 @@
 
     private EditTree EditTree { get; set; }
 
-    private void Share()
-        {
-
-        }
+    private void Share(Project project)
+    {
+        ShareProject.Project = project;
+        NavigationManager.NavigateTo("/share");
+    }
 
     private void OpenProjectPreferences(Project project)
     {

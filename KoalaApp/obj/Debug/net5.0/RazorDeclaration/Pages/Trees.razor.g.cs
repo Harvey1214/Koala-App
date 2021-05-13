@@ -105,13 +105,19 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 48 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 50 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
        
     public List<Project> Projects { get; set; } = new List<Project>();
 
     private bool redirectToLoginPage = false;
 
     private EditTree EditTree { get; set; }
+
+    private void Share(Project project)
+    {
+        ShareProject.Project = project;
+        NavigationManager.NavigateTo("/share");
+    }
 
     private void OpenProjectPreferences(Project project)
     {

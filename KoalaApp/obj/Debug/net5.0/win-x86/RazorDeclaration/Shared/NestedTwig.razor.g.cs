@@ -121,6 +121,7 @@ using Data;
 
     private string block = "";
 
+    // calculating margin using the nesting level
     private string margin
     {
         get
@@ -139,7 +140,17 @@ using Data;
             return style;
         }
     }
+    // choosing a color that stands out against the background
+    private string color
+    {
+        get
+        {
+            if (Twig.RelativeLevel != 1) return "color: white;";
+            return "";
+        }
+    }
 
+    // finding out if this twig has children
     private bool hasChildren
     {
         get
@@ -161,6 +172,29 @@ using Data;
         }
     }
 
+    // if this twig is currently being dragged
+    private bool Dragging { get; set; } = false;
+    private string paddingLeft
+    {
+        get
+        {
+            if (Dragging) return "padding-left: 0px;";
+            return "";
+        }
+    }
+
+    // if another twig is being dragged over this one
+    private bool DragOver { get; set; } = false;
+    private string onDragOverHoverEffect
+    {
+        get
+        {
+            if (DragOver) return "";
+            return "";
+        }
+    }
+
+    // composing the title displayed when a user hovers over this task
     private string title
     {
         get
@@ -191,6 +225,7 @@ using Data;
             Update();
         }
 
+        // open this task for editting if it has been newly created
         if (TwigsTempStorage.OpenForEdittingId == Twig.Id)
         {
             OpenForEditting();
@@ -199,6 +234,7 @@ using Data;
         }
     }
 
+    // add the task that has been dropped onto this one as a new child
     private void OnDrop()
     {
         if (DragAndDropContainer.TransportedTwig == null) return;
@@ -210,9 +246,25 @@ using Data;
         TwigsTempStorage.Order();
     }
 
+    // when this twig is being dragged
     private void OnDragStart()
     {
         DragAndDropContainer.TransportedTwig = Twig;
+        Dragging = true;
+    }
+    private void OnDragEnd()
+    {
+        Dragging = false;
+    }
+
+    // when another twig is being dragged over this twig
+    private void OnDragOver()
+    {
+        DragOver = true;
+    }
+    private void OnDragLeave()
+    {
+        DragOver = false;
     }
 
     private void Collapse()
@@ -236,16 +288,8 @@ using Data;
 
     public void Update()
     {
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 174 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
-           
-
-    InvokeAsync(StateHasChanged);
-}
+        InvokeAsync(StateHasChanged);
+    }
 
     private void AddTwig()
     {

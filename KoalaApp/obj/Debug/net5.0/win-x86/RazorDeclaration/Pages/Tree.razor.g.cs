@@ -106,7 +106,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 39 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
+#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
        
     [Parameter]
     public string TreeIdText { get; set; }
@@ -129,7 +129,7 @@ using DataAccessLibrary;
         {
             RedirectToLoginPage();
         }
-        
+
         if (firstRender)
         {
             if (AccountHandler.User == null)
@@ -200,8 +200,18 @@ using DataAccessLibrary;
         {
             if (projects.Count > 0)
             {
-                return projects.Where(o => o.Id == TreeId).ToList().FirstOrDefault();
+                var project = projects.Where(o => o.Id == TreeId).ToList().FirstOrDefault();
+                if (project != null) return project;
             }
+        }
+
+        var collaborations = ShareHandler.GetCollaborations(TreeId);
+        if (collaborations == null) return null;
+        if (collaborations.Count == 0) return null;
+
+        if (collaborations.Where(o => o.UserId == AccountHandler.User.Id).ToList().Count > 0)
+        {
+            return ProjectsHandler.GetProject(TreeId).ToList().FirstOrDefault();
         }
 
         return null;
@@ -211,6 +221,7 @@ using DataAccessLibrary;
 #line hidden
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareHandler ShareHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }

@@ -1,27 +1,47 @@
 ﻿@page "/share"
 
 @using Data
-@using Data.ValidationModels 
+@using Data.ValidationModels
 @using DataAccessLibrary
 
 @inject UsersHandler UsersHandler
-@inject ShareHandler ShareHandler  
-@inject ShareProject ShareProject 
-@inject AccountHandler AccountHandler 
-@inject NavigationManager NavigationManager 
+@inject ShareHandler ShareHandler
+@inject ShareProject ShareProject
+@inject AccountHandler AccountHandler
+@inject NavigationManager NavigationManager
+
+@if (success.HasValue)
+{
+    @if (success.Value)
+    {
+        <div class="alert alert-success">
+            You have <strong>successfuly shared</strong> <i>@ShareProject.Project.Name</i> with <i>@ShareModel.Email</i>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            An <strong>error has occured</strong>, please refresh the page or try again later
+        </div>
+    }
+}
+
+<h5>Share <i>@ShareProject.Project.Name</i></h5>
 
 <EditForm Model="@ShareModel" OnValidSubmit="@ShareThisProject" class="form-inline">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="form-group mb-2" style="margin-right:0.2rem">
-        <InputText @bind-Value="ShareModel.Email" placeholder="Name" class="form-control"></InputText>
+        <InputText @bind-Value="ShareModel.Email" placeholder="Email" class="form-control"></InputText>
     </div>
     <button type="submit" class="btn btn-primary mb-2">Share</button>
 </EditForm>
 
 @code {
     private ShareModel ShareModel { get; set; } = new ShareModel();
+
+    private bool? success = null;
 
     private void ShareThisProject()
     {
@@ -30,6 +50,6 @@
         if (users == null) return;
         if (users.Count != 1) return;
 
-        ShareHandler.Share(ShareProject.Project.Id, users.First().Id);
+        success = ShareHandler.Share(ShareProject.Project.Id, users.First().Id);
     }
 }
