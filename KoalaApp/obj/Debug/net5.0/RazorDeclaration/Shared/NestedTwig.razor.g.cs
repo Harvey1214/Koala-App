@@ -189,7 +189,7 @@ using Data;
     {
         get
         {
-            if (DragOver) return "transform: translateX(2rem);";
+            if (DragOver) return "";
             return "";
         }
     }

@@ -88,3 +88,5 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\Blazored.LocalSto
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\BouncyCastle.Crypto.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Shared\Dropzone.razor.g.cs
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\Dropzone.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Pages\Share.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Pages\Share.razor.g.cs

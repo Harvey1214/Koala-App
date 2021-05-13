@@ -83,21 +83,28 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
 using Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
+using Data.ValidationModels;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
 using DataAccessLibrary;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/trees")]
-    public partial class Trees : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/share")]
+    public partial class Share : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -105,90 +112,28 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 48 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
+#line 23 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
        
-    public List<Project> Projects { get; set; } = new List<Project>();
+    private ShareModel ShareModel { get; set; } = new ShareModel();
 
-    private bool redirectToLoginPage = false;
-
-    private EditTree EditTree { get; set; }
-
-    private void OpenProjectPreferences(Project project)
+    private void ShareThisProject()
     {
-        if (EditTree == null)
-        {
-            return;
-        }
+        var users = UsersHandler.GetUsers(ShareModel.Email).ToList();
 
-        EditTree.Edit(project);
-    }
+        if (users == null) return;
+        if (users.Count != 1) return;
 
-    private void OpenProject(int id)
-    {
-        NavigationManager.NavigateTo($"/tree/{id}");
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender) LoadProjects();
-
-        if (redirectToLoginPage)
-        {
-            NavigationManager.NavigateTo("/login");
-        }
-    }
-
-    private async void LoadProjects()
-    {
-        if (AccountHandler.User == null)
-        {
-            var cookieContent = await LocalStorage.GetItemAsync<string>("QoAOgiNzhb");
-            AccountHandler.HandleCookies(cookieContent);
-        }
-
-        if (AccountHandler.User == null)
-        {
-            redirectToLoginPage = true;
-            return;
-        }
-
-        Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
-        LoadSharedProjects();
-
-        InvokeAsync(StateHasChanged);
-    }
-
-    private void LoadSharedProjects()
-    {
-        var collaborations = ShareHandler.GetCollaborationsWithUser(AccountHandler.User.Id);
-
-        if (collaborations == null) return;
-
-        foreach (var collaboration in collaborations)
-        {
-            var project = ProjectsHandler.GetProject(collaboration.ProjectId).ToList();
-            if (project != null)
-                if (project.Count == 1)
-                    Projects.Add(project.First());
-        }
-    }
-
-    public void Update()
-    {
-        InvokeAsync(StateHasChanged);
-        LoadProjects();
+        ShareHandler.Share(ShareProject.Project.Id, users.First().Id);
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareProject ShareProject { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UsersHandler UsersHandler { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareHandler ShareHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ProjectsHandler ProjectsHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareProject ShareProject { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareHandler ShareHandler { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UsersHandler UsersHandler { get; set; }
     }
 }
 #pragma warning restore 1591

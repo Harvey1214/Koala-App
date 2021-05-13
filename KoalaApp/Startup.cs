@@ -38,9 +38,11 @@ namespace KoalaApp
             services.AddScoped<AccountHandler>();
             services.AddScoped<TwigsTempStorage>();
             services.AddScoped<EditedTwig>();
+            services.AddScoped<ShareHandler>();
 
             services.AddScoped<OptimizationManager>();
             services.AddScoped<DragAndDropContainer>();
+            services.AddScoped<ShareProject>();
 
             services.AddSingleton<CookieSecurityHandler>();
 
