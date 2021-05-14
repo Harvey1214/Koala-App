@@ -131,6 +131,7 @@ using DataAccessLibrary;
 
     private void OpenProject(int id)
     {
+        ProjectsHandler.UpdateProjectLastOpened(new Project() { Id = id, LastOpened = DateTime.Now });
         NavigationManager.NavigateTo($"/tree/{id}");
     }
 
@@ -160,6 +161,8 @@ using DataAccessLibrary;
 
         Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
         LoadSharedProjects();
+
+        Projects = Projects.OrderByDescending(o => o.LastOpened).ToList();
 
         InvokeAsync(StateHasChanged);
     }

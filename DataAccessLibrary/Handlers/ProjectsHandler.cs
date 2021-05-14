@@ -99,6 +99,25 @@ namespace DataAccessLibrary
             }
         }
 
+        public bool UpdateProjectLastOpened(Project project)
+        {
+            string command = "update ProjectsTable set LastOpened = @LastOpened where Id = @Id";
+
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = project.Id, LastOpened = project.LastOpened }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
