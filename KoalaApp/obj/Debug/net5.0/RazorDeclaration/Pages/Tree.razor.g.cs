@@ -106,7 +106,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
+#line 57 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
        
     [Parameter]
     public string TreeIdText { get; set; }
@@ -139,7 +139,15 @@ using DataAccessLibrary;
             }
 
             LoadProject();
+
+            AdjustUIBasedOnWindowDimensions();
         }
+    }
+
+    private async void AdjustUIBasedOnWindowDimensions()
+    {
+        WindowDimensions.BrowserDimension = await WindowDimensions.GetDimensions();
+        InvokeAsync(StateHasChanged);
     }
 
     private void RedirectToLoginPage()
@@ -221,6 +229,7 @@ using DataAccessLibrary;
 #line hidden
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WindowDimensions WindowDimensions { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareHandler ShareHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }

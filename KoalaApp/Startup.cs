@@ -45,6 +45,7 @@ namespace KoalaApp
             services.AddScoped<ShareProject>();
 
             services.AddSingleton<CookieSecurityHandler>();
+            services.AddScoped<WindowDimensions>();
 
             services.AddBlazoredLocalStorage();
             services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);

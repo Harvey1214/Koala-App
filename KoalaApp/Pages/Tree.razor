@@ -9,7 +9,8 @@
 @inject AccountHandler AccountHandler
 @inject NavigationManager NavigationManager
 @inject TwigsTempStorage TwigsTempStorage
-@inject ShareHandler ShareHandler 
+@inject ShareHandler ShareHandler
+@inject WindowDimensions WindowDimensions
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
 @if (ProjectNotFound)
@@ -25,16 +26,32 @@
     </div>
 }
 
+Width: @WindowDimensions.BrowserDimension.Width
+Height: @WindowDimensions.BrowserDimension.Height
+
 @if (Project != null)
 {
     <h5>@Project.Name</h5>
-    <NestedStructure ProjectId="@Project.Id" Project="@Project" />
-    <div class="resizable-window" style="float: right; position:fixed; top:1rem; right:1rem; height: 95%;">
-        <div class="resizable-window-content">
-            <SearchSort />
-            <Edit />
+    @if (WindowDimensions.BrowserDimension.Width > 1000)
+    {
+        <NestedStructure ProjectId="@Project.Id" Project="@Project" />
+        <div class="resizable-window" style="float: right; position:fixed; top:1rem; right:1rem; height: 95%;">
+            <div class="resizable-window-content">
+                <SearchSort />
+                <Edit />
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <NestedStructure ProjectId="@Project.Id" Project="@Project" />
+        <SearchSort />
+        <div class="resizable-window" style="float: right; position:fixed; top:1rem; right:1rem; height: 95%;">
+            <div class="resizable-window-content">
+                <Edit />
+            </div>
+        </div>
+    }
 }
 
 @code {
@@ -69,7 +86,15 @@
             }
 
             LoadProject();
+
+            AdjustUIBasedOnWindowDimensions();
         }
+    }
+
+    private async void AdjustUIBasedOnWindowDimensions()
+    {
+        WindowDimensions.BrowserDimension = await WindowDimensions.GetDimensions();
+        InvokeAsync(StateHasChanged);
     }
 
     private void RedirectToLoginPage()
