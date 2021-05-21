@@ -26,13 +26,10 @@
     </div>
 }
 
-Width: @WindowDimensions.BrowserDimension.Width
-Height: @WindowDimensions.BrowserDimension.Height
-
 @if (Project != null)
 {
     <h5>@Project.Name</h5>
-    @if (WindowDimensions.BrowserDimension.Width > 1000)
+    @if (WindowDimensions.Mobile == false)
     {
         <NestedStructure ProjectId="@Project.Id" Project="@Project" />
         <div class="resizable-window" style="float: right; position:fixed; top:1rem; right:1rem; height: 95%;">
@@ -44,13 +41,11 @@ Height: @WindowDimensions.BrowserDimension.Height
     }
     else
     {
-        <NestedStructure ProjectId="@Project.Id" Project="@Project" />
-        <SearchSort />
-        <div class="resizable-window" style="float: right; position:fixed; top:1rem; right:1rem; height: 95%;">
-            <div class="resizable-window-content">
-                <Edit />
-            </div>
-        </div>
+        <button class="btn btn-primary switch-view" @onclick="SwitchViewInMobile">Switch View</button>
+
+        <NestedStructure ProjectId="@Project.Id" Project="@Project" Visible="NestedStructureVisible" />
+        <SearchSort Visible="!NestedStructureVisible" />
+        <Edit Visible="false" />
     }
 }
 
@@ -64,6 +59,8 @@ Height: @WindowDimensions.BrowserDimension.Height
     private bool ValidURL { get; set; } = true;
     private bool ProjectNotFound { get; set; } = false;
     private bool RedirectToLogin { get; set; } = false;
+
+    private bool NestedStructureVisible { get; set; } = true;
 
     protected override void OnInitialized()
     {
@@ -87,14 +84,19 @@ Height: @WindowDimensions.BrowserDimension.Height
 
             LoadProject();
 
-            AdjustUIBasedOnWindowDimensions();
+            LoadDimensions();
         }
     }
 
-    private async void AdjustUIBasedOnWindowDimensions()
+    private async void LoadDimensions()
     {
-        WindowDimensions.BrowserDimension = await WindowDimensions.GetDimensions();
+        await WindowDimensions.MainLayout.AdjustUIBasedOnWindowDimensions();
         InvokeAsync(StateHasChanged);
+    }
+
+    private void SwitchViewInMobile()
+    {
+        NestedStructureVisible = !NestedStructureVisible;
     }
 
     private void RedirectToLoginPage()

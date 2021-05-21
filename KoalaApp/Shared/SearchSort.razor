@@ -5,7 +5,7 @@
 @inject ProjectsHandler ProjectsHandler 
 @inject EditedTwig EditedTwig  
 
-<div class="search-sort">
+<div class="search-sort" style="display: @visible;">
     <div class="list-group search-sort-list">
         <div class="dropdown">
             <button @onclick="ToggleDropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -30,6 +30,18 @@
 </div>
 
 @code {      
+    [Parameter]
+    public bool Visible { get; set; } = true;
+
+    private string visible
+    {
+        get
+        {
+            if (Visible) return "block";
+            return "none";
+        }
+    }
+
     private bool dropdownOpened;
     private string dropdownOpenedStyle
     {
@@ -99,6 +111,7 @@
 
         if (EditedTwig.Edit != null)
         {
+            EditedTwig.Edit.MobileOpenForEdittingCheck();
             EditedTwig.Edit.Update();
         }
     }

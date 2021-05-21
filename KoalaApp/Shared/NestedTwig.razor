@@ -8,7 +8,7 @@
 @inject EditedTwig EditedTwig
 
 <div ondragover="event.preventDefault();" @ondragenter="OnDragOver" @ondragleave="OnDragLeave" ondragstart="event.dataTransfer.setData('', event.target.id);" @ondrop="OnDrop" style="@onDragOverHoverEffect">
-    <div class="noOverflow @block twig" style="margin-left:@margin;@paddingLeft" title="@title" alt="@title" draggable="true" @ondragend="OnDragEnd" @ondragstart="OnDragStart">
+    <div class="noOverflow @block twig" style="margin-left:@margin;@paddingLeft width:20rem;" title="@title" alt="@title" draggable="true" @ondragend="OnDragEnd" @ondragstart="OnDragStart">
         <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3 noOverflow" style="width: 18rem;margin-left:0px;cursor:pointer;">
             <div class="card-body">
                 <h5 class="card-title noBottomPaddingMargin block">@Twig.Title</h5>
@@ -16,11 +16,11 @@
                 {
                     @if (Twig.ShowChildren)
                     {
-                        <button class="btn floatRight" @onclick="Collapse"><span style="@color" class="oi oi-arrow-bottom"></span></button>
+                        <button class="btn floatRight" @onclick="Collapse" @onclick:stopPropagation="true"><span style="@color" class="oi oi-arrow-bottom"></span></button>
                     }
                     else
                     {
-                        <button class="btn floatRight" @onclick="Collapse"><span style="@color" class="oi oi-arrow-top"></span></button>
+                        <button class="btn floatRight" @onclick="Collapse" @onclick:stopPropagation="true"><span style="@color" class="oi oi-arrow-top"></span></button>
                     }
                 }
             </div>
@@ -198,6 +198,7 @@
 
         if (EditedTwig.Edit != null)
         {
+            EditedTwig.Edit.MobileOpenForEdittingCheck();
             EditedTwig.Edit.Update();
         }
     }

@@ -1,5 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
+@using Data
+
+@inject WindowDimensions WindowDimensions
+
 <div class="page">
     @if (navMenuHidden == false)
     {
@@ -26,5 +30,31 @@
     private void ToggleNavMenuHidden()
     {
         navMenuHidden = !navMenuHidden;
+    }
+
+    protected override void OnInitialized()
+    {
+        WindowDimensions.MainLayout = this;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender) AdjustUIBasedOnWindowDimensions();
+    }
+
+    public async Task AdjustUIBasedOnWindowDimensions()
+    {
+        WindowDimensions.BrowserDimension = await WindowDimensions.GetDimensions();
+
+        if (WindowDimensions.BrowserDimension.Width > 1000)
+        {
+            WindowDimensions.Mobile = false;
+        }
+        else
+        {
+            WindowDimensions.Mobile = true;
+        }
+
+        InvokeAsync(StateHasChanged);
     }
 }

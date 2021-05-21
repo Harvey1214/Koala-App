@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KoalaApp.Shared;
 using Microsoft.JSInterop;
 
 namespace KoalaApp.Data
 {
     public class WindowDimensions
     {
+        public bool Mobile { get; set; } = false;
+
+        public MainLayout MainLayout { get; set; }
+
         public BrowserDimension BrowserDimension { get; set; } = new BrowserDimension();
         private readonly IJSRuntime _js;
 

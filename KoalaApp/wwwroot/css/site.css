@@ -68,16 +68,6 @@ a, .btn-link {
     
 }
 
-.hideSidebarBtn {
-    height: 3rem;
-    width: 3rem;
-    float: left;
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    margin-top: 2rem;
-}
-
 .search-sort {
     display: inline-block;
     margin-left: 0.5rem;
@@ -91,12 +81,7 @@ a, .btn-link {
 .edit {
     display: inline-block;
     float: right;
-}
-
-.resizable-window-only-width {
-    resize: horizontal;
-    overflow-x: auto;
-    direction: rtl;
+    position: initial;
 }
 
 .resizable-window {
@@ -109,12 +94,81 @@ a, .btn-link {
     direction: ltr;
 }
 
-.twig {
+.hideSidebarBtn {
+    height: 3rem;
+    width: 3rem;
+    float: left;
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    margin-top: 2rem;
+}
 
+@media only screen and (max-width: 1000px)
+{
+    .edit {
+        display: block;
+        position: absolute;
+        float: none;
+        width: 100%;
+        height: fit-content();
+        top: 12%;
+        left: 0px;
+        z-index: 10000;
+    }
+
+    .resizable-window {
+        resize: none;
+        overflow: auto;
+        direction: inherit;
+    }
+
+    .resizable-window-content {
+        direction: inherit;
+    }
+
+    .hideSidebarBtn {
+        height: 3rem;
+        width: 3rem;
+        float: left;
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        margin-top: 2rem;
+        display: none;
+    }
+
+    .search-sort {
+        display: inline-block;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        float: left;
+        margin-bottom: 10rem;
+        resize: none;
+        overflow-x: auto;
+        width: 85%;
+    }
+}
+
+.switch-view {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.resizable-window-only-width {
+    resize: horizontal;
+    overflow-x: auto;
+    direction: rtl;
+}
+
+.twig {
+    margin-right: 0px;
+    padding-right: 0px;
+    width: fit-content();
 }
 
 .twig:hover {
-    padding-left:2rem;
+    padding-left: 2rem;
 }
 
 .SmallerPage {

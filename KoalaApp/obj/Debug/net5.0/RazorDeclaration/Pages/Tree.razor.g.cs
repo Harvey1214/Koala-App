@@ -106,7 +106,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 57 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
+#line 52 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
        
     [Parameter]
     public string TreeIdText { get; set; }
@@ -117,6 +117,8 @@ using DataAccessLibrary;
     private bool ValidURL { get; set; } = true;
     private bool ProjectNotFound { get; set; } = false;
     private bool RedirectToLogin { get; set; } = false;
+
+    private bool NestedStructureVisible { get; set; } = true;
 
     protected override void OnInitialized()
     {
@@ -140,14 +142,19 @@ using DataAccessLibrary;
 
             LoadProject();
 
-            AdjustUIBasedOnWindowDimensions();
+            LoadDimensions();
         }
     }
 
-    private async void AdjustUIBasedOnWindowDimensions()
+    private async void LoadDimensions()
     {
-        WindowDimensions.BrowserDimension = await WindowDimensions.GetDimensions();
+        await WindowDimensions.MainLayout.AdjustUIBasedOnWindowDimensions();
         InvokeAsync(StateHasChanged);
+    }
+
+    private void SwitchViewInMobile()
+    {
+        NestedStructureVisible = !NestedStructureVisible;
     }
 
     private void RedirectToLoginPage()

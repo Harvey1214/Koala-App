@@ -4,9 +4,10 @@
 @inject EditedTwig EditedTwig
 @inject TwigsHandler TwigsHandler
 @inject TwigsTempStorage TwigsTempStorage
+@inject WindowDimensions WindowDimensions 
 @inject IJSRuntime JS
 
-<div class="card edit resizable-window">
+<div class="card edit resizable-window" style="display: @visible;">
     <div class="edit-content resizable-window-content">
         <h5 class="card-header">Edit</h5>
         <div class="card-body">
@@ -15,6 +16,10 @@
                 <div class="form-group">
                     <button @onclick="Copy" type="button" class="btn btn-link block">Copy</button>
                     <button @onclick="Paste" type="button" class="btn btn-link">Paste</button>
+                    @if (WindowDimensions.Mobile)
+                    {
+                        <button @onclick="Close" class="btn btn-secondary" style="float: right;"><span class="oi oi-minus"></span></button>
+                    }
                 </div>
                 <div class="form-group">
                     @if (EditedTwig.Twig.CompletedDate.HasValue)
@@ -23,7 +28,7 @@
                     }
                 </div>
                 <div class="form-group">
-                    @if (Latency < LatencyLimitForInstantUpdating && Latency > 0)
+                    @if (Latency < LatencyLimitForInstantUpdating && Latency > 0 && WindowDimensions.Mobile == false)
                     {
                         <input @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); }" @bind="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }" class="form-control" placeholder="Title" />
                     }
@@ -133,6 +138,18 @@
 </div>
 
 @code {
+    [Parameter]
+    public bool Visible { get; set; } = true;
+
+    private string visible
+    {
+        get
+        {
+            if (Visible) return "block";
+            return "none";
+        }
+    }
+
     protected ElementReference Title;
 
     private DateTime StartLoadTime { get; set; }
@@ -267,6 +284,18 @@
             Latency = (DateTime.Now - StartLoadTime).TotalMilliseconds;
             InvokeAsync(StateHasChanged);
         }
+    }
+
+    public void MobileOpenForEdittingCheck()
+    {
+        if (WindowDimensions.Mobile)
+        {
+            Visible = true;
+        }
+    }
+    private void Close()
+    {
+        Visible = false;
     }
 
     public void Update()

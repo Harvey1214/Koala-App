@@ -4,11 +4,11 @@
 @inject TwigsTempStorage TwigsTempStorage
 @inject TwigsHandler TwigsHandler 
 
-<div style="margin-bottom:1rem;">
+<div style="margin-bottom: 1rem; display: @visible;">
     <button class="btn btn-outline-info" @onclick="AddTwig">Add twig</button>
 </div>
 
-<div class="block SmallerPage">
+<div class="block SmallerPage" style="display: @visible;">
     @if (TwigsTempStorage.Twigs != null)
     {
         @foreach (var twig in TwigsTempStorage.OrderedTwigs)
@@ -19,6 +19,18 @@
 </div>
 
 @code {
+    [Parameter]
+    public bool Visible { get; set; } = true;
+
+    private string visible
+    {
+        get
+        {
+            if (Visible) return "block";
+            return "none";
+        }
+    }
+
     [Parameter]
     public int ProjectId { get; set; }
 

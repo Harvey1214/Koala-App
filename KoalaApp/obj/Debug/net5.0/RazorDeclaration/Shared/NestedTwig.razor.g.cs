@@ -282,6 +282,7 @@ using Data;
 
         if (EditedTwig.Edit != null)
         {
+            EditedTwig.Edit.MobileOpenForEdittingCheck();
             EditedTwig.Edit.Update();
         }
     }

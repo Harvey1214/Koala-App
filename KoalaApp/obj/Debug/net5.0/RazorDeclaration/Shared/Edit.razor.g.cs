@@ -104,8 +104,20 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 135 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 140 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
+    [Parameter]
+    public bool Visible { get; set; } = true;
+
+    private string visible
+    {
+        get
+        {
+            if (Visible) return "block";
+            return "none";
+        }
+    }
+
     protected ElementReference Title;
 
     private DateTime StartLoadTime { get; set; }
@@ -242,6 +254,18 @@ using DataAccessLibrary;
         }
     }
 
+    public void MobileOpenForEdittingCheck()
+    {
+        if (WindowDimensions.Mobile)
+        {
+            Visible = true;
+        }
+    }
+    private void Close()
+    {
+        Visible = false;
+    }
+
     public void Update()
     {
         InvokeAsync(StateHasChanged);
@@ -256,6 +280,7 @@ using DataAccessLibrary;
 #line hidden
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JS { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WindowDimensions WindowDimensions { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }
