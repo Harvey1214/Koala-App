@@ -106,6 +106,18 @@ using DataAccessLibrary;
 #nullable restore
 #line 32 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
              
+    [Parameter]
+    public bool Visible { get; set; } = true;
+
+    private string visible
+    {
+        get
+        {
+            if (Visible) return "block";
+            return "none";
+        }
+    }
+
     private bool dropdownOpened;
     private string dropdownOpenedStyle
     {
@@ -175,6 +187,7 @@ using DataAccessLibrary;
 
         if (EditedTwig.Edit != null)
         {
+            EditedTwig.Edit.MobileOpenForEdittingCheck();
             EditedTwig.Edit.Update();
         }
     }

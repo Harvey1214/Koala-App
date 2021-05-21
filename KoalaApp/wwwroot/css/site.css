@@ -108,7 +108,7 @@ a, .btn-link {
 {
     .edit {
         display: block;
-        position: absolute;
+        position: fixed;
         float: none;
         width: 100%;
         height: fit-content();

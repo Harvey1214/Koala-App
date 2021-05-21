@@ -82,6 +82,13 @@ using KoalaApp.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
+using Data;
+
+#line default
+#line hidden
+#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998
@@ -90,7 +97,7 @@ using KoalaApp.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 23 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
+#line 27 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
        
     private bool navMenuHidden = false;
 
@@ -99,9 +106,36 @@ using KoalaApp.Shared;
         navMenuHidden = !navMenuHidden;
     }
 
+    protected override void OnInitialized()
+    {
+        WindowDimensions.MainLayout = this;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender) AdjustUIBasedOnWindowDimensions();
+    }
+
+    public async Task AdjustUIBasedOnWindowDimensions()
+    {
+        WindowDimensions.BrowserDimension = await WindowDimensions.GetDimensions();
+
+        if (WindowDimensions.BrowserDimension.Width > 1000)
+        {
+            WindowDimensions.Mobile = false;
+        }
+        else
+        {
+            WindowDimensions.Mobile = true;
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WindowDimensions WindowDimensions { get; set; }
     }
 }
 #pragma warning restore 1591

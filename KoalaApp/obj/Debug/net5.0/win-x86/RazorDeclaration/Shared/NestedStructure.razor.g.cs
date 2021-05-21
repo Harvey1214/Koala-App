@@ -107,6 +107,18 @@ using Data;
 #line 21 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
        
     [Parameter]
+    public bool Visible { get; set; } = true;
+
+    private string visible
+    {
+        get
+        {
+            if (Visible) return "block";
+            return "none";
+        }
+    }
+
+    [Parameter]
     public int ProjectId { get; set; }
 
     [Parameter]

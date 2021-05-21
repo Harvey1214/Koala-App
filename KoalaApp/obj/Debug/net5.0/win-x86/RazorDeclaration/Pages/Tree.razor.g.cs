@@ -106,7 +106,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
+#line 52 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Tree.razor"
        
     [Parameter]
     public string TreeIdText { get; set; }
@@ -117,6 +117,8 @@ using DataAccessLibrary;
     private bool ValidURL { get; set; } = true;
     private bool ProjectNotFound { get; set; } = false;
     private bool RedirectToLogin { get; set; } = false;
+
+    private bool NestedStructureVisible { get; set; } = true;
 
     protected override void OnInitialized()
     {
@@ -139,7 +141,20 @@ using DataAccessLibrary;
             }
 
             LoadProject();
+
+            LoadDimensions();
         }
+    }
+
+    private async void LoadDimensions()
+    {
+        await WindowDimensions.MainLayout.AdjustUIBasedOnWindowDimensions();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void SwitchViewInMobile()
+    {
+        NestedStructureVisible = !NestedStructureVisible;
     }
 
     private void RedirectToLoginPage()
@@ -221,6 +236,7 @@ using DataAccessLibrary;
 #line hidden
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WindowDimensions WindowDimensions { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareHandler ShareHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
