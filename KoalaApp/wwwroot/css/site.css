@@ -104,6 +104,24 @@ a, .btn-link {
     margin-top: 2rem;
 }
 
+.twig {
+    margin-right: 0px;
+    padding-right: 0px;
+    width: fit-content();
+}
+
+.twig:hover {
+    padding-left: 2rem;
+}
+
+.add-new-twig-btn {
+    display: none;
+}
+
+.hide-edit-btn {
+    display: none;
+}
+
 @media only screen and (max-width: 1000px)
 {
     .edit {
@@ -148,6 +166,18 @@ a, .btn-link {
         overflow-x: auto;
         width: 85%;
     }
+
+    .twig:hover {
+        padding-left: 0rem;
+    }
+
+    .add-new-twig-btn {
+        display: inline-block;
+    }
+
+    .hide-edit-btn {
+        display: block;
+    }
 }
 
 .switch-view {
@@ -159,16 +189,6 @@ a, .btn-link {
     resize: horizontal;
     overflow-x: auto;
     direction: rtl;
-}
-
-.twig {
-    margin-right: 0px;
-    padding-right: 0px;
-    width: fit-content();
-}
-
-.twig:hover {
-    padding-left: 2rem;
 }
 
 .SmallerPage {

@@ -12,17 +12,20 @@
         <div @onclick="OpenForEditting" @ondblclick="AddTwig" class="card @cardStyle mb-3 noOverflow" style="width: 18rem;margin-left:0px;cursor:pointer;">
             <div class="card-body">
                 <h5 class="card-title noBottomPaddingMargin block">@Twig.Title</h5>
-                @if (hasChildren)
-                {
-                    @if (Twig.ShowChildren)
+                <div class="floatRight">
+                    <button class="btn @addNewTwigButtonColor add-new-twig-btn" @onclick="AddTwig" @onclick:stopPropagation="true"><span class="oi oi-plus"></span></button>
+                    @if (hasChildren)
                     {
-                        <button class="btn floatRight" @onclick="Collapse" @onclick:stopPropagation="true"><span style="@color" class="oi oi-arrow-bottom"></span></button>
+                        @if (Twig.ShowChildren)
+                        {
+                            <button class="btn" @onclick="Collapse" @onclick:stopPropagation="true"><span style="@color" class="oi oi-arrow-bottom"></span></button>
+                        }
+                        else
+                        {
+                            <button class="btn" @onclick="Collapse" @onclick:stopPropagation="true"><span style="@color" class="oi oi-arrow-top"></span></button>
+                        }
                     }
-                    else
-                    {
-                        <button class="btn floatRight" @onclick="Collapse" @onclick:stopPropagation="true"><span style="@color" class="oi oi-arrow-top"></span></button>
-                    }
-                }
+                </div>
             </div>
         </div>
     </div>
@@ -36,6 +39,16 @@
     public NestedStructure NestedStructure { get; set; }
 
     private string block = "";
+
+    // choose a contrasting color for the add new twig button (mobile)
+    private string addNewTwigButtonColor
+    {
+        get
+        {
+            if (Twig.RelativeLevel == 0 || Twig.RelativeLevel == 3) return "btn-light";
+            return "btn-dark";
+        }
+    }
 
     // calculating margin using the nesting level
     private string margin

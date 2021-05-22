@@ -111,7 +111,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 31 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 34 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
@@ -120,6 +120,16 @@ using Data;
     public NestedStructure NestedStructure { get; set; }
 
     private string block = "";
+
+    // choose a contrasting color for the add new twig button (mobile)
+    private string addNewTwigButtonColor
+    {
+        get
+        {
+            if (Twig.RelativeLevel == 0 || Twig.RelativeLevel == 3) return "btn-light";
+            return "btn-dark";
+        }
+    }
 
     // calculating margin using the nesting level
     private string margin

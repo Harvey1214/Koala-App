@@ -16,10 +16,7 @@
                 <div class="form-group">
                     <button @onclick="Copy" type="button" class="btn btn-link block">Copy</button>
                     <button @onclick="Paste" type="button" class="btn btn-link">Paste</button>
-                    @if (WindowDimensions.Mobile)
-                    {
-                        <button @onclick="Close" class="btn btn-secondary" style="float: right;"><span class="oi oi-minus"></span></button>
-                    }
+                    <button @onclick="Close" class="btn btn-secondary hide-edit-btn" style="float: right;"><span class="oi oi-minus"></span></button>
                 </div>
                 <div class="form-group">
                     @if (EditedTwig.Twig.CompletedDate.HasValue)
@@ -93,10 +90,11 @@
             }
             else
             {
-                <div class="form-group">
-                    <button @onclick="Copy" type="button" class="btn btn-link block" disabled>Copy</button>
-                    <button @onclick="Paste" type="button" class="btn btn-link" disabled>Paste</button>
-                </div>
+        <div class="form-group">
+            <button @onclick="Copy" type="button" class="btn btn-link block" disabled>Copy</button>
+            <button @onclick="Paste" type="button" class="btn btn-link" disabled>Paste</button>
+            <button @onclick="Close" class="btn btn-secondary hide-edit-btn" style="float: right;"><span class="oi oi-minus"></span></button>
+        </div>
                 <div class="form-group">
                     <input class="form-control" placeholder="Title" disabled />
                 </div>

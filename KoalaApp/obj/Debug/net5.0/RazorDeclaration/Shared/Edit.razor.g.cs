@@ -104,7 +104,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 140 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 138 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
     [Parameter]
     public bool Visible { get; set; } = true;
