@@ -104,7 +104,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 138 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 147 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
     [Parameter]
     public bool Visible { get; set; } = true;
@@ -119,6 +119,20 @@ using DataAccessLibrary;
     }
 
     protected ElementReference Title;
+
+    protected ElementReference Description;
+    private string DescriptionWidth
+    {
+        get
+        {
+            if (TwigsTempStorage == null) return "";
+            if (TwigsTempStorage.Tree == null) return "";
+            if (TwigsTempStorage.Tree.Project == null) return "";
+            if (TwigsTempStorage.Tree.Project.DescriptionFieldWidth == 0) return "";
+
+            return $"height: {TwigsTempStorage.Tree.Project.DescriptionFieldWidth}px";
+        }
+    }
 
     private DateTime StartLoadTime { get; set; }
     private double Latency { get; set; }
@@ -276,10 +290,26 @@ using DataAccessLibrary;
         if (Title.Equals(null) == false) Title.FocusAsync();
     }
 
+    private async void SaveDescriptionWidth()
+    {
+        if (Description.Equals(null) || TwigsTempStorage.Tree == null) return;
+
+        BoundingClientRect rect = await GetElementRect(Description);
+        TwigsTempStorage.Tree.Project.DescriptionFieldWidth = (int)rect.Height;
+
+        ProjectsHandler.UpdateProjectDescriptionFieldWidth(TwigsTempStorage.Tree.Project);
+    }
+
+    public async Task<BoundingClientRect> GetElementRect(ElementReference elementReference)
+    {
+        return await JS.InvokeAsync<BoundingClientRect>("MyDOMGetBoundingClientRect", elementReference);
+    }
+
 #line default
 #line hidden
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JS { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ProjectsHandler ProjectsHandler { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private WindowDimensions WindowDimensions { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsHandler TwigsHandler { get; set; }

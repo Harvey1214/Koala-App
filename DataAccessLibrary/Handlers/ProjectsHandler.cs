@@ -118,6 +118,79 @@ namespace DataAccessLibrary
             }
         }
 
+        public bool UpdateProjectEditWindow(Project project)
+        {
+            string command = "update ProjectsTable set EditWindow = @EditWindow where Id = @Id";
+
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = project.Id, EditWindow = project.EditWindowDimensions.ToString() }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool UpdateProjectRightContainer(Project project)
+        {
+            string command = "update ProjectsTable set RightContainer = @RightContainer where Id = @Id";
+
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = project.Id, EditWindow = project.RightContainerDimensions.ToString() }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool UpdateProjectDescriptionFieldWidth(Project project)
+        {
+            string command = "update ProjectsTable set DescriptionFieldWidth = @DescriptionFieldWidth where Id = @Id";
+
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = project.Id, DescriptionFieldWidth = project.DescriptionFieldWidth }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool UpdateProjectSearchSortWindowWidth(Project project)
+        {
+            string command = "update ProjectsTable set SearchSortWindowWidth = @SearchSortWindowWidth where Id = @Id";
+
+            DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
+
+            int rowsAffected = dataAccess.WriteData(command,
+                new { Id = project.Id, SearchSortWindowWidth = project.SearchSortWindowWidth }); ;
+
+            if (rowsAffected == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

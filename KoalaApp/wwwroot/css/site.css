@@ -128,10 +128,10 @@ a, .btn-link {
         display: block;
         position: fixed;
         float: none;
-        width: 100%;
+        width: 90%;
         height: fit-content();
         top: 12%;
-        left: 0px;
+        left: 5%;
         z-index: 10000;
     }
 

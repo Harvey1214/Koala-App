@@ -1,4 +1,4 @@
 {
-  "Environment": 1,
+  "Environment": 0,
   "ConnectionStrings": [ "Data Source=MSI\\SQLSERVER;Initial Catalog=KoalaAppDatabase;Integrated Security=True;Pooling=False", "Data Source=81.2.195.160;Integrated Security=False;User ID=f139218;password=faT39C2F;Connect Timeout=15;Encrypt=False;Packet Size=4096" ]
 }
