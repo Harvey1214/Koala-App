@@ -7,14 +7,14 @@
 <div class="page">
     @if (navMenuHidden == false)
     {
-        <div class="sidebar">
+        <div class="sidebar" style="background: @UISettings.PrimaryColor;">
             <NavMenu />
         </div>
-        <button @onclick="ToggleNavMenuHidden" type="button" class="btn btn-primary hideSidebarBtn"><span class="oi oi-arrow-left"></span></button>
+        <button @onclick="ToggleNavMenuHidden" type="button" class="btn @UISettings.PrimaryButton hideSidebarBtn"><span class="oi oi-arrow-left"></span></button>
     }
     else
     {
-        <button @onclick="ToggleNavMenuHidden" type="button" class="btn btn-primary hideSidebarBtn"><span class="oi oi-arrow-right"></span></button>
+        <button @onclick="ToggleNavMenuHidden" type="button" class="btn @UISettings.PrimaryButton hideSidebarBtn"><span class="oi oi-arrow-right"></span></button>
     }
 
     <div class="main">

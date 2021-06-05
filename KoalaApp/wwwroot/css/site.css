@@ -98,7 +98,7 @@ a, .btn-link {
     height: 3rem;
     width: 3rem;
     float: left;
-    position: absolute;
+    position: fixed;
     bottom: 1rem;
     left: 1rem;
     margin-top: 2rem;

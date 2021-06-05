@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLibrary;
-using KoalaApp.Data.Common;
+using KoalaApp.Data;
 using KoalaApp.Shared;
 using KoalaApp.Pages;
 
