@@ -236,7 +236,7 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Ou
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\hostfxr.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\hostpolicy.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscordaccore.dll
-C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscordaccore_x86_x86_5.0.521.16609.dll
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscordaccore_x86_x86_5.0.721.25508.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscordbi.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\mscorrc.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\PubTmp\Out\ucrtbase.dll

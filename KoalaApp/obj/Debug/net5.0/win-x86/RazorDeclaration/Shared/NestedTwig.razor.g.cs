@@ -91,13 +91,6 @@ using DataAccessLibrary;
 #nullable disable
 #nullable restore
 #line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
-using Data.Common;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
 using Data;
 
 #line default
@@ -111,7 +104,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 34 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
+#line 33 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedTwig.razor"
        
     [Parameter]
     public Twig Twig { get; set; }
