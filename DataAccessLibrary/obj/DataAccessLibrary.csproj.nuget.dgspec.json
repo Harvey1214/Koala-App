@@ -27,7 +27,8 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Users\\mikuh\\OneDrive\\Plocha\\Nugets": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/havit/_packaging/Main/nuget/v3/index.json": {}
         },
         "frameworks": {
           "netstandard2.0": {

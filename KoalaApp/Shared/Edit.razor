@@ -1,5 +1,6 @@
 ﻿@using Data
 @using DataAccessLibrary
+@using System.Threading 
 
 @inject EditedTwig EditedTwig
 @inject TwigsHandler TwigsHandler
@@ -28,11 +29,11 @@
                 <div class="form-group">
                     @if (Latency < LatencyLimitForInstantUpdating && Latency > 0 && WindowDimensions.Mobile == false)
                     {
-                        <input @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); }" @bind="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }" class="form-control" placeholder="Title" />
+                        <input @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); }" @bind="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }" maxlength="50" class="form-control" placeholder="Title" />
                     }
                     else
                     {
-                        <input @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }" @bind="EditedTwig.Twig.Title" class="form-control" placeholder="Title" />
+                        <input @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }" @bind="EditedTwig.Twig.Title" class="form-control" maxlength="50" placeholder="Title" />
                     }
                 </div>
                 <div class="form-group">
@@ -94,7 +95,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-danger" @onclick="DeleteTwig">Remove</button>
+                    <button class="btn btn-danger" @onclick="() => ShowConfirmDeletionDialog(true, true)" style="@DeleteButtonVisibility">Remove</button>
+                    <button class="btn btn-sm btn-outline-danger" @onclick="DeleteTwig" style="@ConfirmDeletionButtonVisiblity">Delete <strong>@EditedTwig.Twig.Title</strong></button>
                 </div>
             }
             else
@@ -177,6 +179,14 @@
     private double Latency { get; set; }
 
     private double LatencyLimitForInstantUpdating { get; } = 50;
+
+    private string DeleteButtonVisibility { get; set; } = displayBlock;
+    private string ConfirmDeletionButtonVisiblity { get; set; } = displayNone;
+
+    #region ReadonlyConstants
+    private static readonly string displayBlock = "display: block;";
+    private static readonly string displayNone = "display: none;";
+    #endregion
 
     private void Copy()
     {
@@ -267,6 +277,21 @@
         }
     }
 
+    private void ShowConfirmDeletionDialog(bool show, bool delay = false)
+    {
+        if (delay) Thread.Sleep(500);
+
+        if (show)
+        {
+            ConfirmDeletionButtonVisiblity = displayBlock;
+            DeleteButtonVisibility = displayNone;
+        }
+        else
+        {
+            DeleteButtonVisibility = displayBlock;
+            ConfirmDeletionButtonVisiblity = displayNone;
+        }
+    }
     private void DeleteTwig()
     {
         // deleting the twig record from the database
@@ -278,6 +303,8 @@
 
         // not displaing the twig anymore in the edit
         EditedTwig.Twig = null;
+
+        ShowConfirmDeletionDialog(false);
     }
 
     private void UpdateEditedTwig()
@@ -321,6 +348,7 @@
 
     public void Update()
     {
+        ShowConfirmDeletionDialog(false);
         InvokeAsync(StateHasChanged);
     }
 
