@@ -83,6 +83,27 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 11 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor.Components.Web.Bootstrap;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
 using Data;
 
@@ -112,7 +133,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 41 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
+#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
        
     private ShareModel ShareModel { get; set; } = new ShareModel();
 

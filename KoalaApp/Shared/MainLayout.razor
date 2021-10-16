@@ -37,9 +37,9 @@
         WindowDimensions.MainLayout = this;
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender) AdjustUIBasedOnWindowDimensions();
+        if (firstRender) await AdjustUIBasedOnWindowDimensions();
     }
 
     public async Task AdjustUIBasedOnWindowDimensions()
@@ -55,6 +55,6 @@
             WindowDimensions.Mobile = true;
         }
 
-        InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged);
     }
 }

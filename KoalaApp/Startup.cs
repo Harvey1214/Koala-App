@@ -12,6 +12,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLibrary;
 using Blazored.LocalStorage;
+using Havit;
+using Havit.Blazor;
+using Havit.Blazor.Components.Web;
+using Havit.Blazor.Components.Web.Bootstrap;
 
 namespace KoalaApp
 {
@@ -49,6 +53,16 @@ namespace KoalaApp
 
             services.AddBlazoredLocalStorage();
             services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
+
+            services.AddHxServices();
+
+            SetDefaults();
+        }
+
+        private void SetDefaults()
+        {
+            HxButton.Defaults.Color = ThemeColor.Info;
+            HxSubmit.Defaults.Color = ThemeColor.Info;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

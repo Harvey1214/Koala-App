@@ -83,15 +83,22 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
-using Data;
+#line 11 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
-using DataAccessLibrary;
+#line 12 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor.Components.Web.Bootstrap;
 
 #line default
 #line hidden
@@ -104,100 +111,6 @@ using DataAccessLibrary;
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 50 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Trees.razor"
-       
-    public List<Project> Projects { get; set; } = new List<Project>();
-
-    private bool redirectToLoginPage = false;
-
-    private EditTree EditTree { get; set; }
-
-    private void Share(Project project)
-    {
-        ShareProject.Project = project;
-        NavigationManager.NavigateTo("/share");
-    }
-
-    private void OpenProjectPreferences(Project project)
-    {
-        if (EditTree == null)
-        {
-            return;
-        }
-
-        EditTree.Edit(project);
-    }
-
-    private void OpenProject(int id)
-    {
-        ProjectsHandler.UpdateProjectLastOpened(new Project() { Id = id, LastOpened = DateTime.Now });
-        NavigationManager.NavigateTo($"/tree/{id}");
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender) LoadProjects();
-
-        if (redirectToLoginPage)
-        {
-            NavigationManager.NavigateTo("/login");
-        }
-    }
-
-    private async void LoadProjects()
-    {
-        if (AccountHandler.User == null)
-        {
-            var cookieContent = await LocalStorage.GetItemAsync<string>("QoAOgiNzhb");
-            AccountHandler.HandleCookies(cookieContent);
-        }
-
-        if (AccountHandler.User == null)
-        {
-            redirectToLoginPage = true;
-            return;
-        }
-
-        Projects = ProjectsHandler.GetProjectsOfUser(AccountHandler.User.Id) ?? new List<Project>();
-        LoadSharedProjects();
-
-        Projects = Projects.OrderByDescending(o => o.LastOpened).ToList();
-
-        await InvokeAsync(StateHasChanged);
-    }
-
-    private void LoadSharedProjects()
-    {
-        var collaborations = ShareHandler.GetCollaborationsWithUser(AccountHandler.User.Id);
-
-        if (collaborations == null) return;
-
-        foreach (var collaboration in collaborations)
-        {
-            var project = ProjectsHandler.GetProject(collaboration.ProjectId).ToList();
-            if (project != null)
-                if (project.Count == 1)
-                    Projects.Add(project.First());
-        }
-    }
-
-    public void Update()
-    {
-        InvokeAsync(StateHasChanged);
-        LoadProjects();
-    }
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareProject ShareProject { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UsersHandler UsersHandler { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ShareHandler ShareHandler { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ProjectsHandler ProjectsHandler { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AccountHandler AccountHandler { get; set; }
     }
 }
 #pragma warning restore 1591

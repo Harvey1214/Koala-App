@@ -5,12 +5,13 @@
 
 @inject AccountHandler AccountHandler
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject NavigationManager NavigationManager 
 
 <h1>Koala</h1>
 
 <p>Koala is an innovative and modern task tracking and planning app. It allows you to create tree task structures to easily organize your projects and stay focused on your work.</p>
 
-<a href="/signup" class="btn @UISettings.PrimaryButton btn-lg">Sign Up</a>
+<HxButton OnClick="SignUp" Text="Sign Up" Size="ButtonSize.Large" />
 
 @code {      
     protected async override void OnAfterRender(bool firstRender)
@@ -23,5 +24,10 @@
                 AccountHandler.HandleCookies(cookieContent);
             }
         }
+    }
+
+    private void SignUp()
+    {
+        NavigationManager.NavigateTo("/signup");
     }
 }

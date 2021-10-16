@@ -14,15 +14,15 @@
 {
     @if (success.Value)
     {
-        <div class="alert alert-success">
+        <HxAlert Color="ThemeColor.Success">
             You have <strong>successfuly shared</strong> <i>@ShareProject.Project.Name</i> with <i>@ShareModel.Email</i>
-        </div>
+        </HxAlert>
     }
     else
     {
-        <div class="alert alert-danger">
+        <HxAlert Color="ThemeColor.Danger">
             An <strong>error has occured</strong>, please refresh the page or try again later
-        </div>
+        </HxAlert>
     }
 }
 
@@ -32,10 +32,9 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group mb-2" style="margin-right:0.2rem">
-        <InputText @bind-Value="ShareModel.Email" placeholder="Email" class="form-control"></InputText>
-    </div>
-    <button type="submit" class="btn btn-primary mb-2">Share</button>
+    <HxInputText @bind-Value="ShareModel.Email" Placeholder="Email" CssClass="mb-0" />
+    
+    <HxSubmit Text="Share" CssClass="mt-0 ml-1" />
 </EditForm>
 
 @code {

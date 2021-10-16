@@ -35,8 +35,6 @@ namespace KoalaApp.Shared
             }
         }
 
-        private int sortByCount = 6;
-
         private void ToggleDropdown()
         {
             dropdownOpened = !dropdownOpened;

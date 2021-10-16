@@ -7,3 +7,4 @@ C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\bin\Debug\netstandard2.0\
 C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.dll
 C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.pdb
 C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.csproj.AssemblyReference.cache
+C:\Users\mikuh\source\repos\KoalaApp\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.GeneratedMSBuildEditorConfig.editorconfig

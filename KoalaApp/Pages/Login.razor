@@ -12,23 +12,23 @@
 
 @if (SignUpSuccessful)
 {
-    <div class="alert alert-success">
+    <HxAlert Color="ThemeColor.Success">
         You have <strong>successfuly signed up</strong>, please login
-    </div>
+    </HxAlert>
 }
 
 @if (LoginNotSuccessful)
 {
-    <div class="alert alert-danger">
+    <HxAlert Color="ThemeColor.Danger">
         Acccount with this email <strong>doesn't</strong> exist, please <a class="alert-link" href="/signup">sign up</a>
-    </div>
+    </HxAlert>
 }
 
 @if (UsernameAndPasswordDoNotMatch)
 {
-    <div class="alert alert-danger">
+    <HxAlert Color="ThemeColor.Danger">
         Email and password <strong>do not match</strong>, <a class="alert-link" href="/forgotpassword">forgot password?</a>
-    </div>
+    </HxAlert>
 }
 
 <h3>Login</h3>
@@ -37,14 +37,10 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <InputText @bind-Value="LoginModel.Email" placeholder="Email" class="form-control"></InputText>
-    </div>
-    <div class="form-group">
-        <InputText @bind-Value="LoginModel.Password" type="password" Placeholder="Password" class="form-control"></InputText>
-    </div>
+    <HxInputText @bind-Value="LoginModel.Email" Placeholder="Email" />
+    <HxInputText @bind-Value="LoginModel.Password" Placeholder="Password" Type="InputType.Password" CssClass="mb-0" />
 
-    <button type="submit" class="btn @UISettings.PrimaryButton">Login</button>
+    <HxSubmit Text="Login" />
 </EditForm>
 
 @code {

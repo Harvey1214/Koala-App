@@ -137,6 +137,10 @@
               "target": "Package",
               "version": "[3.0.0, )"
             },
+            "Havit.Blazor.Components.Web.Bootstrap": {
+              "target": "Package",
+              "version": "[1.4.2, )"
+            },
             "Microsoft.AspNetCore.Components.DataAnnotations.Validation": {
               "target": "Package",
               "version": "[3.2.0-rc1.20223.4, )"

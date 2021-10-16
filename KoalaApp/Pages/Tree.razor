@@ -15,15 +15,15 @@
 
 @if (ProjectNotFound)
 {
-    <div class="alert alert-warning">
+    <HxAlert Color="ThemeColor.Warning">
         Tree <strong>was not found</strong>, please check your spelling and <a href="/trees" class="alert-link">tree list</a>
-    </div>
+    </HxAlert>
 }
 @if (ValidURL == false)
 {
-    <div class="alert alert-warning">
+    <HxAlert Color="ThemeColor.Warning">
         The url is <strong>invalid</strong>, the correct form is base URL + /tree/{Tree Id}
-    </div>
+    </HxAlert>
 }
 
 @if (Project != null)
@@ -39,7 +39,7 @@
     }
     else
     {
-        <button class="btn @UISettings.PrimaryButton switch-view" @onclick="SwitchViewInMobile">Switch View</button>
+        <HxButton OnClick="SwitchViewInMobile" CssClass="switch-view" Text="Switch View" />
 
         <NestedStructure ProjectId="@Project.Id" Project="@Project" Visible="NestedStructureVisible" />
         <SearchSort Visible="!NestedStructureVisible" />
@@ -89,7 +89,7 @@
     private async void LoadDimensions()
     {
         await WindowDimensions.MainLayout.AdjustUIBasedOnWindowDimensions();
-        InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged);
     }
 
     private void SwitchViewInMobile()

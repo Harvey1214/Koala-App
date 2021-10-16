@@ -7,16 +7,16 @@
 
 @if (SomethingWentWrong)
 {
-    <div class="alert alert-danger">
+    <HxAlert Color="ThemeColor.Danger">
         Something <strong>went wrong</strong>, please <a class="alert-link" href="/signup">try again</a> in a few minutes
-    </div>
+    </HxAlert>
 }
 
 @if (AccountWithThisEmailExists)
 {
-    <div class="alert alert-danger">
+    <HxAlert Color="ThemeColor.Danger">
         Unfortunately an account with this email <strong>already exists</strong>, please use a different email address
-    </div>
+    </HxAlert>
 }
 
 <h3>Sign Up</h3>
@@ -25,17 +25,11 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <InputText @bind-Value="SignupModel.Email" placeholder="Email" class="form-control"></InputText>
-    </div>
-    <div class="form-group">
-        <InputText @bind-Value="SignupModel.Password" type="password" Placeholder="Password" class="form-control"></InputText>
-    </div>
-    <div class="form-group">
-        <InputText @bind-Value="SignupModel.ControlPassword" type="password" Placeholder="Repeat Password" class="form-control"></InputText>
-    </div>
+    <HxInputText @bind-Value="SignupModel.Email" Placeholder="Email" />
+    <HxInputText @bind-Value="SignupModel.Password" Placeholder="Password" Type="InputType.Password" />
+    <HxInputText @bind-Value="SignupModel.ControlPassword" Placeholder="Repeat Password" Type="InputType.Password" CssClass="mb-0" />
 
-    <button type="submit" class="btn @UISettings.PrimaryButton">Submit</button>
+    <HxSubmit Text="Submit" />
 </EditForm>
 
 @code {
