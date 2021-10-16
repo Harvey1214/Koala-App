@@ -47,7 +47,7 @@ html, body {
 }
 
 ::-webkit-scrollbar {
-    display: none;
+    width: 10px;
 }
 
 a, .btn-link {
@@ -86,8 +86,9 @@ a, .btn-link {
     margin-right: 0.5rem;
     float: left;
     margin-bottom: 10rem;
-    resize: horizontal;
+    resize: none;
     overflow-x: auto;
+    max-width: 250px;
 }
 
 .edit {
@@ -97,7 +98,7 @@ a, .btn-link {
 }
 
 .resizable-window {
-    resize: both;
+    resize: horizontal;
     overflow: auto;
     direction: rtl;
 }
@@ -119,7 +120,7 @@ a, .btn-link {
 .twig {
     margin-right: 0px;
     padding-right: 0px;
-    width: fit-content();
+    width: fit-content;
     transition: 0.3s;
 }
 
@@ -142,7 +143,7 @@ a, .btn-link {
         position: fixed;
         float: none;
         width: 90%;
-        height: fit-content();
+        height: fit-content;
         top: 12%;
         left: 5%;
         z-index: 10000;
@@ -178,10 +179,7 @@ a, .btn-link {
         resize: none;
         overflow-x: auto;
         width: 85%;
-    }
-
-    .twig:hover {
-        padding-left: 0rem;
+        max-width: 100%;
     }
 
     .add-new-twig-btn {

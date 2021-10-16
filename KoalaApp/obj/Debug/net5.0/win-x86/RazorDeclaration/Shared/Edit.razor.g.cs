@@ -96,6 +96,13 @@ using DataAccessLibrary;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+using System.Threading;
+
+#line default
+#line hidden
+#nullable disable
     public partial class Edit : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -104,7 +111,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 147 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
+#line 149 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\Edit.razor"
        
     [Parameter]
     public bool Visible { get; set; } = true;
@@ -138,6 +145,14 @@ using DataAccessLibrary;
     private double Latency { get; set; }
 
     private double LatencyLimitForInstantUpdating { get; } = 50;
+
+    private string DeleteButtonVisibility { get; set; } = displayBlock;
+    private string ConfirmDeletionButtonVisiblity { get; set; } = displayNone;
+
+    #region ReadonlyConstants
+    private static readonly string displayBlock = "display: block;";
+    private static readonly string displayNone = "display: none;";
+    #endregion
 
     private void Copy()
     {
@@ -228,6 +243,21 @@ using DataAccessLibrary;
         }
     }
 
+    private void ShowConfirmDeletionDialog(bool show, bool delay = false)
+    {
+        if (delay) Thread.Sleep(500);
+
+        if (show)
+        {
+            ConfirmDeletionButtonVisiblity = displayBlock;
+            DeleteButtonVisibility = displayNone;
+        }
+        else
+        {
+            DeleteButtonVisibility = displayBlock;
+            ConfirmDeletionButtonVisiblity = displayNone;
+        }
+    }
     private void DeleteTwig()
     {
         // deleting the twig record from the database
@@ -239,6 +269,8 @@ using DataAccessLibrary;
 
         // not displaing the twig anymore in the edit
         EditedTwig.Twig = null;
+
+        ShowConfirmDeletionDialog(false);
     }
 
     private void UpdateEditedTwig()
@@ -282,6 +314,7 @@ using DataAccessLibrary;
 
     public void Update()
     {
+        ShowConfirmDeletionDialog(false);
         InvokeAsync(StateHasChanged);
     }
 
