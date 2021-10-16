@@ -164,7 +164,7 @@ using DataAccessLibrary;
 
         Projects = Projects.OrderByDescending(o => o.LastOpened).ToList();
 
-        InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged);
     }
 
     private void LoadSharedProjects()

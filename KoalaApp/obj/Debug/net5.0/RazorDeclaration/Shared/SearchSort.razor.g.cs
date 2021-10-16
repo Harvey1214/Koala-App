@@ -82,20 +82,6 @@ using KoalaApp.Shared;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
-using Data;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 2 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
-using DataAccessLibrary;
-
-#line default
-#line hidden
-#nullable disable
     public partial class SearchSort : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -103,106 +89,6 @@ using DataAccessLibrary;
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 32 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\SearchSort.razor"
-             
-    [Parameter]
-    public bool Visible { get; set; } = true;
-
-    private string visible
-    {
-        get
-        {
-            if (Visible) return "block";
-            return "none";
-        }
-    }
-
-    private bool dropdownOpened;
-    private string dropdownOpenedStyle
-    {
-        get
-        {
-            if (dropdownOpened) return "display: block;";
-            return "display: none";
-        }
-    }
-
-    private int sortByCount = 6;
-
-    private void ToggleDropdown()
-    {
-        dropdownOpened = !dropdownOpened;
-    }
-
-    private void CloseDropdown()
-    {
-        dropdownOpened = false;
-    }
-
-    private void UpdateSort(SortBy sortBy)
-    {
-        TwigsTempStorage.SortBy = sortBy;
-
-        if (TwigsTempStorage.Tree != null)
-            if (TwigsTempStorage.Tree.Project != null)
-                TwigsTempStorage.Tree.Project.SortBy = sortBy;
-
-        TwigsTempStorage.Order();
-
-        CloseDropdown();
-
-        ProjectsHandler.UpdateProjectSortBy(TwigsTempStorage.Tree.Project);
-    }
-
-    protected override void OnInitialized()
-    {
-        TwigsTempStorage.SearchSort = this;
-    }
-
-    private string GetTitle(Twig twig)
-    {
-        if (twig == null) return "";
-
-        string title = "";
-
-        int maxLength = 50;
-
-        if (twig.Description != null)
-            if (maxLength < twig.Description.Length)
-                title += $"{twig.Description.Substring(0, maxLength)}...{Environment.NewLine}";
-            else
-                title += $"{twig.Description}{Environment.NewLine}";
-
-        title += $"Due Date: {twig.DueDate}{Environment.NewLine}";
-        title += $"Priority: {twig.Priority}";
-
-        return title;
-    }
-
-    private void OpenForEditting(Twig twig)
-    {
-        EditedTwig.Twig = twig;
-        EditedTwig.NestedTwig = null;
-
-        if (EditedTwig.Edit != null)
-        {
-            EditedTwig.Edit.MobileOpenForEdittingCheck();
-            EditedTwig.Edit.Update();
-        }
-    }
-
-    public void Update()
-    {
-        InvokeAsync(StateHasChanged);
-    }
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private EditedTwig EditedTwig { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ProjectsHandler ProjectsHandler { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private TwigsTempStorage TwigsTempStorage { get; set; }
     }
 }
 #pragma warning restore 1591
