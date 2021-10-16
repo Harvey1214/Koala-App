@@ -12,15 +12,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KoalaApp</title>
     <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+
+    <!-- Custom themed Bootstrap CSS build -->
+    <link href="_content/Havit.Blazor.Components.Web.Bootstrap/bootstrap.css" rel="stylesheet" />
+
     <link href="css/site.css" rel="stylesheet" />
     <link href="KoalaApp.styles.css" rel="stylesheet" />
 
     <!-- Default values for additional CSS Variables (+ import Bootstrap Icons) -->
     <link href="_content/Havit.Blazor.Components.Web.Bootstrap/defaults.css" rel="stylesheet" />
-
-    <!-- Blazor CSS Isolation -->
-    <link href="Your.Blazor.Project.Assembly.Name.styles.css" rel="stylesheet" />
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />

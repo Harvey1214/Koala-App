@@ -7,6 +7,7 @@ using DataAccessLibrary;
 using System.Threading;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Havit.Blazor.Components.Web.Bootstrap;
 
 namespace KoalaApp.Shared
 {
@@ -30,9 +31,9 @@ namespace KoalaApp.Shared
             }
         }
 
-        protected ElementReference Title;
+        protected HxInputText Title;
 
-        protected ElementReference Description;
+        protected HxInputTextArea Description;
         private string DescriptionWidth
         {
             get
@@ -59,6 +60,31 @@ namespace KoalaApp.Shared
         private static readonly string displayNone = "display: none;";
         #endregion
 
+        private State TwigState
+        {
+            get
+            {
+                return EditedTwig.Twig.State;
+            }
+            set
+            {
+                SetState(value);
+            }
+        }
+
+        private List<State> GetStateValues()
+        {
+            return new List<State>() { State.NOTSTARTED, State.INPROGRESS, State.COMPLETED };
+        }
+
+        private string GetLabel(State state) => state switch
+        {
+            State.NOTSTARTED => "Not started yet",
+            State.INPROGRESS => "In Progress",
+            State.COMPLETED => "Completed",
+            _ => "",
+        };
+
         private void Copy()
         {
             TwigsTempStorage.CopiedTwig = EditedTwig.Twig.Copy();
@@ -67,7 +93,7 @@ namespace KoalaApp.Shared
         private void Paste()
         {
             // check if there's a twig in the clipboard
-            if (TwigsTempStorage.CopiedTwig == null)
+            if (TwigsTempStorage.CopiedTwig == null || TwigsTempStorage.CopiedTwig == EditedTwig.Twig)
             {
                 return;
             }
@@ -112,6 +138,7 @@ namespace KoalaApp.Shared
 
             TwigsTempStorage.Order();
         }
+
         private void SetDueDate(string dueDateText)
         {
             DateTime dueDate;
@@ -228,15 +255,16 @@ namespace KoalaApp.Shared
             if (Title.Equals(null) == false) Title.FocusAsync();
         }
 
-        private async void SaveDescriptionWidth()
+        /*private async void SaveDescriptionWidth()
         {
             if (Description.Equals(null) || TwigsTempStorage.Tree == null) return;
 
+            // @onmouseup="SaveDescriptionWidth" has to be added to the textarea component along with this: style="@DescriptionWidth"
             BoundingClientRect rect = await GetElementRect(Description);
             TwigsTempStorage.Tree.Project.DescriptionFieldWidth = (int)rect.Height;
 
             ProjectsHandler.UpdateProjectDescriptionFieldWidth(TwigsTempStorage.Tree.Project);
-        }
+        }*/
 
         public async Task<BoundingClientRect> GetElementRect(ElementReference elementReference)
         {

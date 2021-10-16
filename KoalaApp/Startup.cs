@@ -16,6 +16,8 @@ using Havit;
 using Havit.Blazor;
 using Havit.Blazor.Components.Web;
 using Havit.Blazor.Components.Web.Bootstrap;
+using System.Threading;
+using System.Globalization;
 
 namespace KoalaApp
 {
@@ -51,18 +53,30 @@ namespace KoalaApp
             services.AddSingleton<CookieSecurityHandler>();
             services.AddScoped<WindowDimensions>();
 
-            services.AddBlazoredLocalStorage();
-            services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
-
-            services.AddHxServices();
+            AddExternalServices(services);
+            SetLanguage();
 
             SetDefaults();
         }
 
+        private void AddExternalServices(IServiceCollection services)
+        {
+            services.AddBlazoredLocalStorage();
+            services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
+
+            services.AddHxServices();
+        }
+
+        private void SetLanguage()
+        {
+            var cultureInfo = new CultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+        }
+
         private void SetDefaults()
         {
-            HxButton.Defaults.Color = ThemeColor.Info;
-            HxSubmit.Defaults.Color = ThemeColor.Info;
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

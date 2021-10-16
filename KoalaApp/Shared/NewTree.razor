@@ -6,16 +6,16 @@
 
 @if (NewTreeHasBeenCreated)
 {
-    <div class="alert alert-success">
+    <HxAlert Color="ThemeColor.Success">
         The new tree has been <strong>created successfuly!</strong>
-    </div>
+    </HxAlert>
 }
 
 @if (ErrorOccured)
 {
-    <div class="alert alert-danger">
+    <HxAlert Color="ThemeColor.Danger">
         An <strong>error has occured</strong>, please refresh the page or try again later
-    </div>
+    </HxAlert>
 }
 
 <h5>New Tree</h5>
@@ -24,10 +24,13 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group mb-2" style="margin-right:0.2rem">
-        <InputText @bind-Value="NewTreeModel.Name" placeholder="Name" class="form-control"></InputText>
-    </div>
-    <button type="submit" class="btn @UISettings.PrimaryButton mb-2">Create</button>
+    <row>
+        <div class="col-md-3 d-inline-block">
+            <HxInputText @bind-Value="NewTreeModel.Name" Placeholder="Name" />
+        </div>
+        
+        <KoSubmit Text="Create" />
+    </row>
 </EditForm>
 
 @code {

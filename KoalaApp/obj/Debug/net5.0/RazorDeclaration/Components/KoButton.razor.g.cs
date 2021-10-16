@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace KoalaApp.Shared
+namespace KoalaApp.Components
 {
     #line hidden
     using System;
@@ -110,67 +110,13 @@ using Havit.Blazor.Components.Web;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 15 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
-using KoalaApp.Components;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
-using Data;
-
-#line default
-#line hidden
-#nullable disable
-    public partial class MainLayout : LayoutComponentBase
+    public partial class KoButton : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 27 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
-       
-    private bool navMenuHidden = false;
-
-    private void ToggleNavMenuHidden()
-    {
-        navMenuHidden = !navMenuHidden;
-    }
-
-    protected override void OnInitialized()
-    {
-        WindowDimensions.MainLayout = this;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender) await AdjustUIBasedOnWindowDimensions();
-    }
-
-    public async Task AdjustUIBasedOnWindowDimensions()
-    {
-        WindowDimensions.BrowserDimension = await WindowDimensions.GetDimensions();
-
-        if (WindowDimensions.BrowserDimension.Width > 1000)
-        {
-            WindowDimensions.Mobile = false;
-        }
-        else
-        {
-            WindowDimensions.Mobile = true;
-        }
-
-        await InvokeAsync(StateHasChanged);
-    }
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WindowDimensions WindowDimensions { get; set; }
     }
 }
 #pragma warning restore 1591
