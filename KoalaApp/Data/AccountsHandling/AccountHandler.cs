@@ -9,7 +9,7 @@ namespace KoalaApp.Data
 {
     public class AccountHandler
     {
-        public NavMenu NavMenu { get; set; }
+        public Sidebar NavMenu { get; set; }
 
         private UsersHandler UsersHandler = new UsersHandler();
         private CookieSecurityHandler CookieSecurityHandler = new CookieSecurityHandler();

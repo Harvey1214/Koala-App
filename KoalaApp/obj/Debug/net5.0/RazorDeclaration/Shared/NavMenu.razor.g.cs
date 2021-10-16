@@ -140,7 +140,7 @@ using Data;
 
     protected override void OnInitialized()
     {
-        AccountHandler.NavMenu = this;
+        //AccountHandler.NavMenu = this;
     }
 
     public void Update()

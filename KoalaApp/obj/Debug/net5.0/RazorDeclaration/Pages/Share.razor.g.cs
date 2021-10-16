@@ -147,7 +147,7 @@ using DataAccessLibrary;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 40 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
+#line 44 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Pages\Share.razor"
        
     private ShareModel ShareModel { get; set; } = new ShareModel();
 

@@ -32,9 +32,13 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <HxInputText @bind-Value="ShareModel.Email" Placeholder="Email" CssClass="mb-0" />
-    
-    <KoSubmit Text="Share" CssClass="mt-0 ml-1" />
+    <row>
+        <div class="col-md-4 d-inline-block">
+            <HxInputText @bind-Value="ShareModel.Email" Placeholder="Email" CssClass="mb-0" />
+        </div>
+
+        <KoSubmit Text="Share" CssClass="mt-0 ml-1" />
+    </row>
 </EditForm>
 
 @code {

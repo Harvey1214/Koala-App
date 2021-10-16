@@ -1,0 +1,33 @@
+﻿@using Data
+@inject AccountHandler AccountHandler
+
+<HxSidebar CssClass="sticky-top">
+    <HeaderTemplate>
+        <HxSidebarBrand BrandName="Koala" BrandNameShort="KO" />
+    </HeaderTemplate>
+
+    <ItemsTemplate>
+        <HxSidebarItem Text="Home" Href="/" Icon="BootstrapIcon.House" />
+        @if (AccountHandler.User == null)
+        {
+            <HxSidebarItem Text="Login" Href="/login" Icon="BootstrapIcon.BoxArrowInRight" />
+        }
+        else
+        {
+            <HxSidebarItem Text="Log Out" Href="/login?logout=true" Icon="BootstrapIcon.BoxArrowLeft" />
+            <HxSidebarItem Text="Trees" Href="/trees" Icon="BootstrapIcon.Tree" />
+        }
+    </ItemsTemplate>
+</HxSidebar>
+
+@code {
+    protected override void OnInitialized()
+    {
+        AccountHandler.NavMenu = this;
+    }
+
+    public void Update()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+}

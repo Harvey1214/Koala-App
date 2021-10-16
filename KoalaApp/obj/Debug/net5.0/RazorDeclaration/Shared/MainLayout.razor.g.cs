@@ -132,7 +132,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 27 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
+#line 14 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
        
     private bool navMenuHidden = false;
 

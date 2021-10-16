@@ -4,23 +4,10 @@
 
 @inject WindowDimensions WindowDimensions
 
-<div class="page">
-    @if (navMenuHidden == false)
-    {
-        <div class="sidebar bg-info">
-            <NavMenu />
-        </div>
-        <KoButton OnClick="ToggleNavMenuHidden" CssClass="hideSidebarBtn"><HxIcon Icon="@BootstrapIcon.ArrowLeft" /></KoButton>
-    }
-    else
-    {
-        <KoButton OnClick="ToggleNavMenuHidden" CssClass="hideSidebarBtn"><HxIcon Icon="@BootstrapIcon.ArrowRight" /></KoButton>
-    }
-
-    <div class="main">
-        <div class="content px-4">
-            @Body
-        </div>
+<div class="d-md-flex min-vh-100">
+    <Sidebar />
+    <div class="main p-4 flex-grow-1 overflow-hidden">
+        @Body
     </div>
 </div>
 

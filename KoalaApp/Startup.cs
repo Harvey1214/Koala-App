@@ -76,7 +76,7 @@ namespace KoalaApp
 
         private void SetDefaults()
         {
-            
+            HxButton.Defaults.Color = ThemeColor.Primary;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,7 +11,7 @@ namespace KoalaApp.Components
         public KoSubmit()
         {
             CssClass = "text-white";
-            Color = ThemeColor.Info;
+            Color = ThemeColor.Primary;
         }
     }
 }

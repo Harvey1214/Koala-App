@@ -102,3 +102,5 @@ C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\Microsoft.Extensi
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\Microsoft.JSInterop.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\System.IO.Pipelines.dll
 C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\cs\Havit.Blazor.Components.Web.Bootstrap.resources.dll
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\RazorDeclaration\Shared\Sidebar.razor.g.cs
+C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\Razor\Shared\Sidebar.razor.g.cs
