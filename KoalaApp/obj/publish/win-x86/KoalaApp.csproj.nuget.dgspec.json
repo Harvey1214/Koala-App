@@ -83,7 +83,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
@@ -142,6 +142,10 @@
               "target": "Package",
               "version": "[3.0.0, )"
             },
+            "Havit.Blazor.Components.Web.Bootstrap": {
+              "target": "Package",
+              "version": "[1.4.2, )"
+            },
             "Microsoft.AspNetCore.Components.DataAnnotations.Validation": {
               "target": "Package",
               "version": "[3.2.0-rc1.20223.4, )"
@@ -160,15 +164,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Runtime.win-x86",
-              "version": "[5.0.7, 5.0.7]"
+              "version": "[5.0.9, 5.0.9]"
             },
             {
               "name": "Microsoft.NETCore.App.Runtime.win-x86",
-              "version": "[5.0.7, 5.0.7]"
+              "version": "[5.0.9, 5.0.9]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Runtime.win-x86",
-              "version": "[5.0.7, 5.0.7]"
+              "version": "[5.0.9, 5.0.9]"
             }
           ],
           "frameworkReferences": {
@@ -179,7 +183,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

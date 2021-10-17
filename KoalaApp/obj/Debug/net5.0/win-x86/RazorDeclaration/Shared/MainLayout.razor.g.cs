@@ -83,6 +83,41 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 11 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor.Components.Web.Bootstrap;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor.Components.Web;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using KoalaApp.Components;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
 using Data;
 
@@ -97,7 +132,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 27 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
+#line 14 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\MainLayout.razor"
        
     private bool navMenuHidden = false;
 
@@ -111,9 +146,9 @@ using Data;
         WindowDimensions.MainLayout = this;
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender) AdjustUIBasedOnWindowDimensions();
+        if (firstRender) await AdjustUIBasedOnWindowDimensions();
     }
 
     public async Task AdjustUIBasedOnWindowDimensions()
@@ -129,7 +164,7 @@ using Data;
             WindowDimensions.Mobile = true;
         }
 
-        InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged);
     }
 
 #line default

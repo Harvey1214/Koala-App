@@ -1,3 +1,5 @@
 ﻿<StaticWebAssets Version="1.0">
   <ContentRoot BasePath="/" Path="C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\obj\Debug\net5.0\win-x86\scopedcss\bundle\" />
+  <ContentRoot BasePath="_content/Havit.Blazor.Components.Web" Path="C:\Users\mikuh\.nuget\packages\havit.blazor.components.web\1.0.25\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Havit.Blazor.Components.Web.Bootstrap" Path="C:\Users\mikuh\.nuget\packages\havit.blazor.components.web.bootstrap\1.4.2\build\..\staticwebassets\" />
 </StaticWebAssets>

@@ -83,6 +83,41 @@ using KoalaApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 11 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor.Components.Web.Bootstrap;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using Havit.Blazor.Components.Web;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\_Imports.razor"
+using KoalaApp.Components;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 1 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NewTree.razor"
 using Data.ValidationModels;
 
@@ -111,7 +146,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 33 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NewTree.razor"
+#line 36 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NewTree.razor"
        
     [Parameter]
     public object Parent { get; set; }
