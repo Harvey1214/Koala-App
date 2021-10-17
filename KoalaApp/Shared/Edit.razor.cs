@@ -72,6 +72,20 @@ namespace KoalaApp.Shared
             }
         }
 
+        private DateTime TwigDueDate
+        {
+            get
+            {
+                return EditedTwig.Twig.DueDate;
+            }
+            set
+            {
+                SetDueDate(value);
+                UpdateEditedTwig();
+                UpdateTwigDueDateInDatabase();
+            }
+        }
+
         private List<State> GetStateValues()
         {
             return new List<State>() { State.NOTSTARTED, State.INPROGRESS, State.COMPLETED };
@@ -139,17 +153,11 @@ namespace KoalaApp.Shared
             TwigsTempStorage.Order();
         }
 
-        private void SetDueDate(string dueDateText)
+        private void SetDueDate(DateTime dueDate)
         {
-            DateTime dueDate;
-            bool success = DateTime.TryParse(dueDateText, out dueDate);
-
-            if (success)
+            if (dueDate.Year > 1800 && dueDate.Year < 9000)
             {
-                if (dueDate.Year > 1800 && dueDate.Year < 9000)
-                {
-                    EditedTwig.Twig.DueDate = dueDate;
-                }
+                EditedTwig.Twig.DueDate = dueDate;
             }
 
             TwigsTempStorage.Order();
@@ -230,6 +238,11 @@ namespace KoalaApp.Shared
                 Latency = (DateTime.Now - StartLoadTime).TotalMilliseconds;
                 InvokeAsync(StateHasChanged);
             }
+        }
+
+        private void UpdateTwigDueDateInDatabase()
+        {
+            TwigsHandler.UpdateTwigDueDate(EditedTwig.Twig);
         }
 
         public void MobileOpenForEdittingCheck()

@@ -28,7 +28,7 @@
                 <td>@project.Name</td>
                 <td>@project.DateCreated</td>
                 <td>@project.LastOpened</td>
-                <td><HxButton Color="ThemeColor.Secondary" Outline="true" OnClick="() => OpenProject(project.Id)">Open</HxButton></td>
+                <td><HxButton Color="ThemeColor.Secondary" Spinner="null" Outline="true" OnClick="() => OpenProject(project.Id)">Open</HxButton></td>
                 <td><HxButton Color="ThemeColor.Secondary" OnClick="() => OpenProjectPreferences(project)"><span class="oi oi-wrench"></span></HxButton></td>
                 <td><HxButton Color="ThemeColor.Secondary" OnClick="() => Share(project)"><span class="oi oi-share"></span></HxButton></td>
             </tr>

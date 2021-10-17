@@ -32,10 +32,10 @@
                                      @bind-Value="EditedTwig.Twig.Description"
                                      Placeholder="Description" />
 
-                    <HxInputDate @onfocusout="() => TwigsHandler.UpdateTwigDueDate(EditedTwig.Twig)" @bind-Value="EditedTwig.Twig.DueDate" @oninput="@((e) => { SetDueDate((string)e.Value); UpdateEditedTwig(); })" Placeholder="Due Date" />
+                    <HxInputDate @bind-Value="TwigDueDate" Placeholder="Due Date" />
 
                     <HxInputNumber @onfocusout="() => UpdateTwigInDatabase()" @bind-Value="EditedTwig.Twig.Priority" @oninput="@((e) => { SetPriority((string)e.Value); UpdateEditedTwig(); })" Placeholder="Priority" CssClass="mb-2" />
-                    <HxRadioButtonList Data="GetStateValues()" TextSelector="GetLabel" TItem="State" TValue="State" @bind-Value="TwigState" CssClass="mb-2" />
+                    <HxRadioButtonList AutoSort="false" Data="GetStateValues()" TextSelector="GetLabel" TItem="State" TValue="State" @bind-Value="TwigState" CssClass="mb-2" />
 
                     <HxButton Color="ThemeColor.Danger" OnClick="() => ShowConfirmDeletionDialog(true, true)" style="@DeleteButtonVisibility" Text="Remove" />
                     <HxButton Color="ThemeColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="DeleteTwig" style="@ConfirmDeletionButtonVisiblity">Delete <strong>@EditedTwig.Twig.Title</strong></HxButton>
