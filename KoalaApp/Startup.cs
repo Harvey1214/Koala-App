@@ -54,8 +54,6 @@ namespace KoalaApp
             services.AddScoped<WindowDimensions>();
 
             AddExternalServices(services);
-            SetLanguage();
-
             SetDefaults();
         }
 
@@ -65,13 +63,6 @@ namespace KoalaApp
             services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
 
             services.AddHxServices();
-        }
-
-        private void SetLanguage()
-        {
-            var cultureInfo = new CultureInfo("en-US");
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
         }
 
         private void SetDefaults()
