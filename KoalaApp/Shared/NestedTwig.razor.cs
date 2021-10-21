@@ -149,11 +149,34 @@ namespace KoalaApp.Shared
         {
             if (DragAndDropContainer.TransportedTwig == null) return;
             if (DragAndDropContainer.TransportedTwig == Twig) return;
+            if (GetParentIds().Contains(DragAndDropContainer.TransportedTwig.Id)) return;
 
             DragAndDropContainer.TransportedTwig.ParentId = Twig.Id;
             TwigsHandler.UpdateTwigParent(DragAndDropContainer.TransportedTwig);
 
             TwigsTempStorage.Order();
+        }
+
+        private List<int> GetParentIds()
+        {
+            List<int> result = new();
+
+            int currentParentId = Twig.ParentId.GetValueOrDefault();
+            while (true)
+            {
+                result.Add(currentParentId);
+                var parents = TwigsTempStorage.Twigs.Where(o => o.Id == currentParentId).ToList();
+                if (parents is not null && parents.Count == 1)
+                {
+                    currentParentId = parents.FirstOrDefault().ParentId.GetValueOrDefault();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return result;
         }
 
         // when this twig is being dragged
