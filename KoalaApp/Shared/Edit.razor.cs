@@ -227,6 +227,9 @@ namespace KoalaApp.Shared
 
         protected override void OnInitialized()
         {
+            EditedTwig.Twig = null;
+            EditedTwig.NestedTwig = null;
+
             StartLoadTime = DateTime.Now;
             EditedTwig.Edit = this;
         }

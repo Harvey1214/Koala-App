@@ -1,0 +1,6 @@
+Build Name: 	002.HFW-HavitBlazor
+Build Number: 	002.HFW-HavitBlazor-2021-10-08.02
+Repository: 	002.HFW-HavitBlazor
+Branch: 	refs/heads/master
+CommitID: 	cb1a4289157e0e1ad99a0ef37d78716c96aa57bd
+Date: 		8.10.2021 12:40

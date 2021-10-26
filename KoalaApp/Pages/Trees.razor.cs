@@ -100,6 +100,7 @@ namespace KoalaApp.Pages
             var twigs = TwigsHandler.GetTwigsOfProject(project.Id);
 
             if (twigs is null) return ProjectDueDateInfo.ALLCOMPLETED;
+            twigs.RemoveAll(o => o.State == State.COMPLETED);
 
             if (twigs.Any(o => o.DueDate.Date == DateTime.Now.Date))
             {

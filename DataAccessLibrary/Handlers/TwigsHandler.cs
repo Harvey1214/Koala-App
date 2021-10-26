@@ -52,7 +52,7 @@ namespace DataAccessLibrary
             DataAccess<Twig, object> dataAccess = new DataAccess<Twig, object>();
 
             int rowsAffected = dataAccess.WriteData(command,
-                new {ProjectId = projectId, Title = Security.Encrypt("New Twig"), DueDate = DateTime.Now.AddYears(100), Priority = 0, Description = "", State = State.NOTSTARTED, ParentId = parentId, ShowChildren = true }); ;
+                new {ProjectId = projectId, Title = Security.Encrypt("New Twig"), DueDate = DateTime.Now, Priority = 0, Description = "", State = State.NOTSTARTED, ParentId = parentId, ShowChildren = true }); ;
 
             if (rowsAffected == 1)
             {

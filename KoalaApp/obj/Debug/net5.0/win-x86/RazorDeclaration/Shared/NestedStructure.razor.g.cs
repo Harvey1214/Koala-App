@@ -139,7 +139,7 @@ using Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 21 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
+#line 23 "C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\Shared\NestedStructure.razor"
        
     [Parameter]
     public bool Visible { get; set; } = true;
@@ -148,7 +148,7 @@ using Data;
     {
         get
         {
-            if (Visible) return "block";
+            if (Visible) return "inline-block";
             return "none";
         }
     }
