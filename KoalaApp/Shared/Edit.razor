@@ -6,40 +6,40 @@
         <div class="card-body">
             @if (EditedTwig.Twig != null)
             {
-                <EditForm Model="EditedTwig.Twig">
-                    <div class="mb-1">
-                        <HxButton OnClick="Copy" Color="ThemeColor.Link" Text="Copy" CssClass="d-inline-block" />
-                        <HxButton OnClick="Paste" Color="ThemeColor.Link" Text="Paste" />
-                        <HxButton OnClick="Close" Color="ThemeColor.Secondary" CssClass="hide-edit-btn" style="float: right;"><HxIcon Icon="@BootstrapIcon.NodeMinus" /></HxButton>
-                    </div>
+            <EditForm Model="EditedTwig.Twig">
+                <div class="mb-1">
+                    <HxButton OnClick="Copy" Color="ThemeColor.Link" Text="Copy" CssClass="d-inline-block" />
+                    <HxButton OnClick="Paste" Color="ThemeColor.Link" Text="Paste" />
+                    <HxButton OnClick="Close" Color="ThemeColor.Secondary" CssClass="hide-edit-btn" style="float: right;"><HxIcon Icon="@BootstrapIcon.ArrowBarDown" /></HxButton>
+                </div>
 
-                    @if (EditedTwig.Twig.CompletedDate.HasValue)
-                    {
-                        <div>Completed @EditedTwig.Twig.CompletedDate.Value.ToString()</div>
-                    }
+                @if (Latency < LatencyLimitForInstantUpdating && Latency > 0 && WindowDimensions.Mobile == false)
+                {
+                    <HxInputText @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); }" @bind-Value="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }" maxlength="50" Placeholder="Title" />
+                }
+                else
+                {
+                    <HxInputText @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }" @bind-Value="@EditedTwig.Twig.Title" maxlength="50" Placeholder="Title" />
+                }
 
-                    @if (Latency < LatencyLimitForInstantUpdating && Latency > 0 && WindowDimensions.Mobile == false)
-                    {
-                        <HxInputText @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); }" @bind-Value="EditedTwig.Twig.Title" @oninput="(e) => { EditedTwig.Twig.Title = (string)e.Value; UpdateEditedTwig(); }" maxlength="50" Placeholder="Title" />
-                    }
-                    else
-                    {
-                        <HxInputText @ref="Title" @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }" @bind-Value="@EditedTwig.Twig.Title" maxlength="50" Placeholder="Title" />
-                    }
+                <HxInputTextArea @ref="Description"
+                                 @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }"
+                                 @bind-Value="EditedTwig.Twig.Description"
+                                 Placeholder="Description" />
 
-                    <HxInputTextArea @ref="Description"
-                                     @onfocusout="() => { UpdateTwigInDatabase(); UpdateEditedTwig(); }"
-                                     @bind-Value="EditedTwig.Twig.Description"
-                                     Placeholder="Description" />
+                <HxInputDate @bind-Value="TwigDueDate" Placeholder="Due Date" />
 
-                    <HxInputDate @bind-Value="TwigDueDate" Placeholder="Due Date" />
+                <HxInputNumber @onfocusout="() => UpdateTwigInDatabase()" @bind-Value="EditedTwig.Twig.Priority" @oninput="@((e) => { SetPriority((string)e.Value); UpdateEditedTwig(); })" Placeholder="Priority" CssClass="mb-2" />
+                <HxRadioButtonList AutoSort="false" Data="GetStateValues()" TextSelector="GetLabel" TItem="State" TValue="State" @bind-Value="TwigState" CssClass="mb-2" />
 
-                    <HxInputNumber @onfocusout="() => UpdateTwigInDatabase()" @bind-Value="EditedTwig.Twig.Priority" @oninput="@((e) => { SetPriority((string)e.Value); UpdateEditedTwig(); })" Placeholder="Priority" CssClass="mb-2" />
-                    <HxRadioButtonList AutoSort="false" Data="GetStateValues()" TextSelector="GetLabel" TItem="State" TValue="State" @bind-Value="TwigState" CssClass="mb-2" />
+                @if (EditedTwig.Twig.CompletedDate.HasValue)
+                {
+                    <small>Completed @EditedTwig.Twig.CompletedDate.Value.ToShortDateString() @EditedTwig.Twig.CompletedDate.Value.ToShortTimeString()</small>
+                }
 
-                    <HxButton Color="ThemeColor.Danger" OnClick="() => ShowConfirmDeletionDialog(true, true)" style="@DeleteButtonVisibility" Text="Remove" />
-                    <HxButton Color="ThemeColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="DeleteTwig" style="@ConfirmDeletionButtonVisiblity">Delete <strong>@EditedTwig.Twig.Title</strong></HxButton>
-                </EditForm>
+                <HxButton Color="ThemeColor.Danger" OnClick="() => ShowConfirmDeletionDialog(true, true)" style="@DeleteButtonVisibility" Text="Remove" />
+                <HxButton Color="ThemeColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="DeleteTwig" style="@ConfirmDeletionButtonVisiblity">Delete <strong>@EditedTwig.Twig.Title</strong></HxButton>
+            </EditForm>
             }
             else
             {
