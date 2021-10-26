@@ -40,12 +40,6 @@ a, .btn-link {
 
 .search-sort {
     display: inline-block;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-    float: left;
-    margin-bottom: 10rem;
-    resize: none;
-    overflow-x: auto;
     max-width: 250px;
 }
 

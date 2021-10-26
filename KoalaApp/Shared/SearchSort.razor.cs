@@ -21,7 +21,7 @@ namespace KoalaApp.Shared
         {
             get
             {
-                if (Visible) return "block";
+                if (Visible) return "inline-block";
                 return "none";
             }
         }

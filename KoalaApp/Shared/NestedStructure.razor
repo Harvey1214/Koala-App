@@ -4,18 +4,20 @@
 @inject TwigsTempStorage TwigsTempStorage
 @inject TwigsHandler TwigsHandler 
 
-<div style="margin-bottom: 1rem; display: @visible;">
-    <HxButton Outline="true" @onclick="AddTwig">Add twig</HxButton>
-</div>
+<div style="display: @visible;">
+    <div style="margin-bottom: 1rem;">
+        <HxButton Outline="true" @onclick="AddTwig">Add twig</HxButton>
+    </div>
 
-<div class="block SmallerPage" style="display: @visible;">
-    @if (TwigsTempStorage.Twigs != null)
-    {
-        @foreach (var twig in TwigsTempStorage.OrderedTwigs)
+    <div class="SmallerPage">
+        @if (TwigsTempStorage.Twigs != null)
         {
-            <NestedTwig Twig="@twig" NestedStructure="@this" @ref="AddNestedTwigToList" />
+            @foreach (var twig in TwigsTempStorage.OrderedTwigs)
+            {
+                <NestedTwig Twig="@twig" NestedStructure="@this" @ref="AddNestedTwigToList" />
+            }
         }
-    }
+    </div>
 </div>
 
 @code {
@@ -26,7 +28,7 @@
     {
         get
         {
-            if (Visible) return "block";
+            if (Visible) return "inline-block";
             return "none";
         }
     }

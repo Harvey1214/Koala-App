@@ -31,9 +31,18 @@
     <h5>@Project.Name</h5>
     @if (WindowDimensions.Mobile == false)
     {
-        <NestedStructure ProjectId="@Project.Id" Project="@Project" />
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <SearchSort />
+                </div>
+                <div class="col">
+                    <NestedStructure ProjectId="@Project.Id" Project="@Project" />
+                </div>
+            </div>
+        </div>
+        
         <div style="float: right; position:fixed; top:1rem; right:1rem; height: 95%;">
-            <SearchSort />
             <Edit />
         </div>
     }
