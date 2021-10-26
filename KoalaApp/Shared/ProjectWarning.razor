@@ -1,0 +1,18 @@
+﻿@using Pages
+
+@if (ProjectDueDateInfo == ProjectDueDateInfo.LEFTOVER)
+            {
+                <HxIcon Icon="BootstrapIcon.ExclamationTriangle" />
+            }
+else if (ProjectDueDateInfo == ProjectDueDateInfo.TODOTODAY)
+            {
+                <HxIcon Icon="BootstrapIcon.Stopwatch" />
+            }
+            else
+            {
+                <HxIcon Icon="BootstrapIcon.CheckAll" />
+            }
+
+@code {
+    [Parameter] public ProjectDueDateInfo ProjectDueDateInfo { get; set; }
+}

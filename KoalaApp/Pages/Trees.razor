@@ -25,7 +25,10 @@
         @foreach (var project in Projects)
         {
             <tr>
-                <td>@project.Name</td>
+                <td>
+                    <ProjectWarning ProjectDueDateInfo="GetProjectDueDateInfo(project)" />
+                    @project.Name
+                </td>
                 <td>@project.DateCreated.ToShortDateString() @project.DateCreated.ToShortTimeString()</td>
                 <td>@project.LastOpened.ToShortDateString() @project.LastOpened.ToShortTimeString()</td>
                 <td><HxButton Color="ThemeColor.Secondary" Spinner="null" Outline="true" OnClick="() => OpenProject(project.Id)">Open</HxButton></td>

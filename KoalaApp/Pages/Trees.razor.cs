@@ -16,6 +16,7 @@ namespace KoalaApp.Pages
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] ShareHandler ShareHandler { get; set; }
         [Inject] UsersHandler UsersHandler { get; set; }
+        [Inject] TwigsHandler TwigsHandler { get; set; }
         [Inject] ShareProject ShareProject { get; set; }
         [Inject] Blazored.LocalStorage.ILocalStorageService LocalStorage { get; set; }
 
@@ -94,10 +95,37 @@ namespace KoalaApp.Pages
             }
         }
 
+        private ProjectDueDateInfo GetProjectDueDateInfo(Project project)
+        {
+            var twigs = TwigsHandler.GetTwigsOfProject(project.Id);
+
+            if (twigs is null) return ProjectDueDateInfo.ALLCOMPLETED;
+
+            if (twigs.Any(o => o.DueDate.Date == DateTime.Now.Date))
+            {
+                return ProjectDueDateInfo.TODOTODAY;
+            }
+            else if (twigs.Any(o => o.DueDate.Date < DateTime.Now.Date))
+            {
+                return ProjectDueDateInfo.LEFTOVER;
+            }
+            else
+            {
+                return ProjectDueDateInfo.ALLCOMPLETED;
+            }
+        }
+
         public void Update()
         {
             InvokeAsync(StateHasChanged);
             LoadProjects();
         }
+    }
+
+    public enum ProjectDueDateInfo
+    {
+        LEFTOVER,
+        TODOTODAY,
+        ALLCOMPLETED
     }
 }
