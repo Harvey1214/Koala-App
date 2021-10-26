@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using KoalaApp.Data;
 using DataAccessLibrary;
 using Microsoft.AspNetCore.Components;
+using Havit.Blazor.Components.Web.Bootstrap;
 
 namespace KoalaApp.Shared
 {
@@ -100,6 +101,23 @@ namespace KoalaApp.Shared
         public void Update()
         {
             InvokeAsync(StateHasChanged);
+        }
+
+        private ThemeColor? GetTwigButtonColor(Twig twig)
+        {
+            DateTime dueDate = twig.DueDate;
+            DateTime now = DateTime.Now;
+
+            if (dueDate.Date == now.Date)
+            {
+                return ThemeColor.Primary;
+            }
+            else if (dueDate.Date < now.Date)
+            {
+                return ThemeColor.Danger;
+            }
+
+            return null;
         }
     }
 }

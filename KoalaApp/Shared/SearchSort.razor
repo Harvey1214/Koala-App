@@ -1,7 +1,7 @@
 ﻿@using DataAccessLibrary 
 
 <div class="search-sort" style="display: @visible;">
-    <div class="list-group search-sort-list">
+    <HxListGroup>
         <div class="dropdown">
             <button @onclick="ToggleDropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort By
@@ -19,7 +19,7 @@
         </div>
         @foreach (var twig in TwigsTempStorage.SortedTwigs)
         {
-            <button @onclick="() => OpenForEditting(twig)" type="button" class="list-group-item list-group-item-action" alt="@GetTitle(twig)" title="@GetTitle(twig)">@twig.Title</button>
+            <HxListGroupItem Color="GetTwigButtonColor(twig)" OnClick="() => OpenForEditting(twig)">@twig.Title</HxListGroupItem>
         }
-    </div>
+    </HxListGroup>
 </div>
