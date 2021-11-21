@@ -5,6 +5,6 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\mikuh\source\repos\KoalaApp\KoalaApp\bin\Debug\net5.0\publish\</_PublishTargetUrl>
-    <History>True|2021-10-26T20:22:10.2441553Z;</History>
+    <History>True|2021-10-26T20:48:24.5437770Z;True|2021-10-26T22:22:10.2441553+02:00;</History>
   </PropertyGroup>
 </Project>

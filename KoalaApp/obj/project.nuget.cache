@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "hUFUnXyCiMXFXhf82kmOcHJtWoVd4QZmpco+vUWa0DACdhtRE7ZOonHY3y8CoIjIblOikuuC8zgH+c0MS81gcw==",
+  "dgSpecHash": "1humIS16/ojbGtgfOJ1PUY/lFpf6q+m49251kJuCJRM2KQIlSzFz2QEKLZZQTq2OSfdbuv3VVBY4YiXyGlYQLg==",
   "success": true,
   "projectFilePath": "C:\\Users\\mikuh\\source\\repos\\KoalaApp\\KoalaApp\\KoalaApp.csproj",
   "expectedPackageFiles": [
@@ -36,7 +36,8 @@
     "C:\\Users\\mikuh\\.nuget\\packages\\system.data.sqlclient\\4.8.2\\system.data.sqlclient.4.8.2.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.io.pipelines\\5.0.1\\system.io.pipelines.5.0.1.nupkg.sha512",
     "C:\\Users\\mikuh\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
-    "C:\\Users\\mikuh\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
+    "C:\\Users\\mikuh\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
+    "C:\\Users\\mikuh\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
   ],
   "logs": []
 }
